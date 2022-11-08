@@ -1,0 +1,1 @@
+Todos los archivos jar necesarios: Connector J, JFreeChart y iText estan en esta misma carpeta. Si el programa da error, solo hay que importarlos como librerias.

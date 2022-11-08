@@ -1,0 +1,19 @@
+﻿noRegistro,matricula,nombre,apaterno,amaterno,nivel,grado,turno,dia,mes,year,direccion,calificacion,beca,taller,rfcpadre
+22,PRIM3ACC16,Carlos,Cuevas,Rubio,Primaria,Tercer Grado,Matutino,2,Mayo,2012,Mina #301- Col Roma,90,Foraneo,Ninguno,LEGC362821D76
+23,SECU2BBG11,Bertha,García,Solano,Secundaria,Segundo Año,Vespertino,16,Enero,2011,Victoria #200- Col Progresista,87,Manutencion,Ninguno,LULS362916GG1
+24,PRIM5AMF19,Macarena,Ferreiro,Castro,Primaria,Quinto Grado,Matutino,28,Septiembre,2010,Puebla #205- Col Perales,92,Foraneo,Ninguno,ALCM019282JK0
+25,SECU1BSV20,Saray,Vargas,Vasquez,Secundaria,Primer Año,Vespertino,4,Agosto,2008,Aldama #109- Col Bella vista,99,Excelencia,Ninguno,FEHM219262YY2
+26,PREP6BIB21,Irene,Blas,Martínez,Preparatoria,Sexto Semestre,Vespertino,31,Enero,2005,Galeana #130- Col San Diego ,90,Foraneo,Mecanica,IRRD251936CX4
+27,PRIM2AIP10,Ismael,Palacios,Velazco,Primaria,Segundo Grado,Matutino,29,Junio,2013,Vergel #180- Col Valenzuela,89,Foraneo,Ninguno,ERMN286122KM2
+28,PREP3ADC14,Daniel,Castrejon,Ortíz,Preparatoria,Tercer Semestre,Matutino,23,Octubre,2006,Olmos #505- Col Chapultepec,82,Manutencion,Informatica,SAMA251421IO9
+29,SECU2BAM17,Andrés,Molina,Garrido,Secundaria,Segundo Año,Vespertino,3,Febrero,2009,Nazas #301- Col Remedios,95,Excelencia,Ninguno,CEVG264491O01
+30,SECU3AZP13,Zaira,Perez,Millan,Secundaria,Tercer Año,Matutino,15,Julio,2010,Marmol #608- Col Loma dorada,99,Excelencia,Ninguno,ALHC251427JH2
+31,PREP5AAM22,Álvaro,Murillo,Morte,Preparatoria,Quinto Semestre,Matutino,8,Septiembre,2005,Olivo #101- Col Del bosque,100,Excelencia,Ofimatica,VASB422931U77
+32,PRIM4BIO17,Itziar,Oliveira,Flores,Primaria,Cuarto Grado,Vespertino,30,Octubre,2012,Maguey #430- col Margaritas,80,Manutencion,Ninguno,MALU621927MMR
+33,PREP4BAA11,Alison,Arce,Gomez,Preparatoria,Cuarto Semestre,Vespertino,6,Noviembre,2006,Zafiro #312- Col Palma alta,96,Excelencia,Informatica,CLTO251962L21
+34,PRIM1MMS20,Mario,Suarez,Montero,Primaria,Primer Grado,Matutino,12,Marzo,2014,Perla #405- Col Maderera,89,Manutencion,Ninguno,ALSR329261JMS
+35,PREP1BIS13,Isabel,Salas,Lorente,Preparatoria,Primer Semestre,Vespertino,19,Diciembre,2005,Aguila real #202- Col Aguilas,90,Foraneo,Cocina,ROGV723571PP0
+36,PRIM3BIG22,Ingrid,Gamboa,Claderón,Primaria,Tercer Grado,Vespertino,7,Febrero,2012,Arroyo #126- Col Miraflores,100,Excelencia,Ninguno,DIPS173520YT5
+37,SECU3AIC15,Ivan,Camacho,Sanz,Secundaria,Tercer Año,Matutino,18,Abril,2010,Hidra #603- Col Cielo vista,88,Manutencion,Ninguno,MECE302981NM4
+38,PREP1BJC17,JuanCamilo,Meza,Ramirez,Preparatoria,Primer Semestre,Vespertino,2,Julio,2013,Las ninfas #18 - col Las palmas,96,Excelencia,Mecanica,LULS362916GG1
+39,PREP3BCR19,Caleb,Rivera,Huerta,Preparatoria,Tercer Semestre,Vespertino,31,Enero,2008,San carlos #103 - Col Anahuac,91,Excelencia,Electronica,LEGC362821D76
