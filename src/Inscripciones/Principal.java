@@ -55,17 +55,21 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
     public Principal() {
         initComponents();
-        btnInscripciones.addMouseListener(ml);
-        btnInscripciones.addFocusListener(this);
+        btnEmpleados.addMouseListener(ml);
+        btnEmpleados.addFocusListener(this);
 
-        /*btnBecas.addMouseListener(ml);
-        btnBecas.addFocusListener(this);*/
-        btnGrupos.addMouseListener(ml);
-        btnGrupos.addFocusListener(this);
+        btnProductos.addMouseListener(ml);
+        btnProductos.addFocusListener(this);
 
-        btnFinanzas.addMouseListener(ml);
-        btnFinanzas.addFocusListener(this);
+        btnProveedores.addMouseListener(ml);
+        btnProveedores.addFocusListener(this);
+        
+        btnEntregas.addMouseListener(ml);
+        btnEntregas.addFocusListener(this);
 
+        btnVentas.addMouseListener(ml);
+        btnVentas.addFocusListener(this);
+        
         btnSalir.addMouseListener(ml);
         btnSalir.addFocusListener(this);
 
@@ -76,7 +80,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         add(pnlIzquierdo);
 
         pnlDerecho.setLayout(new BoxLayout(pnlDerecho, BoxLayout.PAGE_AXIS));
-        pnlDerecho.add(pnlTitulo);
         pnlDerecho.add(pnlPrincipal);
         add(pnlDerecho);
 
@@ -104,18 +107,19 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private void initComponents() {
 
         pnlMenu = new javax.swing.JPanel();
-        btnInscripciones = new javax.swing.JButton();
-        btnGrupos = new javax.swing.JButton();
-        btnFinanzas = new javax.swing.JButton();
+        btnEmpleados = new javax.swing.JButton();
+        btnProductos = new javax.swing.JButton();
+        btnProveedores = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnFinanzas1 = new javax.swing.JButton();
-        btnFinanzas2 = new javax.swing.JButton();
+        btnEntregas = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         pnlPrincipal = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        btnPrepa = new javax.swing.JButton();
+        btnInsertarEmpleado = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        btnConsultaAlumnos = new javax.swing.JButton();
+        btnEditarEmpleados = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnPDF = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -126,7 +130,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jButton7 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         showID = new javax.swing.JButton();
         showNombre = new javax.swing.JButton();
@@ -139,80 +142,85 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        lblEmpleado6 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         btnBajas1 = new javax.swing.JButton();
-        btnConsultaAlumnos1 = new javax.swing.JButton();
-        btnConsultaAlumnos2 = new javax.swing.JButton();
-        pnlTitulo = new javax.swing.JPanel();
-        lblEscuela = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        btnVerEmpleados = new javax.swing.JButton();
+        btnEliminarEmpleados = new javax.swing.JButton();
+        lblEmpleado1 = new javax.swing.JLabel();
+        lblEmpleado2 = new javax.swing.JLabel();
+        lblEmpleado3 = new javax.swing.JLabel();
+        lblEmpleado4 = new javax.swing.JLabel();
+        lblEmpleado5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(2, 62, 138));
+        setBackground(new java.awt.Color(187, 187, 187));
         setMinimumSize(new java.awt.Dimension(1400, 781));
-        setPreferredSize(new java.awt.Dimension(1400, 781));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1410, 781));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         pnlMenu.setBackground(new java.awt.Color(2, 62, 138));
         pnlMenu.setMaximumSize(new java.awt.Dimension(210, 781));
         pnlMenu.setMinimumSize(new java.awt.Dimension(210, 781));
-        pnlMenu.setPreferredSize(new java.awt.Dimension(210, 781));
+        pnlMenu.setPreferredSize(new java.awt.Dimension(210, 780));
         pnlMenu.setRequestFocusEnabled(false);
         pnlMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnInscripciones.setBackground(new java.awt.Color(2, 62, 138));
-        btnInscripciones.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
-        btnInscripciones.setForeground(new java.awt.Color(232, 230, 230));
-        btnInscripciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribir.png"))); // NOI18N
-        btnInscripciones.setText("Empleados");
-        btnInscripciones.setAlignmentY(0.0F);
-        btnInscripciones.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        btnInscripciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnInscripciones.setFocusPainted(false);
-        btnInscripciones.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnInscripciones.setIconTextGap(15);
-        btnInscripciones.addActionListener(new java.awt.event.ActionListener() {
+        btnEmpleados.setBackground(new java.awt.Color(2, 62, 138));
+        btnEmpleados.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
+        btnEmpleados.setForeground(new java.awt.Color(232, 230, 230));
+        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribir.png"))); // NOI18N
+        btnEmpleados.setText("Empleados");
+        btnEmpleados.setAlignmentY(0.0F);
+        btnEmpleados.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        btnEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEmpleados.setFocusPainted(false);
+        btnEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEmpleados.setIconTextGap(15);
+        btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInscripcionesActionPerformed(evt);
+                btnEmpleadosActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnInscripciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, 80));
+        pnlMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, 80));
 
-        btnGrupos.setBackground(new java.awt.Color(2, 62, 138));
-        btnGrupos.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
-        btnGrupos.setForeground(new java.awt.Color(232, 230, 230));
-        btnGrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGrupos.png"))); // NOI18N
-        btnGrupos.setText("Productos");
-        btnGrupos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnGrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnGrupos.setFocusPainted(false);
-        btnGrupos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnGrupos.setIconTextGap(15);
-        btnGrupos.addActionListener(new java.awt.event.ActionListener() {
+        btnProductos.setBackground(new java.awt.Color(2, 62, 138));
+        btnProductos.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
+        btnProductos.setForeground(new java.awt.Color(232, 230, 230));
+        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGrupos.png"))); // NOI18N
+        btnProductos.setText("Productos");
+        btnProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnProductos.setFocusPainted(false);
+        btnProductos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnProductos.setIconTextGap(15);
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGruposActionPerformed(evt);
+                btnProductosActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnGrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 80));
+        pnlMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 80));
 
-        btnFinanzas.setBackground(new java.awt.Color(2, 62, 138));
-        btnFinanzas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
-        btnFinanzas.setForeground(new java.awt.Color(232, 230, 230));
-        btnFinanzas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
-        btnFinanzas.setText("Proveedores");
-        btnFinanzas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnFinanzas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnFinanzas.setFocusPainted(false);
-        btnFinanzas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnFinanzas.setIconTextGap(15);
-        btnFinanzas.addActionListener(new java.awt.event.ActionListener() {
+        btnProveedores.setBackground(new java.awt.Color(2, 62, 138));
+        btnProveedores.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
+        btnProveedores.setForeground(new java.awt.Color(232, 230, 230));
+        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
+        btnProveedores.setText("Proveedores");
+        btnProveedores.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnProveedores.setFocusPainted(false);
+        btnProveedores.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnProveedores.setIconTextGap(15);
+        btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinanzasActionPerformed(evt);
+                btnProveedoresActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnFinanzas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 210, 80));
+        pnlMenu.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 210, 80));
 
         btnSalir.setBackground(new java.awt.Color(2, 62, 138));
         btnSalir.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
@@ -231,67 +239,72 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 700, 210, 80));
 
-        btnFinanzas1.setBackground(new java.awt.Color(2, 62, 138));
-        btnFinanzas1.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
-        btnFinanzas1.setForeground(new java.awt.Color(232, 230, 230));
-        btnFinanzas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
-        btnFinanzas1.setText("Entregas");
-        btnFinanzas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnFinanzas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnFinanzas1.setFocusPainted(false);
-        btnFinanzas1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnFinanzas1.setIconTextGap(15);
-        btnFinanzas1.addActionListener(new java.awt.event.ActionListener() {
+        btnEntregas.setBackground(new java.awt.Color(2, 62, 138));
+        btnEntregas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
+        btnEntregas.setForeground(new java.awt.Color(232, 230, 230));
+        btnEntregas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
+        btnEntregas.setText("Entregas");
+        btnEntregas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEntregas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEntregas.setFocusPainted(false);
+        btnEntregas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEntregas.setIconTextGap(15);
+        btnEntregas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinanzas1ActionPerformed(evt);
+                btnEntregasActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnFinanzas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 210, 80));
+        pnlMenu.add(btnEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 210, 80));
 
-        btnFinanzas2.setBackground(new java.awt.Color(2, 62, 138));
-        btnFinanzas2.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
-        btnFinanzas2.setForeground(new java.awt.Color(232, 230, 230));
-        btnFinanzas2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
-        btnFinanzas2.setText("Ventas");
-        btnFinanzas2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnFinanzas2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnFinanzas2.setFocusPainted(false);
-        btnFinanzas2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnFinanzas2.setIconTextGap(15);
-        btnFinanzas2.addActionListener(new java.awt.event.ActionListener() {
+        btnVentas.setBackground(new java.awt.Color(2, 62, 138));
+        btnVentas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
+        btnVentas.setForeground(new java.awt.Color(232, 230, 230));
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
+        btnVentas.setText("Ventas");
+        btnVentas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnVentas.setFocusPainted(false);
+        btnVentas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnVentas.setIconTextGap(15);
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinanzas2ActionPerformed(evt);
+                btnVentasActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnFinanzas2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 210, 80));
+        pnlMenu.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 210, 80));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Ferreteria");
+        pnlMenu.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 160, -1));
 
         getContentPane().add(pnlMenu);
 
         pnlPrincipal.setBackground(new java.awt.Color(232, 232, 232));
-        pnlPrincipal.setMaximumSize(new java.awt.Dimension(1200, 750));
-        pnlPrincipal.setMinimumSize(new java.awt.Dimension(1200, 750));
-        pnlPrincipal.setPreferredSize(new java.awt.Dimension(1200, 750));
+        pnlPrincipal.setMaximumSize(new java.awt.Dimension(1200, 780));
+        pnlPrincipal.setMinimumSize(new java.awt.Dimension(1200, 780));
+        pnlPrincipal.setPreferredSize(new java.awt.Dimension(1200, 780));
         pnlPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Turno");
-        pnlPrincipal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 50, -1));
+        pnlPrincipal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 50, -1));
 
-        btnPrepa.setBackground(new java.awt.Color(78, 201, 74));
-        btnPrepa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnPrepa.setForeground(new java.awt.Color(255, 255, 255));
-        btnPrepa.setText("Nuevo Trabajador");
-        btnPrepa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnPrepa.setFocusPainted(false);
-        btnPrepa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnPrepa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnPrepa.addActionListener(new java.awt.event.ActionListener() {
+        btnInsertarEmpleado.setBackground(new java.awt.Color(1, 50, 112));
+        btnInsertarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnInsertarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
+        btnInsertarEmpleado.setText("Nuevo Trabajador");
+        btnInsertarEmpleado.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnInsertarEmpleado.setFocusPainted(false);
+        btnInsertarEmpleado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnInsertarEmpleado.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnInsertarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrepaActionPerformed(evt);
+                btnInsertarEmpleadoActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnPrepa, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 530, 240, 40));
+        pnlPrincipal.add(btnInsertarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 570, 240, 35));
 
         jButton4.setBackground(new java.awt.Color(215, 215, 215));
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -300,7 +313,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton4.setBorderPainted(false);
         jButton4.setFocusPainted(false);
-        pnlPrincipal.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 470, 390, 33));
+        pnlPrincipal.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 515, 390, 33));
 
         jButton5.setBackground(new java.awt.Color(215, 215, 215));
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -309,44 +322,44 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton5.setBorderPainted(false);
         jButton5.setFocusPainted(false);
-        pnlPrincipal.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 510, 33));
+        pnlPrincipal.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 650, 33));
 
-        btnConsultaAlumnos.setBackground(new java.awt.Color(21, 128, 232));
-        btnConsultaAlumnos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnConsultaAlumnos.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultaAlumnos.setText("Modificar empleados");
-        btnConsultaAlumnos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnConsultaAlumnos.setFocusPainted(false);
-        btnConsultaAlumnos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConsultaAlumnos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnConsultaAlumnos.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarEmpleados.setBackground(new java.awt.Color(1, 50, 112));
+        btnEditarEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEditarEmpleados.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarEmpleados.setText("Modificar empleados");
+        btnEditarEmpleados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEditarEmpleados.setFocusPainted(false);
+        btnEditarEmpleados.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEditarEmpleados.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEditarEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaAlumnosActionPerformed(evt);
+                btnEditarEmpleadosActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnConsultaAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 630, 240, 40));
+        pnlPrincipal.add(btnEditarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 630, 240, 35));
 
-        btnModificar.setBackground(new java.awt.Color(102, 16, 173));
+        btnModificar.setBackground(new java.awt.Color(2, 62, 138));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
         btnModificar.setText("Modificar Datos");
         btnModificar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnModificar.setFocusPainted(false);
-        btnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnModificar.setIconTextGap(8);
         btnModificar.setPreferredSize(new java.awt.Dimension(75, 27));
-        btnModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 240, 40));
+        pnlPrincipal.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 290, 50));
 
         btnPDF.setBackground(new java.awt.Color(2, 62, 138));
-        btnPDF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnPDF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnPDF.setForeground(new java.awt.Color(255, 255, 255));
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPDF.png"))); // NOI18N
-        btnPDF.setText("Generar PDF");
+        btnPDF.setText("Imprimir Datos del Empleado");
         btnPDF.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnPDF.setBorderPainted(false);
         btnPDF.setFocusPainted(false);
@@ -355,38 +368,39 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnPDFActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 160, 40));
+        pnlPrincipal.add(btnPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, 290, 50));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Bienvenido NOMBRE");
-        pnlPrincipal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 20, 230, -1));
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Fecha");
+        pnlPrincipal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 30, 230, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre");
-        pnlPrincipal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 100, -1));
+        pnlPrincipal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 70, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 130, 70, -1));
+        pnlPrincipal.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1085, 150, 70, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (3).png"))); // NOI18N
-        pnlPrincipal.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 530, 130, -1));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Herramientas.png"))); // NOI18N
+        pnlPrincipal.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 570, 100, -1));
 
         showTurno.setBackground(new java.awt.Color(215, 215, 215));
         showTurno.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         showTurno.setForeground(new java.awt.Color(102, 102, 102));
         showTurno.setText("Turno");
-        showTurno.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        showTurno.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         showTurno.setBorderPainted(false);
         showTurno.setFocusPainted(false);
         showTurno.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         showTurno.setMargin(new java.awt.Insets(8, 14, 2, 14));
-        pnlPrincipal.add(showTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 340, 230, 25));
+        pnlPrincipal.add(showTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 495, 40));
 
         jButton7.setBackground(new java.awt.Color(215, 215, 215));
         jButton7.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -395,22 +409,17 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jButton7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton7.setBorderPainted(false);
         jButton7.setFocusPainted(false);
-        pnlPrincipal.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 400, 33));
+        pnlPrincipal.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, 400, 33));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Puesto");
-        pnlPrincipal.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 50, -1));
+        pnlPrincipal.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 50, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/sol.png"))); // NOI18N
-        pnlPrincipal.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 340, 30, -1));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setText("Consulta de Empleados, se muestra el nombre");
-        pnlPrincipal.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 330, 330, -1));
+        pnlPrincipal.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 425, 30, -1));
 
         jButton8.setBackground(new java.awt.Color(215, 215, 215));
         jButton8.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -419,165 +428,177 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jButton8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton8.setBorderPainted(false);
         jButton8.setFocusPainted(false);
-        pnlPrincipal.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 71, 530, 33));
+        pnlPrincipal.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 650, 33));
 
         showID.setBackground(new java.awt.Color(215, 215, 215));
         showID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         showID.setForeground(new java.awt.Color(102, 102, 102));
         showID.setText("Datos del Perfil");
-        showID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        showID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         showID.setBorderPainted(false);
         showID.setFocusPainted(false);
         showID.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         showID.setMargin(new java.awt.Insets(8, 14, 2, 14));
-        pnlPrincipal.add(showID, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 160, 230, 25));
+        pnlPrincipal.add(showID, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 350, 40));
 
         showNombre.setBackground(new java.awt.Color(215, 215, 215));
         showNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         showNombre.setForeground(new java.awt.Color(102, 102, 102));
         showNombre.setText("Nombre");
-        showNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        showNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         showNombre.setBorderPainted(false);
         showNombre.setFocusPainted(false);
         showNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         showNombre.setMargin(new java.awt.Insets(8, 14, 2, 14));
-        pnlPrincipal.add(showNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 220, 230, 25));
+        pnlPrincipal.add(showNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 495, 40));
 
         showPuesto.setBackground(new java.awt.Color(215, 215, 215));
         showPuesto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         showPuesto.setForeground(new java.awt.Color(102, 102, 102));
         showPuesto.setText("Puesto");
-        showPuesto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        showPuesto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         showPuesto.setBorderPainted(false);
         showPuesto.setFocusPainted(false);
         showPuesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         showPuesto.setMargin(new java.awt.Insets(8, 14, 2, 14));
-        pnlPrincipal.add(showPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 280, 230, 25));
+        pnlPrincipal.add(showPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 350, 40));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cerrar (1).png"))); // NOI18N
-        pnlPrincipal.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 30, -1));
+        pnlPrincipal.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 185, 30, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/id-insignia.png"))); // NOI18N
-        pnlPrincipal.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 30, -1));
+        pnlPrincipal.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 265, 30, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/maletin.png"))); // NOI18N
-        pnlPrincipal.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, 30, -1));
+        pnlPrincipal.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 345, 30, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/retrato (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 130, -1));
+        pnlPrincipal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, -1));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 130, 70, -1));
+        pnlPrincipal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 70, -1));
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("ID");
-        pnlPrincipal.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 20, -1));
+        pnlPrincipal.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 20, -1));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 250, 70, -1));
+        pnlPrincipal.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 310, 70, -1));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 130, 70, -1));
+        pnlPrincipal.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(925, 150, 70, -1));
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel20.setText("Consulta de Empleados, se muestra el nombre");
-        pnlPrincipal.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 210, 330, -1));
+        lblEmpleado6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblEmpleado6.setForeground(new java.awt.Color(0, 0, 0));
+        lblEmpleado6.setText("Empleado 1");
+        pnlPrincipal.add(lblEmpleado6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 400, 90, -1));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 250, 70, -1));
+        pnlPrincipal.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(925, 310, 70, -1));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 250, 70, -1));
+        pnlPrincipal.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(1085, 310, 70, -1));
 
-        btnBajas1.setBackground(new java.awt.Color(153, 0, 0));
+        btnBajas1.setBackground(new java.awt.Color(1, 50, 112));
         btnBajas1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBajas1.setForeground(new java.awt.Color(255, 255, 255));
+        btnBajas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png"))); // NOI18N
         btnBajas1.setText("Darse de baja");
         btnBajas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBajas1.setFocusPainted(false);
-        btnBajas1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBajas1.setIconTextGap(8);
         btnBajas1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBajas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajas1ActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnBajas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 500, 260, 40));
+        pnlPrincipal.add(btnBajas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 280, 50));
 
-        btnConsultaAlumnos1.setBackground(new java.awt.Color(21, 128, 232));
-        btnConsultaAlumnos1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnConsultaAlumnos1.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultaAlumnos1.setText("Ver todos");
-        btnConsultaAlumnos1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnConsultaAlumnos1.setFocusPainted(false);
-        btnConsultaAlumnos1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConsultaAlumnos1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnConsultaAlumnos1.addActionListener(new java.awt.event.ActionListener() {
+        btnVerEmpleados.setBackground(new java.awt.Color(2, 62, 138));
+        btnVerEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnVerEmpleados.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerEmpleados.setText("Ver todos");
+        btnVerEmpleados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnVerEmpleados.setFocusPainted(false);
+        btnVerEmpleados.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVerEmpleados.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnVerEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaAlumnos1ActionPerformed(evt);
+                btnVerEmpleadosActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnConsultaAlumnos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 400, 190, 30));
+        pnlPrincipal.add(btnVerEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 460, 390, 30));
 
-        btnConsultaAlumnos2.setBackground(new java.awt.Color(21, 128, 232));
-        btnConsultaAlumnos2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnConsultaAlumnos2.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultaAlumnos2.setText("Dar de baja empleados");
-        btnConsultaAlumnos2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnConsultaAlumnos2.setFocusPainted(false);
-        btnConsultaAlumnos2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConsultaAlumnos2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnConsultaAlumnos2.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarEmpleados.setBackground(new java.awt.Color(1, 50, 112));
+        btnEliminarEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEliminarEmpleados.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarEmpleados.setText("Dar de baja empleados");
+        btnEliminarEmpleados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEliminarEmpleados.setFocusPainted(false);
+        btnEliminarEmpleados.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEliminarEmpleados.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEliminarEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaAlumnos2ActionPerformed(evt);
+                btnEliminarEmpleadosActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnConsultaAlumnos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 580, 240, 40));
+        pnlPrincipal.add(btnEliminarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 690, 390, 35));
+
+        lblEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblEmpleado1.setForeground(new java.awt.Color(0, 0, 0));
+        lblEmpleado1.setText("Empleado 1");
+        pnlPrincipal.add(lblEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 230, 90, -1));
+
+        lblEmpleado2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblEmpleado2.setForeground(new java.awt.Color(0, 0, 0));
+        lblEmpleado2.setText("Empleado 1");
+        pnlPrincipal.add(lblEmpleado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 230, 90, -1));
+
+        lblEmpleado3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblEmpleado3.setForeground(new java.awt.Color(0, 0, 0));
+        lblEmpleado3.setText("Empleado 1");
+        pnlPrincipal.add(lblEmpleado3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 230, 90, -1));
+
+        lblEmpleado4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblEmpleado4.setForeground(new java.awt.Color(0, 0, 0));
+        lblEmpleado4.setText("Empleado 1");
+        pnlPrincipal.add(lblEmpleado4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 400, 90, -1));
+
+        lblEmpleado5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblEmpleado5.setForeground(new java.awt.Color(0, 0, 0));
+        lblEmpleado5.setText("Empleado 1");
+        pnlPrincipal.add(lblEmpleado5, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 400, 90, -1));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        pnlPrincipal.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, -1, 640));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Bienvenido NOMBRE");
+        pnlPrincipal.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 230, -1));
 
         getContentPane().add(pnlPrincipal);
-
-        pnlTitulo.setBackground(new java.awt.Color(2, 62, 138));
-        pnlTitulo.setMaximumSize(new java.awt.Dimension(1200, 40));
-        pnlTitulo.setMinimumSize(new java.awt.Dimension(1200, 40));
-        pnlTitulo.setPreferredSize(new java.awt.Dimension(1200, 40));
-        pnlTitulo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblEscuela.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 18)); // NOI18N
-        lblEscuela.setForeground(new java.awt.Color(232, 230, 230));
-        lblEscuela.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblEscuela.setText("INSTITUTO TECNOLÓGICO ASCENCIÓN");
-        pnlTitulo.add(lblEscuela, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 5, -1, 31));
-
-        jLabel5.setForeground(new java.awt.Color(232, 230, 230));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoUsuario.png"))); // NOI18N
-        jLabel5.setText("Usuario: Admin");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jLabel5.setMaximumSize(new java.awt.Dimension(125, 30));
-        jLabel5.setMinimumSize(new java.awt.Dimension(125, 30));
-        jLabel5.setPreferredSize(new java.awt.Dimension(125, 30));
-        pnlTitulo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1065, 6, 125, 30));
-
-        getContentPane().add(pnlTitulo);
 
         pack();
         setLocationRelativeTo(null);
@@ -590,40 +611,37 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscripcionesActionPerformed
+    private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
         pnlResultadoBusqueda.cima1 = 0;
         pnlDerecho.removeAll();
-        pnlDerecho.add(pnlTitulo);
         pnlDerecho.add(pnlPrincipal);
         pnlNuevaInscripcion.btnOperacion.show();
         revalidate();
         repaint();
         desbloquearEdicion();
-    }//GEN-LAST:event_btnInscripcionesActionPerformed
+    }//GEN-LAST:event_btnEmpleadosActionPerformed
     JPanel pnlFinanzas = new pnlFinanzas();
-    private void btnFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzasActionPerformed
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         pnlDerecho.removeAll();
-        pnlDerecho.add(pnlTitulo);
         pnlDerecho.add(pnlFinanzas);
         revalidate();
         repaint();
-    }//GEN-LAST:event_btnFinanzasActionPerformed
+    }//GEN-LAST:event_btnProveedoresActionPerformed
     static String operacion;
     static String taller;
     static JPanel pnlInscribir = new pnlNuevaInscripcion();    static pnlResultadoBusqueda pnlBusqueda = new pnlResultadoBusqueda();
-    private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
+    private void btnEditarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpleadosActionPerformed
         pnlResultadoBusqueda.buscarContacto("Mostrar", true, 0);
         revalidate();
         repaint();
-    }//GEN-LAST:event_btnConsultaAlumnosActionPerformed
+    }//GEN-LAST:event_btnEditarEmpleadosActionPerformed
     JPanel pnlGrupos = new pnlGrupos();
-    private void btnGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGruposActionPerformed
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         pnlDerecho.removeAll();
-        pnlDerecho.add(pnlTitulo);
         pnlDerecho.add(pnlGrupos);
         revalidate();
         repaint();
-    }//GEN-LAST:event_btnGruposActionPerformed
+    }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
         Document documento = new Document(PageSize.A4.rotate());
@@ -754,15 +772,15 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         }
     }//GEN-LAST:event_btnPDFActionPerformed
 
-    private void btnFinanzas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzas1ActionPerformed
+    private void btnEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnFinanzas1ActionPerformed
+    }//GEN-LAST:event_btnEntregasActionPerformed
 
-    private void btnFinanzas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzas2ActionPerformed
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnFinanzas2ActionPerformed
+    }//GEN-LAST:event_btnVentasActionPerformed
 
-    private void btnPrepaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrepaActionPerformed
+    private void btnInsertarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarEmpleadoActionPerformed
         operacion = "Preparatoria";
         pnlNuevaInscripcion.llenarGrado();
         pnlDerecho.remove(pnlPrincipal);
@@ -770,7 +788,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         revalidate();
         repaint();
         pnlNuevaInscripcion.btnTitulo.setText("Inscripción a Preparatoria");
-    }//GEN-LAST:event_btnPrepaActionPerformed
+    }//GEN-LAST:event_btnInsertarEmpleadoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
@@ -783,17 +801,16 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBajas1ActionPerformed
 
-    private void btnConsultaAlumnos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnos1ActionPerformed
+    private void btnVerEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpleadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnConsultaAlumnos1ActionPerformed
+    }//GEN-LAST:event_btnVerEmpleadosActionPerformed
 
-    private void btnConsultaAlumnos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnos2ActionPerformed
+    private void btnEliminarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnConsultaAlumnos2ActionPerformed
+    }//GEN-LAST:event_btnEliminarEmpleadosActionPerformed
 
     public static void cargarInicio() {
         pnlDerecho.removeAll();
-        pnlDerecho.add(pnlTitulo);
         pnlDerecho.add(pnlPrincipal);
     }
 
@@ -840,15 +857,15 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     @Override
     public void focusGained(FocusEvent evt) {
         Component c = evt.getComponent();
-        if (c == btnInscripciones) {
-            btnInscripciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribirActivado.png")));
-            btnInscripciones.setBackground(new Color(1, 49, 109));
-        } else if (c == btnGrupos) {
-            btnGrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGruposActivado.png")));
-            btnGrupos.setBackground(new Color(1, 49, 109));
-        } else if (c == btnFinanzas) {
-            btnFinanzas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzasActivado.png")));
-            btnFinanzas.setBackground(new Color(1, 49, 109));
+        if (c == btnEmpleados) {
+            btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribirActivado.png")));
+            btnEmpleados.setBackground(new Color(1, 49, 109));
+        } else if (c == btnProductos) {
+            btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGruposActivado.png")));
+            btnProductos.setBackground(new Color(1, 49, 109));
+        } else if (c == btnProveedores) {
+            btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzasActivado.png")));
+            btnProveedores.setBackground(new Color(1, 49, 109));
         } else if (c == btnSalir) {
             btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoSalirActivado.png")));
             btnSalir.setBackground(new Color(1, 49, 109));
@@ -858,15 +875,15 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     @Override
     public void focusLost(FocusEvent evt) {
         Component c = evt.getComponent();
-        if (c == btnInscripciones) {
-            btnInscripciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribir.png")));
-            btnInscripciones.setBackground(new Color(2, 62, 138));
-        } else if (c == btnGrupos) {
-            btnGrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGrupos.png")));
-            btnGrupos.setBackground(new Color(2, 62, 138));
-        } else if (c == btnFinanzas) {
-            btnFinanzas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png")));
-            btnFinanzas.setBackground(new Color(2, 62, 138));
+        if (c == btnEmpleados) {
+            btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribir.png")));
+            btnEmpleados.setBackground(new Color(2, 62, 138));
+        } else if (c == btnProductos) {
+            btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGrupos.png")));
+            btnProductos.setBackground(new Color(2, 62, 138));
+        } else if (c == btnProveedores) {
+            btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png")));
+            btnProveedores.setBackground(new Color(2, 62, 138));
         } else if (c == btnSalir) {
             btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoSalir.png")));
             btnSalir.setBackground(new Color(2, 62, 138));
@@ -897,25 +914,24 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBajas1;
-    private javax.swing.JButton btnConsultaAlumnos;
-    private javax.swing.JButton btnConsultaAlumnos1;
-    private javax.swing.JButton btnConsultaAlumnos2;
-    private javax.swing.JButton btnFinanzas;
-    private javax.swing.JButton btnFinanzas1;
-    private javax.swing.JButton btnFinanzas2;
-    private javax.swing.JButton btnGrupos;
-    private javax.swing.JButton btnInscripciones;
+    private javax.swing.JButton btnEditarEmpleados;
+    private javax.swing.JButton btnEliminarEmpleados;
+    private javax.swing.JButton btnEmpleados;
+    private javax.swing.JButton btnEntregas;
+    private javax.swing.JButton btnInsertarEmpleado;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPDF;
-    private javax.swing.JButton btnPrepa;
+    private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnVentas;
+    private javax.swing.JButton btnVerEmpleados;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -924,19 +940,24 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel lblEscuela;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblEmpleado1;
+    private javax.swing.JLabel lblEmpleado2;
+    private javax.swing.JLabel lblEmpleado3;
+    private javax.swing.JLabel lblEmpleado4;
+    private javax.swing.JLabel lblEmpleado5;
+    private javax.swing.JLabel lblEmpleado6;
     private javax.swing.JPanel pnlMenu;
     public static javax.swing.JPanel pnlPrincipal;
-    public static javax.swing.JPanel pnlTitulo;
     private javax.swing.JButton showID;
     private javax.swing.JButton showNombre;
     private javax.swing.JButton showPuesto;
