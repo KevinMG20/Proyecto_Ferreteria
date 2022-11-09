@@ -418,7 +418,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/sol.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoTurno.png"))); // NOI18N
         pnlPrincipal.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 425, 30, -1));
 
         jButton8.setBackground(new java.awt.Color(215, 215, 215));
@@ -465,17 +465,17 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cerrar (1).png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoCandado.png"))); // NOI18N
         pnlPrincipal.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 185, 30, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/id-insignia.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoNombre.png"))); // NOI18N
         pnlPrincipal.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 265, 30, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/maletin.png"))); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPuesto.png"))); // NOI18N
         pnlPrincipal.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 345, 30, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
