@@ -21,12 +21,12 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author Kevin MG
  */
-public class pnlGrupos extends javax.swing.JPanel {
+public class PnlProductos extends javax.swing.JPanel {
 
     /**
      * Creates new form pnlGrupos
      */
-    public pnlGrupos() {
+    public PnlProductos() {
         initComponents();
         inicializar();
         turnoActual = cbxTurno.getSelectedItem().toString();
@@ -93,7 +93,7 @@ public class pnlGrupos extends javax.swing.JPanel {
             }
             jTable1.setModel(miModelo);
         } catch (SQLException ex) {
-            Logger.getLogger(pnlGrupos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -117,7 +117,7 @@ public class pnlGrupos extends javax.swing.JPanel {
             //System.out.println("Dato3: " + dato3);
 
         } catch (SQLException ex) {
-            Logger.getLogger(pnlGrupos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         generarGrafica();

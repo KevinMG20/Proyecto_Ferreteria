@@ -400,7 +400,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         showTurno.setFocusPainted(false);
         showTurno.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         showTurno.setMargin(new java.awt.Insets(8, 14, 2, 14));
-        pnlPrincipal.add(showTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 495, 40));
+        pnlPrincipal.add(showTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 420, 495, 40));
 
         jButton7.setBackground(new java.awt.Color(215, 215, 215));
         jButton7.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -450,7 +450,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         showNombre.setFocusPainted(false);
         showNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         showNombre.setMargin(new java.awt.Insets(8, 14, 2, 14));
-        pnlPrincipal.add(showNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 495, 40));
+        pnlPrincipal.add(showNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 340, 495, 40));
 
         showPuesto.setBackground(new java.awt.Color(215, 215, 215));
         showPuesto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -635,7 +635,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         revalidate();
         repaint();
     }//GEN-LAST:event_btnEditarEmpleadosActionPerformed
-    JPanel pnlGrupos = new pnlGrupos();
+    JPanel pnlGrupos = new PnlProductos();
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlGrupos);
