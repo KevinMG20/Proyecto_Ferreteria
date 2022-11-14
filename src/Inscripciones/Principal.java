@@ -117,8 +117,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         pnlPrincipal = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnInsertarEmpleado = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         btnEditarEmpleados = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnPDF = new javax.swing.JButton();
@@ -127,10 +125,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         showTurno = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
         showID = new javax.swing.JButton();
         showNombre = new javax.swing.JButton();
         showPuesto = new javax.swing.JButton();
@@ -155,12 +150,16 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         lblEmpleado5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(187, 187, 187));
-        setMinimumSize(new java.awt.Dimension(1400, 781));
+        setMinimumSize(new java.awt.Dimension(1410, 780));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1410, 781));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         pnlMenu.setBackground(new java.awt.Color(2, 62, 138));
@@ -306,24 +305,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlPrincipal.add(btnInsertarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 570, 240, 35));
 
-        jButton4.setBackground(new java.awt.Color(215, 215, 215));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(64, 64, 64));
-        jButton4.setText("Herramientas del Gerente");
-        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton4.setBorderPainted(false);
-        jButton4.setFocusPainted(false);
-        pnlPrincipal.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 515, 390, 33));
-
-        jButton5.setBackground(new java.awt.Color(215, 215, 215));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(64, 64, 64));
-        jButton5.setText("Acciones del Perfil");
-        jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusPainted(false);
-        pnlPrincipal.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 650, 33));
-
         btnEditarEmpleados.setBackground(new java.awt.Color(1, 50, 112));
         btnEditarEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnEditarEmpleados.setForeground(new java.awt.Color(255, 255, 255));
@@ -402,33 +383,10 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         showTurno.setMargin(new java.awt.Insets(8, 14, 2, 14));
         pnlPrincipal.add(showTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 420, 495, 40));
 
-        jButton7.setBackground(new java.awt.Color(215, 215, 215));
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(64, 64, 64));
-        jButton7.setText("Familia Ferreteria");
-        jButton7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton7.setBorderPainted(false);
-        jButton7.setFocusPainted(false);
-        pnlPrincipal.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, 400, 33));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Puesto");
-        pnlPrincipal.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 50, -1));
-
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoTurno.png"))); // NOI18N
         pnlPrincipal.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 425, 30, -1));
-
-        jButton8.setBackground(new java.awt.Color(215, 215, 215));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(64, 64, 64));
-        jButton8.setText("Datos del Perfil");
-        jButton8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton8.setBorderPainted(false);
-        jButton8.setFocusPainted(false);
-        pnlPrincipal.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 650, 33));
 
         showID.setBackground(new java.awt.Color(215, 215, 215));
         showID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -496,7 +454,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 310, 70, -1));
+        pnlPrincipal.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, 70, -1));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
@@ -506,17 +464,17 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         lblEmpleado6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lblEmpleado6.setForeground(new java.awt.Color(0, 0, 0));
         lblEmpleado6.setText("Empleado 1");
-        pnlPrincipal.add(lblEmpleado6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 400, 90, -1));
+        pnlPrincipal.add(lblEmpleado6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 370, 90, -1));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(925, 310, 70, -1));
+        pnlPrincipal.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 280, 70, -1));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/usuario (2).png"))); // NOI18N
-        pnlPrincipal.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(1085, 310, 70, -1));
+        pnlPrincipal.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 280, 70, -1));
 
         btnBajas1.setBackground(new java.awt.Color(1, 50, 112));
         btnBajas1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -547,7 +505,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnVerEmpleadosActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnVerEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 460, 390, 30));
+        pnlPrincipal.add(btnVerEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 430, 390, 30));
 
         btnEliminarEmpleados.setBackground(new java.awt.Color(1, 50, 112));
         btnEliminarEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -582,12 +540,12 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         lblEmpleado4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lblEmpleado4.setForeground(new java.awt.Color(0, 0, 0));
         lblEmpleado4.setText("Empleado 1");
-        pnlPrincipal.add(lblEmpleado4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 400, 90, -1));
+        pnlPrincipal.add(lblEmpleado4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 370, 90, -1));
 
         lblEmpleado5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lblEmpleado5.setForeground(new java.awt.Color(0, 0, 0));
         lblEmpleado5.setText("Empleado 1");
-        pnlPrincipal.add(lblEmpleado5, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 400, 90, -1));
+        pnlPrincipal.add(lblEmpleado5, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 370, 90, -1));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -597,6 +555,43 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Bienvenido NOMBRE");
         pnlPrincipal.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 230, -1));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setText("Puesto");
+        pnlPrincipal.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 50, -1));
+
+        jLabel9.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Acciones del Perfil");
+        jLabel9.setOpaque(true);
+        pnlPrincipal.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 650, 33));
+
+        jLabel20.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("Datos del Perfil");
+        jLabel20.setOpaque(true);
+        pnlPrincipal.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 650, 33));
+
+        jLabel23.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("Familia Ferreteria");
+        jLabel23.setOpaque(true);
+        pnlPrincipal.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, 400, 33));
+
+        jLabel24.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("Herramientas del Gerente");
+        jLabel24.setOpaque(true);
+        pnlPrincipal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 500, 390, 33));
 
         getContentPane().add(pnlPrincipal);
 
@@ -926,12 +921,9 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnVentas;
     private javax.swing.JButton btnVerEmpleados;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -940,8 +932,11 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

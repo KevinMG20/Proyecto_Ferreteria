@@ -28,12 +28,9 @@ public class PnlProductos extends javax.swing.JPanel {
      */
     public PnlProductos() {
         initComponents();
-        inicializar();
-        turnoActual = cbxTurno.getSelectedItem().toString();
-        sql = "SELECT * FROM alumnos WHERE nivel = '" + cbxNivel.getSelectedItem().toString() + "' AND grado = '"
-                + cbxGrado.getSelectedItem().toString() + "' AND turno = '" + cbxTurno.getSelectedItem().toString() + "'";
+        inicializar();       
 
-        verTabla();
+        //verTabla();
         //pnlGrafica.setLayout(new BoxLayout(pnlGrafica, BoxLayout.PAGE_AXIS));
     }
 
@@ -98,7 +95,7 @@ public class PnlProductos extends javax.swing.JPanel {
 
         try {
             sentencia = reg.createStatement();
-            rs = sentencia.executeQuery("SELECT COUNT(*) FROM alumnos WHERE nivel = 'Primaria' AND turno = '"
+            /*rs = sentencia.executeQuery("SELECT COUNT(*) FROM alumnos WHERE nivel = 'Primaria' AND turno = '"
                     + cbxTurno.getSelectedItem().toString() + "'");
             rs.next();
             dato1 = rs.getInt(1);
@@ -111,7 +108,7 @@ public class PnlProductos extends javax.swing.JPanel {
             //System.out.println("Dato2: " + dato2);
 
             rs = sentencia.executeQuery("SELECT COUNT(*) FROM alumnos WHERE nivel = 'Preparatoria' AND turno = '"
-                    + cbxTurno.getSelectedItem().toString() + "'");
+                    + cbxTurno.getSelectedItem().toString() + "'");*/
             rs.next();
             dato3 = Integer.parseInt(rs.getString(1));
             //System.out.println("Dato3: " + dato3);
@@ -156,17 +153,11 @@ public class PnlProductos extends javax.swing.JPanel {
 
         ChartPanel cPanel = new ChartPanel(grafico);
         //cPanel.setBackground(new Color(232, 232, 232));
-        pnlGrafica.removeAll();
-        pnlGrafica.add(btnTituloG);
-        pnlGrafica.add(jLabel1);
-        pnlGrafica.add(cPanel);
+        pnlProducto.removeAll();       
+        pnlProducto.add(jLabel1);
+        pnlProducto.add(cPanel);
         revalidate();
         repaint();
-
-        /*JFrame informacion = new JFrame("Papa");
-        informacion.getContentPane().add(cPanel);
-        informacion.pack();
-        informacion.setVisible(true);*/
     }
 
     /**
@@ -178,147 +169,251 @@ public class PnlProductos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton12 = new javax.swing.JButton();
-        pnlBusqueda = new javax.swing.JPanel();
-        cbxNivel = new javax.swing.JComboBox<>();
-        cbxGrado = new javax.swing.JComboBox<>();
-        cbxTurno = new javax.swing.JComboBox<>();
-        btnBuscar = new javax.swing.JButton();
-        chbTurno = new javax.swing.JCheckBox();
-        chbBajas = new javax.swing.JCheckBox();
-        chbNivel = new javax.swing.JCheckBox();
-        chbGrado = new javax.swing.JCheckBox();
-        jButton14 = new javax.swing.JButton();
-        pnlGrafica = new javax.swing.JPanel();
-        btnTituloG = new javax.swing.JButton();
+        pnlCategorias = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        pnlProducto = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel20 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(232, 232, 232));
-        setMaximumSize(new java.awt.Dimension(1200, 750));
-        setMinimumSize(new java.awt.Dimension(1200, 750));
-        setPreferredSize(new java.awt.Dimension(1200, 750));
+        setMaximumSize(new java.awt.Dimension(1200, 780));
+        setMinimumSize(new java.awt.Dimension(1200, 780));
+        setPreferredSize(new java.awt.Dimension(1200, 780));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton12.setBackground(new java.awt.Color(215, 215, 215));
-        jButton12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(64, 64, 64));
-        jButton12.setText("Resultados de la Busqueda");
-        jButton12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton12.setBorderPainted(false);
-        jButton12.setFocusPainted(false);
-        add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 1140, 30));
+        pnlCategorias.setBackground(new java.awt.Color(232, 232, 232));
+        pnlCategorias.setMaximumSize(new java.awt.Dimension(330, 390));
+        pnlCategorias.setMinimumSize(new java.awt.Dimension(330, 390));
+        pnlCategorias.setPreferredSize(new java.awt.Dimension(330, 390));
+        pnlCategorias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlBusqueda.setBackground(new java.awt.Color(232, 232, 232));
-        pnlBusqueda.setMaximumSize(new java.awt.Dimension(330, 390));
-        pnlBusqueda.setMinimumSize(new java.awt.Dimension(330, 390));
-        pnlBusqueda.setPreferredSize(new java.awt.Dimension(330, 390));
-        pnlBusqueda.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jButton3.setBackground(new java.awt.Color(232, 232, 232));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 6.png"))); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.setFocusPainted(false);
+        pnlCategorias.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 120, 120));
 
-        cbxNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primaria", "Secundaria", "Preparatoria" }));
-        cbxNivel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxNivelActionPerformed(evt);
-            }
-        });
-        pnlBusqueda.add(cbxNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 150, -1));
+        jButton4.setBackground(new java.awt.Color(232, 232, 232));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 7.png"))); // NOI18N
+        jButton4.setBorder(null);
+        jButton4.setBorderPainted(false);
+        jButton4.setFocusPainted(false);
+        pnlCategorias.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 120, 120));
 
-        cbxGrado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer Grado", "Segundo Grado", "Tercer Grado", "Cuarto Grado", "Quinto Grado", "Sexto Grado" }));
-        pnlBusqueda.add(cbxGrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 150, -1));
+        jButton5.setBackground(new java.awt.Color(232, 232, 232));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 10.png"))); // NOI18N
+        jButton5.setBorder(null);
+        jButton5.setBorderPainted(false);
+        jButton5.setFocusPainted(false);
+        pnlCategorias.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 245, 120, 120));
 
-        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespertino" }));
-        pnlBusqueda.add(cbxTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 150, -1));
+        jButton6.setBackground(new java.awt.Color(232, 232, 232));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 9.png"))); // NOI18N
+        jButton6.setBorder(null);
+        jButton6.setBorderPainted(false);
+        jButton6.setFocusPainted(false);
+        pnlCategorias.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 245, 120, 120));
 
-        btnBuscar.setBackground(new java.awt.Color(2, 62, 138));
-        btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setFocusPainted(false);
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        pnlBusqueda.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 240, 40));
+        jButton7.setBackground(new java.awt.Color(232, 232, 232));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 8.png"))); // NOI18N
+        jButton7.setBorder(null);
+        jButton7.setBorderPainted(false);
+        jButton7.setFocusPainted(false);
+        pnlCategorias.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 245, 120, 120));
 
-        chbTurno.setBackground(new java.awt.Color(232, 232, 232));
-        chbTurno.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbTurno.setSelected(true);
-        chbTurno.setText(" Turno");
-        chbTurno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbTurnoActionPerformed(evt);
-            }
-        });
-        pnlBusqueda.add(chbTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 70, -1));
+        jLabel2.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Miscelaneos");
+        jLabel2.setOpaque(true);
+        pnlCategorias.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 121, -1));
 
-        chbBajas.setBackground(new java.awt.Color(232, 232, 232));
-        chbBajas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbBajas.setText(" Buscar Alumnos Eliminados");
-        chbBajas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbBajasActionPerformed(evt);
-            }
-        });
-        pnlBusqueda.add(chbBajas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 240, -1));
+        jLabel3.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Equipamento");
+        jLabel3.setOpaque(true);
+        pnlCategorias.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 121, -1));
 
-        chbNivel.setBackground(new java.awt.Color(232, 232, 232));
-        chbNivel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbNivel.setSelected(true);
-        chbNivel.setText(" Nivel");
-        chbNivel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbNivelActionPerformed(evt);
-            }
-        });
-        pnlBusqueda.add(chbNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 70, -1));
+        jLabel4.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Accesorios");
+        jLabel4.setOpaque(true);
+        pnlCategorias.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 121, -1));
 
-        chbGrado.setBackground(new java.awt.Color(232, 232, 232));
-        chbGrado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbGrado.setSelected(true);
-        chbGrado.setText(" Grado");
-        chbGrado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbGradoActionPerformed(evt);
-            }
-        });
-        pnlBusqueda.add(chbGrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 70, -1));
+        jLabel22.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("Categorias");
+        jLabel22.setOpaque(true);
+        pnlCategorias.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 590, 33));
 
-        jButton14.setBackground(new java.awt.Color(215, 215, 215));
-        jButton14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton14.setForeground(new java.awt.Color(64, 64, 64));
-        jButton14.setText("Buscar Grupos");
-        jButton14.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton14.setBorderPainted(false);
-        jButton14.setFocusPainted(false);
-        pnlBusqueda.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 240, 30));
+        jLabel5.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Herramientas");
+        jLabel5.setOpaque(true);
+        pnlCategorias.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 195, 121, -1));
 
-        add(pnlBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 390));
+        jLabel7.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Medición");
+        jLabel7.setOpaque(true);
+        pnlCategorias.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 195, 121, -1));
 
-        pnlGrafica.setBackground(new java.awt.Color(232, 232, 232));
-        pnlGrafica.setMaximumSize(new java.awt.Dimension(870, 390));
-        pnlGrafica.setMinimumSize(new java.awt.Dimension(870, 390));
-        pnlGrafica.setPreferredSize(new java.awt.Dimension(870, 390));
-        pnlGrafica.setLayout(new javax.swing.BoxLayout(pnlGrafica, javax.swing.BoxLayout.PAGE_AXIS));
+        jButton8.setBackground(new java.awt.Color(232, 232, 232));
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 5.png"))); // NOI18N
+        jButton8.setBorder(null);
+        jButton8.setBorderPainted(false);
+        jButton8.setFocusPainted(false);
+        pnlCategorias.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 123, 123));
 
-        btnTituloG.setBackground(new java.awt.Color(215, 215, 215));
-        btnTituloG.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnTituloG.setForeground(new java.awt.Color(64, 64, 64));
-        btnTituloG.setText("Gráfica de la Busqueda");
-        btnTituloG.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnTituloG.setBorderPainted(false);
-        btnTituloG.setFocusPainted(false);
-        btnTituloG.setMaximumSize(new java.awt.Dimension(820, 30));
-        btnTituloG.setMinimumSize(new java.awt.Dimension(820, 30));
-        btnTituloG.setPreferredSize(new java.awt.Dimension(820, 30));
-        pnlGrafica.add(btnTituloG);
+        jLabel14.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Escaleras");
+        jLabel14.setOpaque(true);
+        pnlCategorias.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 195, 121, -1));
+
+        add(pnlCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 410));
+
+        pnlProducto.setBackground(new java.awt.Color(232, 232, 232));
+        pnlProducto.setMaximumSize(new java.awt.Dimension(870, 390));
+        pnlProducto.setMinimumSize(new java.awt.Dimension(870, 390));
+        pnlProducto.setPreferredSize(new java.awt.Dimension(870, 390));
+        pnlProducto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("                         ");
-        pnlGrafica.add(jLabel1);
+        pnlProducto.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        add(pnlGrafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 830, 370));
+        jLabel21.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Datos del Producto");
+        jLabel21.setOpaque(true);
+        pnlProducto.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 440, 33));
+
+        jButton2.setBackground(new java.awt.Color(232, 232, 232));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/1x/Recurso 5.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setFocusPainted(false);
+        pnlProducto.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 123, 123));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel8.setText("Categoria");
+        pnlProducto.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel9.setText("ID");
+        pnlProducto.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel10.setText("Existencias");
+        pnlProducto.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel11.setText("Nombre");
+        pnlProducto.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel12.setText("Marca");
+        pnlProducto.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel13.setText("Precio");
+        pnlProducto.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
+
+        jLabel6.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel6.setText("  ");
+        jLabel6.setOpaque(true);
+        pnlProducto.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 340, -1));
+
+        jLabel15.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("  ");
+        jLabel15.setOpaque(true);
+        pnlProducto.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 240, -1));
+
+        jLabel16.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel16.setText("  ");
+        jLabel16.setOpaque(true);
+        pnlProducto.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 200, -1));
+
+        jLabel17.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel17.setText("  ");
+        jLabel17.setOpaque(true);
+        pnlProducto.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 340, -1));
+
+        jLabel18.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel18.setText("  ");
+        jLabel18.setOpaque(true);
+        pnlProducto.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 340, -1));
+
+        jLabel19.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel19.setText("  ");
+        jLabel19.setOpaque(true);
+        pnlProducto.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, 200, -1));
+
+        add(pnlProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 530, 410));
 
         pnlTabla.setBackground(new java.awt.Color(232, 232, 232));
         pnlTabla.setMaximumSize(new java.awt.Dimension(1200, 360));
@@ -330,16 +425,14 @@ public class PnlProductos extends javax.swing.JPanel {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(1200, 360));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1200, 360));
 
+        jTable1.setBackground(new java.awt.Color(215, 215, 215));
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "ID", "Nombre", "Categoria", "Marca", "Precio", "Existencias"
             }
         ));
         jTable1.setRowHeight(25);
@@ -347,124 +440,55 @@ public class PnlProductos extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         pnlTabla.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 70, 1140, 260);
+        jScrollPane1.setBounds(30, 60, 1140, 280);
 
-        add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 1200, 360));
+        jLabel20.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("Productos Disponibles");
+        jLabel20.setOpaque(true);
+        pnlTabla.add(jLabel20);
+        jLabel20.setBounds(30, 10, 1140, 33);
+
+        add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 1200, 370));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cbxNivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNivelActionPerformed
-        cbxGrado.removeAllItems();
-        switch (cbxNivel.getSelectedIndex()) {
-            case 0:
-                cbxGrado.addItem("Primer Grado");
-                cbxGrado.addItem("Segundo Grado");
-                cbxGrado.addItem("Tercer Grado");
-                cbxGrado.addItem("Cuarto Grado");
-                cbxGrado.addItem("Quinto Grado");
-                cbxGrado.addItem("Sexto Grado");
-                break;
-            case 1:
-                cbxGrado.addItem("Primer Año");
-                cbxGrado.addItem("Segundo Año");
-                cbxGrado.addItem("Tercer Año");
-                break;
-            default:
-                cbxGrado.addItem("Primer Semestre");
-                cbxGrado.addItem("Segundo Semestre");
-                cbxGrado.addItem("Tercer Semestre");
-                cbxGrado.addItem("Cuarto Semestre");
-                cbxGrado.addItem("Quinto Semestre");
-                cbxGrado.addItem("Sexto Semestre");
-                break;
-        }
-    }//GEN-LAST:event_cbxNivelActionPerformed
     String turnoActual;
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
-        if (chbBajas.isSelected()) {
-            sql = "SELECT * FROM bajas";
-        } else {
-            sql = "SELECT * FROM alumnos";
-        }
-        sql += " WHERE ";
-
-        if (chbNivel.isSelected()) { //Para nivel
-            sql += "nivel = '" + cbxNivel.getSelectedItem().toString() + "'";
-        }
-
-        if (chbNivel.isSelected() && chbGrado.isSelected()) { //Para grado
-            sql += " AND grado = '" + cbxGrado.getSelectedItem().toString() + "'";
-
-        } else if (!chbNivel.isSelected() && chbGrado.isSelected()) {
-            sql += "grado = '" + cbxGrado.getSelectedItem().toString() + "'";
-        }
-
-        if ((chbNivel.isSelected() || chbGrado.isSelected()) && chbTurno.isSelected()) { //Para turno
-            sql += " AND turno = '" + cbxTurno.getSelectedItem().toString() + "'";
-            turnoActual = cbxTurno.getSelectedItem().toString();
-        } else if (chbTurno.isSelected()) {
-            sql += "turno = '" + cbxTurno.getSelectedItem().toString() + "'";
-            turnoActual = cbxTurno.getSelectedItem().toString();
-        }
-        if (!chbTurno.isSelected()) {
-            turnoActual = "Ninguno";
-        }
-
-        if (!chbNivel.isSelected() && !chbGrado.isSelected() && !chbTurno.isSelected()) {
-            JOptionPane.showMessageDialog(null, "Tienes que seleccionar por lo menos 1 filtro", "Error", 0);
-        } else {
-            verTabla();
-        }
-
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void chbNivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbNivelActionPerformed
-        if (chbNivel.isSelected()) {
-            cbxNivel.setEnabled(true);
-        } else {
-            cbxNivel.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_chbNivelActionPerformed
-
-    private void chbGradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbGradoActionPerformed
-        if (chbGrado.isSelected()) {
-            cbxGrado.setEnabled(true);
-        } else {
-            cbxGrado.setEnabled(false);
-        }
-    }//GEN-LAST:event_chbGradoActionPerformed
-
-    private void chbTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbTurnoActionPerformed
-        if (chbTurno.isSelected()) {
-            cbxTurno.setEnabled(true);
-        } else {
-            cbxTurno.setEnabled(false);
-        }
-    }//GEN-LAST:event_chbTurnoActionPerformed
-
-    private void chbBajasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbBajasActionPerformed
-
-    }//GEN-LAST:event_chbBajasActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnTituloG;
-    private javax.swing.JComboBox<String> cbxGrado;
-    private javax.swing.JComboBox<String> cbxNivel;
-    private javax.swing.JComboBox<String> cbxTurno;
-    private javax.swing.JCheckBox chbBajas;
-    private javax.swing.JCheckBox chbGrado;
-    private javax.swing.JCheckBox chbNivel;
-    private javax.swing.JCheckBox chbTurno;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JPanel pnlBusqueda;
-    private javax.swing.JPanel pnlGrafica;
+    private javax.swing.JPanel pnlCategorias;
+    private javax.swing.JPanel pnlProducto;
     private javax.swing.JPanel pnlTabla;
     // End of variables declaration//GEN-END:variables
 }
