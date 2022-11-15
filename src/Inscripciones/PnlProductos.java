@@ -195,7 +195,6 @@ public class PnlProductos extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -357,12 +356,12 @@ public class PnlProductos extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(64, 64, 64));
-        jLabel11.setText("Nombre");
+        jLabel11.setText("Marca");
         pnlProducto.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(64, 64, 64));
-        jLabel12.setText("Marca");
+        jLabel12.setText("Nombre");
         pnlProducto.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -385,13 +384,6 @@ public class PnlProductos extends javax.swing.JPanel {
         jLabel15.setOpaque(true);
         pnlProducto.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 240, -1));
 
-        jLabel16.setBackground(new java.awt.Color(215, 215, 215));
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(64, 64, 64));
-        jLabel16.setText("  ");
-        jLabel16.setOpaque(true);
-        pnlProducto.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 200, -1));
-
         jLabel17.setBackground(new java.awt.Color(215, 215, 215));
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(64, 64, 64));
@@ -411,7 +403,7 @@ public class PnlProductos extends javax.swing.JPanel {
         jLabel19.setForeground(new java.awt.Color(64, 64, 64));
         jLabel19.setText("  ");
         jLabel19.setOpaque(true);
-        pnlProducto.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, 200, -1));
+        pnlProducto.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 210, -1));
 
         add(pnlProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 530, 410));
 
@@ -470,7 +462,6 @@ public class PnlProductos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
