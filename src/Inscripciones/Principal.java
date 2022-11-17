@@ -4,7 +4,7 @@
  */
 package Inscripciones;
 
-import static Inscripciones.pnlNuevaInscripcion.desbloquearEdicion;
+import static Inscripciones.PnlEntregas.desbloquearEdicion;
 import com.itextpdf.text.Chunk;
 
 import java.awt.Color;
@@ -322,7 +322,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlPrincipal.add(btnEditarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 630, 240, 35));
 
-        btnModificar.setBackground(new java.awt.Color(204, 0, 51));
+        btnModificar.setBackground(new java.awt.Color(204, 0, 0));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(64, 64, 64));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png"))); // NOI18N
@@ -643,7 +643,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         pnlResultadoBusqueda.cima1 = 0;
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlPrincipal);
-        pnlNuevaInscripcion.btnOperacion.show();
+        PnlEntregas.btnOperacion.show();
         revalidate();
         repaint();
         desbloquearEdicion();
@@ -657,7 +657,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     }//GEN-LAST:event_btnProveedoresActionPerformed
     static String operacion;
     static String taller;
-    static JPanel pnlInscribir = new pnlNuevaInscripcion();    static pnlResultadoBusqueda pnlBusqueda = new pnlResultadoBusqueda();
+    static JPanel pnlInscribir = new PnlEntregas();    static pnlResultadoBusqueda pnlBusqueda = new pnlResultadoBusqueda();
     private void btnEditarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpleadosActionPerformed
         pnlResultadoBusqueda.buscarContacto("Mostrar", true, 0);
         revalidate();
@@ -799,9 +799,12 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         } catch (DocumentException | HeadlessException | FileNotFoundException e) {
         }
     }//GEN-LAST:event_btnPDFActionPerformed
-
+        JPanel pnlEntregas = new PnlEntregas();
     private void btnEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregasActionPerformed
-        // TODO add your handling code here:
+        pnlDerecho.removeAll();
+        pnlDerecho.add(pnlEntregas);
+        revalidate();
+        repaint();
     }//GEN-LAST:event_btnEntregasActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
@@ -810,16 +813,13 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
     private void btnInsertarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarEmpleadoActionPerformed
         operacion = "Preparatoria";
-        pnlNuevaInscripcion.llenarGrado();
         pnlDerecho.remove(pnlPrincipal);
         pnlDerecho.add(pnlInscribir);
         revalidate();
         repaint();
-        pnlNuevaInscripcion.btnTitulo.setText("Inscripción a Preparatoria");
     }//GEN-LAST:event_btnInsertarEmpleadoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-
         pnlResultadoBusqueda.buscarContacto("Modificar", true, 0);
         revalidate();
         repaint();

@@ -150,22 +150,6 @@ public class pnlResultadoBusqueda extends javax.swing.JPanel {
         } else {
             pnlDerecho.remove(Principal.pnlBusqueda);
             pnlDerecho.add(Principal.pnlInscribir);
-            if ("Modificar".equals(operacion)) {
-                pnlNuevaInscripcion.cargarDatos(sql);
-                pnlNuevaInscripcion.btnTitulo.setText("Modificar Datos");
-                pnlNuevaInscripcion.btnOperacion.setText("Modificar Registro");
-            } else if ("Eliminar".equals(operacion)) {
-                pnlNuevaInscripcion.bloquearEdicion();
-                pnlNuevaInscripcion.cargarDatos(sql);
-                pnlNuevaInscripcion.btnTitulo.setText("Solicitar Baja");
-                pnlNuevaInscripcion.btnOperacion.setText("Confirmar Baja");
-            } else if ("Buscar".equals(operacion)) {
-                pnlNuevaInscripcion.cargarDatos(sql);
-                pnlNuevaInscripcion.btnOperacion.hide();
-                pnlNuevaInscripcion.btnTitulo.setText("Consulta de Registro");
-            } else if ("Mostrar".equals(operacion)) {
-                //actualizarTabla();
-            }
             actualizarTabla();
         }
 

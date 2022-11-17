@@ -121,7 +121,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Buscar");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 70, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 45, 70, -1));
 
         btnVerEmpleados1.setBackground(new java.awt.Color(2, 62, 138));
         btnVerEmpleados1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -162,7 +162,7 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         jLabel7.setBackground(new java.awt.Color(215, 215, 215));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setForeground(new java.awt.Color(64, 64, 64));
         jLabel7.setText("Nuestros proveedores");
         jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         jLabel7.setOpaque(true);
