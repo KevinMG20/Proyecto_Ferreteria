@@ -27,23 +27,22 @@ public class PnlProductos extends javax.swing.JPanel {
      */
     public PnlProductos() {
         initComponents();
-        inicializar();       
+        iniciarTabla();
 
-        //verTabla();
+        rellenarTabla();
         //pnlGrafica.setLayout(new BoxLayout(pnlGrafica, BoxLayout.PAGE_AXIS));
     }
 
-    public void inicializar() {
-        DefaultTableModel miModelo = new DefaultTableModel();
-        miModelo.addColumn("Matricula");
-        miModelo.addColumn("Nombre");
-        miModelo.addColumn("Apellido Paterno");
-        miModelo.addColumn("Apellido Materno");
-        miModelo.addColumn("Dia Nacimiento");
-        miModelo.addColumn("Mes Nacimiento");
-        miModelo.addColumn("Año Nacimiento");
-        miModelo.addColumn("Calificacion");
-        jTable1.setModel(miModelo);
+    public void iniciarTabla() {
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Nombre");
+        tableModel.addColumn("Categoria");
+        tableModel.addColumn("Marca");
+        tableModel.addColumn("Precio");
+        tableModel.addColumn("Existencias");
+
+        tblProductos.setModel(tableModel);
     }
 
     static String sql;
@@ -51,118 +50,19 @@ public class PnlProductos extends javax.swing.JPanel {
     static Statement sentencia;
     static ResultSet rs;
     String[] datos;
-    DefaultTableModel miModelo;
+    DefaultTableModel tableModel;
 
-    /*public void verTabla() {
-        miModelo = new DefaultTableModel();
-        datos = new String[8];
-        while (miModelo.getRowCount() != 0) {
-            miModelo.removeRow(0);
+    public void rellenarTabla() {
+        datos = new String[6];
+        while (tableModel.getRowCount() != 0) {
+            tableModel.removeRow(0);
         }
 
-        miModelo.addColumn("Matricula");
-        miModelo.addColumn("Nombre");
-        miModelo.addColumn("Apellido Paterno");
-        miModelo.addColumn("Apellido Materno");
-        miModelo.addColumn("Dia Nacimiento");
-        miModelo.addColumn("Mes Nacimiento");
-        miModelo.addColumn("Año Nacimiento");
-        miModelo.addColumn("Calificacion");
+        
+        
 
-        jTable1.setModel(miModelo);
-
-        try {
-            sentencia = reg.createStatement();
-            rs = sentencia.executeQuery(sql);
-            while (rs.next()) {
-                datos[0] = rs.getString(2);
-                datos[1] = rs.getString(3);
-                datos[2] = rs.getString(4);
-                datos[3] = rs.getString(5);
-
-                datos[4] = rs.getString(9);
-                datos[5] = rs.getString(10);
-                datos[6] = rs.getString(11);
-                datos[7] = rs.getString(13);
-                miModelo.addRow(datos);
-            }
-            jTable1.setModel(miModelo);
-        } catch (SQLException ex) {
-            Logger.getLogger(PnlProductos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            sentencia = reg.createStatement();
-            rs = sentencia.executeQuery("SELECT COUNT(*) FROM alumnos WHERE nivel = 'Primaria' AND turno = '"
-                    + cbxTurno.getSelectedItem().toString() + "'");
-            rs.next();
-            dato1 = rs.getInt(1);
-            //System.out.println("Dato1: " + dato1);
-
-            rs = sentencia.executeQuery("SELECT COUNT(*) FROM alumnos WHERE nivel = 'Secundaria' AND turno = '"
-                    + cbxTurno.getSelectedItem().toString() + "'");
-            rs.next();
-            dato2 = Integer.parseInt(rs.getString(1));
-            //System.out.println("Dato2: " + dato2);
-
-            rs = sentencia.executeQuery("SELECT COUNT(*) FROM alumnos WHERE nivel = 'Preparatoria' AND turno = '"
-                    + cbxTurno.getSelectedItem().toString() + "'");
-            rs.next();
-            dato3 = Integer.parseInt(rs.getString(1));
-            //System.out.println("Dato3: " + dato3);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PnlProductos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        generarGrafica();
-    }*/
-    DefaultCategoryDataset datosGrafica = new DefaultCategoryDataset();
-    int dato1, dato2, dato3;
-
-    public void generarGrafica() {
-        JFreeChart grafico = null;
-
-        //dato1 = 10;//Integer.parseInt(jTextField1.getText());
-        //dato2 = 13;//Integer.parseInt(jTextField1.getText());
-        //dato3 = 15;//Integer.parseInt(jTextField1.getText());
-        //int dato4 = 5; Integer.parseInt(jTextField1.getText());
-        datosGrafica.addValue(dato1, "Grafica 1", "Primaria");
-        datosGrafica.addValue(dato2, "Grafica 1", "Secundaria");
-        datosGrafica.addValue(dato3, "Grafica 1", "Preparatoria");
-        //datos.addValue(dato4, "Grafica 1", "Cuatro");
-
-        String tipoGrafica = "Barras";
-        if (tipoGrafica.equals("Barras")) {
-            grafico = ChartFactory.createBarChart(("Mostrando Alumnos por Nivel en el Turno " + turnoActual), "Niveles", "Alumnos", datosGrafica, PlotOrientation.VERTICAL, false, true, false);
-        }
-        if (tipoGrafica.equals("Lineal")) {
-            grafico = ChartFactory.createLineChart("Grafica Prueba", "Eje X", "Eje Y", datosGrafica, PlotOrientation.VERTICAL, true, true, false);
-        }
-        if (tipoGrafica.equals("Pastel")) {
-            DefaultPieDataset datosPie = new DefaultPieDataset();
-            datosPie.setValue("Uno", dato1);
-            datosPie.setValue("Dos", dato2);
-            datosPie.setValue("Tres", dato3);
-            //datosPie.setValue("Cuatro", dato4);
-            grafico = ChartFactory.createPieChart("Grafica Prueba", datosPie, true, true, false);
-        }
-        grafico.setBackgroundPaint(new Color(232, 232, 232));
-
-        ChartPanel cPanel = new ChartPanel(grafico);
-        //cPanel.setBackground(new Color(232, 232, 232));
-        pnlProducto.removeAll();       
-        pnlProducto.add(jLabel1);
-        pnlProducto.add(cPanel);
-        revalidate();
-        repaint();
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -198,7 +98,7 @@ public class PnlProductos extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProductos = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(232, 232, 232));
@@ -415,9 +315,9 @@ public class PnlProductos extends javax.swing.JPanel {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(1200, 360));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1200, 360));
 
-        jTable1.setBackground(new java.awt.Color(215, 215, 215));
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductos.setBackground(new java.awt.Color(215, 215, 215));
+        tblProductos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -425,9 +325,9 @@ public class PnlProductos extends javax.swing.JPanel {
                 "ID", "Nombre", "Categoria", "Marca", "Precio", "Existencias"
             }
         ));
-        jTable1.setRowHeight(25);
-        jTable1.setRowMargin(5);
-        jScrollPane1.setViewportView(jTable1);
+        tblProductos.setRowHeight(25);
+        tblProductos.setRowMargin(5);
+        jScrollPane1.setViewportView(tblProductos);
 
         pnlTabla.add(jScrollPane1);
         jScrollPane1.setBounds(30, 60, 1140, 280);
@@ -475,9 +375,9 @@ public class PnlProductos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlCategorias;
     private javax.swing.JPanel pnlProducto;
     private javax.swing.JPanel pnlTabla;
+    private javax.swing.JTable tblProductos;
     // End of variables declaration//GEN-END:variables
 }

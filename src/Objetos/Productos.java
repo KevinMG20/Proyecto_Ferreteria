@@ -1,8 +1,12 @@
 package Objetos;
 
+import Interfaz.PnlProductos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -54,7 +58,6 @@ public class Productos {
         }
 
         // </editor-fold>
-        
         try {
             PreparedStatement ps = Conexion.con.prepareStatement("INSERT INTO productos VALUES (?,?,?,?,?,?)");
 
@@ -137,7 +140,7 @@ public class Productos {
             return;
         }
         System.out.println("Se eliminara un nuevo producto\n");
-        
+
         int option = JOptionPane.showConfirmDialog(null,
                 "¿Estás seguro de eliminar a este producto?", "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
@@ -157,7 +160,7 @@ public class Productos {
         }
     }
 
-    public void consultarProductos() { //Consulta de un empleado
+    public void consultarProducto() { //Consulta de un producto
         ResultSet rs;
         String consultaSQL = "SELECT * FROM productos WHERE idProducto=?";
         Productos buscarProd = new Productos(JOptionPane.showInputDialog(null, "Ingrese el ID del producto que desea consultar"));
@@ -165,6 +168,51 @@ public class Productos {
         try {
             PreparedStatement ps = Conexion.con.prepareStatement(consultaSQL);
             ps.setString(1, buscarProd.getIdProducto());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                buscarProd.setNombre(rs.getString("nombre"));
+                buscarProd.setCategoria(rs.getString("categoria"));
+                buscarProd.setMarca(rs.getString("marca"));
+                buscarProd.setPrecio(rs.getFloat("precio"));
+                buscarProd.setExistencias(rs.getInt("existencias"));
+
+                System.out.println("\nProducto encontrado:\n" + buscarProd.toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    public String[] consultarTodosProductos() { //Consulta de un producto
+        ResultSet rs;
+        String consultaSQL = "SELECT * FROM productos";
+        String datos[] = new String[6];
+        ArrayList<String[]> listaDatos = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = Conexion.con.prepareStatement(consultaSQL);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos[0] = rs.getString("idProducto");
+                datos[1] = rs.getString("nombre");
+                datos[2] = rs.getString("categoria");
+                datos[3] = rs.getString("marca");
+
+                datos[4] = Float.toString(rs.getFloat("precio"));
+                datos[5] = Integer.toString(rs.getInt("existencias"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PnlProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            PreparedStatement ps = Conexion.con.prepareStatement(consultaSQL);
             rs = ps.executeQuery();
 
             if (rs.next()) {
