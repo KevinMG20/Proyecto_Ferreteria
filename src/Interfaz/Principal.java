@@ -3,7 +3,6 @@ package Interfaz;
 import static Interfaz.PnlEntregas.desbloquearEdicion;
 import Objetos.Conexion;
 import Objetos.Empleados;
-import com.itextpdf.text.Chunk;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,11 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -24,24 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-//import javax.swing.text.Document;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Desktop;
-import java.awt.HeadlessException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -51,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -937,7 +916,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Herramientas.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconosFerreteria/CatHerramientas.png"))); // NOI18N
         pnlHerramientas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, -1));
 
         btnInsertarEmpleado.setBackground(new java.awt.Color(1, 50, 112));
@@ -1140,14 +1119,15 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             JasperDesign jd = JRXmlLoader.load(archivo);
             JasperReport jr = JasperCompileManager.compileReport(jd);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, Conexion.con);
-            
+
             JRExporter exporter = new JRPdfExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
             exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "ReporteEmpleados.pdf");
             exporter.exportReport();
 
             JasperViewer.viewReport(jp);
-        } catch (Exception e) {
+        } catch (JRException e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnPDFActionPerformed
     JPanel pnlEntregas = new PnlEntregas();

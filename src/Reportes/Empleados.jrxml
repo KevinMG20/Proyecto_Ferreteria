@@ -59,7 +59,7 @@
 			</frame>
 			<image>
 				<reportElement x="456" y="0" width="99" height="100" uuid="97705585-a0b5-4ec7-86f3-ae10c220e6af"/>
-				<imageExpression><![CDATA["C:/Users/Kevin MG/Documents/ITD SEM 5/Taller de Bases de Datos/Proyecto_Ferreteria/src/Recursos/1x/Recurso 11.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:/Users/Main PC/Documents/NetBeansProjects/proyecto_ferreteria/src/Recursos/IconosFerreteria/Recurso 11.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="SubTitle" x="10" y="106" width="249" height="29" forecolor="#FFFFFF" uuid="2ec2abbb-371b-42c4-9f1e-77f78a04d2e6"/>

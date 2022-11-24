@@ -179,7 +179,7 @@ public class Empleados {
         //}
     }
 
-    public Empleados consultarEmpleado(Empleados empleado) { //Consulta de un empleado
+    public Empleados consultarEmpleado(Empleados empleado) { //Consulta de un empleado en especifico por id
         ResultSet rs;
         String consultaSQL = "SELECT * FROM empleados WHERE idEmpleado=?";
         Empleados buscarEmpl = new Empleados(empleado.getIdEmpleado());

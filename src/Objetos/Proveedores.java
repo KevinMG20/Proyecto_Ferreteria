@@ -3,6 +3,7 @@ package Objetos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -19,10 +20,35 @@ public class Proveedores {
     String telefono;
 
     //Metodos
-    public void registrarProveedor() { //Insercion de nuevo Proveedor        
+    public String generarID(String nombre) { //Generacion automatica de la ID
+        String ID = nombre.substring(0, 3);
+        ID = ID.toUpperCase();
+
+        for (int x = 1; x < 1000; x++) {
+            if (x < 10) {
+                if (!existeRegistro(new Proveedores(ID + "00" + x))) {
+                    ID += "00" + x;
+                    return ID;
+                }
+            } else if (x < 100) {
+                if (!existeRegistro(new Proveedores(ID + "0" + x))) {
+                    ID += "0" + x;
+                    return ID;
+                }
+            } else {
+                if (!existeRegistro(new Proveedores(ID + x))) {
+                    ID += x;
+                    return ID;
+                }
+            }
+        }
+        return ID;
+    }
+
+    public void registrarProveedor(Proveedores nuevoProv) { //Insercion de nuevo Proveedor        
         System.out.println("Se registrara un nuevo Proveedor\n");
 
-        // <editor-fold defaultstate="collapsed" desc=" Ingreso de Datos ">
+        /*// <editor-fold defaultstate="collapsed" desc=" Ingreso de Datos ">
         JTextField txtIdProveedor = new JTextField();
         JTextField txtNombre = new JTextField();
         JTextField txtRFC = new JTextField();
@@ -46,8 +72,7 @@ public class Proveedores {
             JOptionPane.showMessageDialog(null, "Los datos ingresados no son validos");
         }
 
-        // </editor-fold>
-        
+        // </editor-fold>*/
         try {
             PreparedStatement ps = Conexion.con.prepareStatement("INSERT INTO proveedores VALUES (?,?,?,?)");
 
@@ -56,21 +81,22 @@ public class Proveedores {
             ps.setString(3, nuevoProv.getRfc());
             ps.setString(4, nuevoProv.getTelefono());
 
-            int filasInsertadas = ps.executeUpdate();
-            System.out.println("Insercion exitosa.\nRegistros insertados: " + filasInsertadas);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Proveedor registrado correctamente\nID: " + nuevoProv.getIdProveedor());
 
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique que los datos sean correctos");
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
     }
 
-    public void actualizarDatosProveedor() { //Actualizacion de proveedores
+    public void actualizarDatosProveedor(Proveedores modificarProv) { //Actualizacion de proveedores
 
         // <editor-fold defaultstate="collapsed" desc=" Ingreso de Datos ">
-        Proveedores modificarProv = new Proveedores(JOptionPane.showInputDialog(null, "Ingrese el ID del proveedor que desea modificar"));
+        //Proveedores modificarProv = new Proveedores(JOptionPane.showInputDialog(null, "Ingrese el ID del proveedor que desea modificar"));
 
-        if (!existeRegistro(modificarProv)) { //Si no existe el registro, se termina el metodo
+        /*if (!existeRegistro(modificarProv)) { //Si no existe el registro, se termina el metodo
             return;
         }
         System.out.println("Se actualizara un proveedor");
@@ -98,13 +124,12 @@ public class Proveedores {
                 return;
             default:
                 break;
-        }
-
+        }*/
         // </editor-fold>
         try {
-            PreparedStatement ps = Conexion.con.prepareStatement("UPDATE proveedores SET " + tipoDato + "=? WHERE idProveedor=?");
-            ps.setString(1, nuevoDato);
-            ps.setString(2, modificarProv.getIdProveedor());
+            PreparedStatement ps = Conexion.con.prepareStatement("UPDATE proveedores SET rfc='" + modificarProv.getRfc() + "', nombre='" + modificarProv.getNombre() + "', "
+                    + "telefono='" + modificarProv.getTelefono() + "' WHERE idProveedor='" + modificarProv.getIdProveedor() + "'");
+
             System.out.println("Filas afectadas: " + ps.executeUpdate());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -112,13 +137,13 @@ public class Proveedores {
         }
     }
 
-    public void eliminarProveedor() { //Eliminacion de proveedoress              
+    public boolean eliminarProveedor(String ID) { //Eliminacion de proveedoress              
 
-        Proveedores eliminarProv = new Proveedores(JOptionPane.showInputDialog(null, "Ingrese el ID del proveedor que desea eliminar"));
+        //Proveedores eliminarProv = new Proveedores(JOptionPane.showInputDialog(null, "Ingrese el ID del proveedor que desea eliminar"));
 
-        if (!existeRegistro(eliminarProv)) { //Si no existe el registro, se termina el metodo
+        /*if (!existeRegistro(eliminarProv)) { //Si no existe el registro, se termina el metodo
             return;
-        }
+        }*/
         System.out.println("Se eliminara un nuevo proveedor\n");
 
         int option = JOptionPane.showConfirmDialog(null,
@@ -126,28 +151,28 @@ public class Proveedores {
 
         if (option == JOptionPane.OK_OPTION) {
             try {
-                PreparedStatement ps = Conexion.con.prepareStatement("DELETE FROM proveedores WHERE idProveedor=?");
-
-                ps.setString(1, eliminarProv.getIdProveedor());
+                PreparedStatement ps = Conexion.con.prepareStatement("DELETE FROM proveedores WHERE idProveedor='" + ID + "'");
 
                 int filasInsertadas = ps.executeUpdate();
                 System.out.println("Eliminacion exitosa.\nRegistros eliminados: " + filasInsertadas);
+                return true;
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
             }
         }
+        return false;
     }
 
-    public void consultarProveedor() { //Consulta de un proveedor
+    public Proveedores consultarProveedor(String ID) { //Consulta de un proveedor
         ResultSet rs;
         String consultaSQL = "SELECT * FROM proveedores WHERE idProveedor=?";
-        Proveedores buscarProv = new Proveedores(JOptionPane.showInputDialog(null, "Ingrese el ID del proveedor que desea consultar"));
+        Proveedores buscarProv = new Proveedores(ID);
 
         try {
             PreparedStatement ps = Conexion.con.prepareStatement(consultaSQL);
-            ps.setString(1, buscarProv.getIdProveedor());
+            ps.setString(1, ID);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -157,13 +182,45 @@ public class Proveedores {
 
                 System.out.println("Proveedor encontrado:\n" + buscarProv.toString());
             } else {
-                JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");
+                //JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");
+                return null;
             }
+
+            return buscarProv;
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
+        return null;
+    }
+
+    public ArrayList<Proveedores> consultarTodosProveedores() { //Consulta todos los proveedores
+        ResultSet rs;
+        String consultaSQL = "SELECT * FROM proveedores";
+        Proveedores buscarProv;
+        ArrayList<Proveedores> listaProveedores = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = Conexion.con.prepareStatement(consultaSQL);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                buscarProv = new Proveedores();
+                buscarProv.setIdProveedor(rs.getString("idProveedor"));
+                buscarProv.setNombre(rs.getString("nombre"));
+                buscarProv.setRfc(rs.getString("rfc"));
+                buscarProv.setTelefono(rs.getString("telefono"));
+
+                listaProveedores.add(buscarProv);
+            }
+            return listaProveedores;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public boolean existeRegistro(Proveedores proveedor) {
@@ -173,7 +230,7 @@ public class Proveedores {
             rs = ps.executeQuery();
 
             if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");
+                System.out.println("ID " + proveedor.getIdProveedor() + " disponible para su uso");
                 return false;
             }
         } catch (SQLException ex) {
