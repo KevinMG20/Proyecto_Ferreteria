@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -35,9 +36,17 @@ public class PnlProveedores extends javax.swing.JPanel {
         cargarProveedores();
     }
 
+    public void guardarDatosAnterior(JTextField txtID, JTextField txtRFC, JTextField txtNombre, JTextField txtTelefono) {
+        datosTemp = new String[4];
+
+        datosTemp[0] = txtID.getText();
+        datosTemp[1] = txtRFC.getText();
+        datosTemp[2] = txtNombre.getText();
+        datosTemp[3] = txtTelefono.getText();
+    }
+
     public void editarProveedor() {
         //System.out.println("Panel seleccionado: " + panelSeleccionado);
-        datosTemp = new String[4];
         edicion = true;
 
         switch (panelSeleccionado) {
@@ -49,11 +58,8 @@ public class PnlProveedores extends javax.swing.JPanel {
                 txtNombre.setBorder(bordeLineal);
                 txtTelefono.setBorder(bordeLineal);
                 anteriorSeleccionado = 1;
+                guardarDatosAnterior(txtID, txtRFC, txtNombre, txtTelefono);
 
-                datosTemp[0] = txtID.getText();
-                datosTemp[1] = txtRFC.getText();
-                datosTemp[2] = txtNombre.getText();
-                datosTemp[3] = txtTelefono.getText();
                 break;
             case 2:
                 txtRFC1.setEditable(true);
@@ -64,10 +70,7 @@ public class PnlProveedores extends javax.swing.JPanel {
                 txtTelefono1.setBorder(bordeLineal);
                 anteriorSeleccionado = 2;
 
-                datosTemp[0] = txtID1.getText();
-                datosTemp[1] = txtRFC1.getText();
-                datosTemp[2] = txtNombre1.getText();
-                datosTemp[3] = txtTelefono1.getText();
+                guardarDatosAnterior(txtID1, txtRFC1, txtNombre1, txtTelefono1);
                 break;
             case 3:
                 txtRFC2.setEditable(true);
@@ -78,10 +81,7 @@ public class PnlProveedores extends javax.swing.JPanel {
                 txtTelefono2.setBorder(bordeLineal);
                 anteriorSeleccionado = 3;
 
-                datosTemp[0] = txtID2.getText();
-                datosTemp[1] = txtRFC2.getText();
-                datosTemp[2] = txtNombre2.getText();
-                datosTemp[3] = txtTelefono2.getText();
+                guardarDatosAnterior(txtID2, txtRFC2, txtNombre2, txtTelefono2);
                 break;
             case 4:
                 txtRFC3.setEditable(true);
@@ -92,10 +92,7 @@ public class PnlProveedores extends javax.swing.JPanel {
                 txtTelefono3.setBorder(bordeLineal);
                 anteriorSeleccionado = 4;
 
-                datosTemp[0] = txtID3.getText();
-                datosTemp[1] = txtRFC3.getText();
-                datosTemp[2] = txtNombre3.getText();
-                datosTemp[3] = txtTelefono3.getText();
+                guardarDatosAnterior(txtID3, txtRFC3, txtNombre3, txtTelefono3);
                 break;
             case 5:
                 txtRFC4.setEditable(true);
@@ -106,10 +103,7 @@ public class PnlProveedores extends javax.swing.JPanel {
                 txtTelefono4.setBorder(bordeLineal);
                 anteriorSeleccionado = 5;
 
-                datosTemp[0] = txtID4.getText();
-                datosTemp[1] = txtRFC4.getText();
-                datosTemp[2] = txtNombre4.getText();
-                datosTemp[3] = txtTelefono4.getText();
+                guardarDatosAnterior(txtID4, txtRFC4, txtNombre4, txtTelefono4);
                 break;
             case 6:
                 txtRFC5.setEditable(true);
@@ -120,10 +114,7 @@ public class PnlProveedores extends javax.swing.JPanel {
                 txtTelefono5.setBorder(bordeLineal);
                 anteriorSeleccionado = 6;
 
-                datosTemp[0] = txtID5.getText();
-                datosTemp[1] = txtRFC5.getText();
-                datosTemp[2] = txtNombre5.getText();
-                datosTemp[3] = txtTelefono5.getText();
+                guardarDatosAnterior(txtID5, txtRFC5, txtNombre5, txtTelefono5);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Primero seleccione a un proveedor");
@@ -248,6 +239,7 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         panelSeleccionado = 1;
         editarProveedor();
+        datosTemp = null;
     }
 
     public void agregarProveedor() {
@@ -1081,15 +1073,15 @@ public class PnlProveedores extends javax.swing.JPanel {
                 btnEliminar.setIcon(new ImageIcon(getClass().getResource("/Recursos/IconoConfirmar.png")));
             }
         } else {*/
-            if (provedAux.eliminarProveedor(proveedorSeleccionado)) {
+        if (provedAux.eliminarProveedor(proveedorSeleccionado)) {
 
-                provedAux = new Proveedores();
-                indexLista = 0;
-                cargarProveedores();
-                //btnEliminar.setIcon(new ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png")));
-                quiereEliminar = false;
-                JOptionPane.showMessageDialog(null, "El proveedor ha sido eliminado correctamente");
-            }
+            provedAux = new Proveedores();
+            indexLista = 0;
+            cargarProveedores();
+            //btnEliminar.setIcon(new ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png")));
+            quiereEliminar = false;
+            JOptionPane.showMessageDialog(null, "El proveedor ha sido eliminado correctamente");
+        }
         //}
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -1120,6 +1112,7 @@ public class PnlProveedores extends javax.swing.JPanel {
     private void btnVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosActionPerformed
         indexLista = 0;
         paginaActual = 1;
+
         bloquerEdicionPanel();
         cargarProveedores();
         btnAgregar.setIcon(new ImageIcon(getClass().getResource("/Recursos/IconoAgregarBlanco.png")));
