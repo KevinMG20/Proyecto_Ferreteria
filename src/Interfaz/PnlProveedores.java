@@ -226,6 +226,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         paginaActual = 1;
         indexLista = 0;
 
+        pnlProv1.setVisible(true);
         pnlProv2.setVisible(false);
         pnlProv3.setVisible(false);
         pnlProv4.setVisible(false);

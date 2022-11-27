@@ -3,6 +3,8 @@ package Objetos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -15,17 +17,45 @@ public class Entregas {
     //Atributos
     String folioEntrega;
     String fecha;
-    String idProducto;
-    int cantidad;
+    String[] idProductos;
+    int[] cantidades;
     String idProveedor;
     String idEmpleado;
 
     //Metodos
-    public void registrarEntrega() { //Insercion de nueva entrega  
+    public String generarFolio(String fecha, String idProv) {
+        try {
+            fecha = fecha.toUpperCase();
+            String folioEntrega = fecha.substring(0, 2);
+            folioEntrega += fecha.substring(3, 8);
+            folioEntrega += fecha.substring(10) + "_";
+            folioEntrega += idProv + "_";
+
+            for (int x = 1; x < 100; x++) {
+                if (x < 10) {
+                    if (!existeRegistro(new Entregas(folioEntrega + "0" + x))) {
+                        folioEntrega += "0" + x;
+                        return folioEntrega;
+                    }
+                } else if (x < 100) {
+                    if (!existeRegistro(new Entregas(folioEntrega + x))) {
+                        folioEntrega += "0" + x;
+                        return folioEntrega;
+                    }
+                }
+            }
+        } catch (StringIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Introduzca una fecha que sea válida");
+        }
+
+        return null;
+    }
+
+    public void registrarEntrega(Entregas nuevaEntrega) { //Insercion de nueva entrega  
         System.out.println("Se registrara una nueva entrega\n");
 
         // <editor-fold defaultstate="collapsed" desc=" Ingreso de Datos ">
-        JTextField txtFolioEntrega = new JTextField();
+        /*JTextField txtFolioEntrega = new JTextField();
         JTextField txtFecha = new JTextField();
         JTextField txtIdProducto = new JTextField();
         JTextField txtCantidad = new JTextField();
@@ -51,32 +81,49 @@ public class Entregas {
             System.out.println("Datos de la entrega:\n" + nuevaEntrega.toString() + "\n");
         } else {
             JOptionPane.showMessageDialog(null, "Los datos ingresados no son validos");
-        }
-
+        }*/
         // </editor-fold>
         try {
-            PreparedStatement ps = Conexion.con.prepareStatement("INSERT INTO entregas VALUES (?,?,?,?,?,?)");
+            Conexion.con.setAutoCommit(false);
+            PreparedStatement insercionEntrega = Conexion.con.prepareStatement("INSERT INTO entregas VALUES (?,?,?,?)");
 
-            ps.setString(1, nuevaEntrega.getFolioEntrega());
-            ps.setString(2, nuevaEntrega.getFecha());
-            ps.setString(3, nuevaEntrega.getIdProducto());
-            ps.setInt(4, nuevaEntrega.getCantidad());
-            ps.setString(5, nuevaEntrega.getIdProveedor());
-            ps.setString(6, nuevaEntrega.getIdEmpleado());
+            insercionEntrega.setString(1, nuevaEntrega.getFolioEntrega());
+            insercionEntrega.setString(2, nuevaEntrega.getFecha());
+            insercionEntrega.setString(3, nuevaEntrega.getIdProveedor());
+            insercionEntrega.setString(4, nuevaEntrega.getIdEmpleado());
 
-            int filasInsertadas = ps.executeUpdate();
-            System.out.println("Insercion exitosa.\nRegistros insertados: " + filasInsertadas);
+            insercionEntrega.execute();
 
+            PreparedStatement insercionProductos;
+
+            for (int x = 0; x < nuevaEntrega.getIdProductos().length; x++) {
+                insercionProductos = Conexion.con.prepareStatement("INSERT INTO productosdeentrega VALUES (?,?,?)");
+                insercionProductos.setString(1, nuevaEntrega.getFolioEntrega());
+                insercionProductos.setString(2, nuevaEntrega.getIdProductos()[x]);
+                insercionProductos.setInt(3, nuevaEntrega.getCantidades()[x]);
+                insercionProductos.execute();
+            }
+
+            Conexion.con.commit();
+            Conexion.con.setAutoCommit(true);
+
+            //int filasInsertadas = ps.executeUpdate();
+            //System.out.println("Insercion exitosa.\nRegistros insertados: " + filasInsertadas);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
+            try {
+                Conexion.con.rollback();
+            } catch (SQLException e) {
+                ex.printStackTrace();
+            }
         }
     }
 
-    public void actualizarDatosEntregas() { //Actualizacion de entregas
+    public void actualizarDatosEntregas(Entregas modificarEntrega) { //Actualizacion de entregas
 
         // <editor-fold defaultstate="collapsed" desc=" Ingreso de Datos ">
-        Entregas modificarEntrega = new Entregas(JOptionPane.showInputDialog(null, "Ingrese el folio de la entrega que desea modificar"));
+        /*Entregas modificarEntrega = new Entregas(JOptionPane.showInputDialog(null, "Ingrese el folio de la entrega que desea modificar"));
 
         if (!existeRegistro(modificarEntrega)) { //Si no existe el registro, se termina el metodo
             return;
@@ -114,15 +161,27 @@ public class Entregas {
                 return;
             default:
                 break;
-        }
-
+        }*/
         // </editor-fold>
-        
         try {
-            PreparedStatement ps = Conexion.con.prepareStatement("UPDATE entregas SET " + tipoDato + "=? WHERE folioEntrega=?");
-            ps.setString(1, nuevoDato);
-            ps.setString(2, modificarEntrega.getFolioEntrega());
+            PreparedStatement ps = Conexion.con.prepareStatement("UPDATE entregas SET fecha='" + modificarEntrega.getFecha()
+                    + "', idProveedor='" + modificarEntrega.getIdProveedor() + "', idEmpleado='" + modificarEntrega.getIdEmpleado()
+                    + "' WHERE folioEntrega='" + modificarEntrega.getFolioEntrega() + "'");
+
             System.out.println("Filas afectadas: " + ps.executeUpdate());
+            JOptionPane.showMessageDialog(null, "Se modificaron existosamente los datos de la entrega");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    public void actualizarCantidades(int cantidad, String idProducto) {
+        try {
+            PreparedStatement ps = Conexion.con.prepareStatement("UPDATE productosdeentrega SET cantidad='" + cantidad
+                    + "' WHERE idProducto='" + idProducto + "'");
+            System.out.println("Filas afectadas: " + ps.executeUpdate());
+            JOptionPane.showMessageDialog(null, "Se modificó la cantidad exitosamente");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
@@ -157,32 +216,63 @@ public class Entregas {
         }
     }
 
-    public void consultarEmpleados() { //Consulta de una entrega
-        ResultSet rs;
-        String consultaSQL = "SELECT * FROM entregas WHERE folioEntrega=?";
-        Entregas buscarEntr = new Entregas(JOptionPane.showInputDialog(null, "Ingrese el folio de la entrega que desea consultar"));
+    public ArrayList<Entregas> consultarTodasEntregas() { //Consulta de una entrega
+        ResultSet resultEntrega, resultProductos;
+        //String consultaEntrega = "SELECT * FROM entregas";
+        //String consultaProductos = "SELECT * FROM productosdeentrega";
+        ArrayList<Entregas> listaDeEntregas = new ArrayList<>();
+        Entregas buscarEntr;
+        int rows = 0;
+        String[] productoDeEntrega;
+        int[] cantidadesDeProductos;
+        int x = 0;
 
         try {
-            PreparedStatement ps = Conexion.con.prepareStatement(consultaSQL);
-            ps.setString(1, buscarEntr.getFolioEntrega());
-            rs = ps.executeQuery();
+            PreparedStatement ps = Conexion.con.prepareStatement("SELECT * FROM entregas");
+            //ps.setString(1, buscarEntr.getFolioEntrega());
+            //Lo primero es obtener todas las entregas que hay y almacenarlas
+            resultEntrega = ps.executeQuery();
 
-            if (rs.next()) {
-                buscarEntr.setFecha(rs.getString("fecha"));
-                buscarEntr.setIdProducto(rs.getString("idProducto"));
-                buscarEntr.setCantidad(rs.getInt("cantidad"));
-                buscarEntr.setIdProveedor(rs.getString("idProveedor"));
-                buscarEntr.setIdEmpleado(rs.getString("idEmpleado"));
+            while (resultEntrega.next()) {
+                buscarEntr = new Entregas();
 
-                System.out.println("\nRegistro encontrado:\n" + buscarEntr.toString());
-            } else {
-                JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");
+                buscarEntr.setFolioEntrega(resultEntrega.getString("folioEntrega"));
+                buscarEntr.setFecha(resultEntrega.getString("fecha"));
+
+                //Posteriormente, de cada entrega, se consulta sus productos en la tabla foranea
+                ps = Conexion.con.prepareStatement("SELECT * FROM productosdeentrega WHERE folioEntrega='"
+                        + buscarEntr.getFolioEntrega() + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                resultProductos = ps.executeQuery();
+                //Obtener la cantidad de productos de la entrega
+                if (resultProductos.last()) {
+                    rows = resultProductos.getRow();
+                    resultProductos.beforeFirst();
+                }
+                productoDeEntrega = new String[rows];
+                cantidadesDeProductos = new int[rows];
+
+                //Se guardan todos los productos y sus cantidades en arrays
+                while (resultProductos.next()) {
+                    productoDeEntrega[x] = resultProductos.getString("idProducto");
+                    cantidadesDeProductos[x] = resultProductos.getInt("cantidad");
+                    x++;
+                }
+                //Y se asignan al objeto
+                buscarEntr.setIdProductos(productoDeEntrega);
+                buscarEntr.setCantidades(cantidadesDeProductos);
+
+                buscarEntr.setIdProveedor(resultEntrega.getString("idProveedor"));
+                buscarEntr.setIdEmpleado(resultEntrega.getString("idEmpleado"));
+
+                x = 0;
+                listaDeEntregas.add(buscarEntr);
             }
-
+            return listaDeEntregas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
+        return null;
     }
 
     public boolean existeRegistro(Entregas entrega) {
@@ -192,7 +282,7 @@ public class Entregas {
             rs = ps.executeQuery();
 
             if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");
+                System.out.println("No hay ningun registro con ese ID");
                 return false;
             }
         } catch (SQLException ex) {
@@ -204,7 +294,7 @@ public class Entregas {
 
     @Override
     public String toString() {
-        return "Entregas\nFolio Entrega: " + folioEntrega + "\nFecha: " + fecha + "\nID Producto: " + idProducto + "\nCantidad: " + cantidad + "\nID Proveedor " + idProveedor + "\nID Empleado: " + idEmpleado;
+        return "Entregas\nFolio Entrega: " + folioEntrega + "\nFecha: " + fecha + "\nID Producto: " + idProductos + "\nCantidad: " + cantidades + "\nID Proveedor " + idProveedor + "\nID Empleado: " + idEmpleado;
     }
 
     // <editor-fold defaultstate="collapsed" desc=" Getters and Setters ">
@@ -224,7 +314,23 @@ public class Entregas {
         this.fecha = fecha;
     }
 
-    public String getIdProducto() {
+    public String[] getIdProductos() {
+        return idProductos;
+    }
+
+    public void setIdProductos(String[] idProducto) {
+        this.idProductos = idProducto;
+    }
+
+    public int[] getCantidades() {
+        return cantidades;
+    }
+
+    public void setCantidades(int[] cantidad) {
+        this.cantidades = cantidad;
+    }
+
+    /*public String getIdProducto() {
         return idProducto;
     }
 
@@ -238,8 +344,7 @@ public class Entregas {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
+    }*/
     public String getIdProveedor() {
         return idProveedor;
     }
@@ -263,13 +368,13 @@ public class Entregas {
 
     public Entregas(String folioEntrega) {
         this.folioEntrega = folioEntrega;
-    }        
+    }
 
-    public Entregas(String folioEntrega, String fecha, String idProducto, int cantidad, String idProveedor, String idEmpleado) {
+    public Entregas(String folioEntrega, String fecha, String[] idProductos, int[] cantidades, String idProveedor, String idEmpleado) {
         this.folioEntrega = folioEntrega;
         this.fecha = fecha;
-        this.idProducto = idProducto;
-        this.cantidad = cantidad;
+        this.idProductos = idProductos;
+        this.cantidades = cantidades;
         this.idProveedor = idProveedor;
         this.idEmpleado = idEmpleado;
     }

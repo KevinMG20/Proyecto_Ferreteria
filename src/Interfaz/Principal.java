@@ -1,15 +1,16 @@
 package Interfaz;
 
-import static Interfaz.PnlEntregas.desbloquearEdicion;
 import Objetos.Conexion;
 import Objetos.Empleados;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,16 +29,29 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import javax.swing.ImageIcon;
+import net.sf.jasperreports.components.items.ItemData;
+import net.sf.jasperreports.components.map.MapComponent;
+import net.sf.jasperreports.components.map.MarkerDataset;
+import net.sf.jasperreports.components.map.StandardMapComponent;
+import net.sf.jasperreports.components.map.type.MapImageTypeEnum;
+import net.sf.jasperreports.components.map.type.MapScaleEnum;
+import net.sf.jasperreports.components.map.type.MapTypeEnum;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
+import net.sf.jasperreports.engine.type.OnErrorTypeEnum;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -1085,10 +1099,9 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         pnlResultadoBusqueda.cima1 = 0;
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlPrincipal);
-        PnlEntregas.btnOperacion.show();
+        PnlEntregas.btnLimpiar.show();
         revalidate();
-        repaint();
-        desbloquearEdicion();
+        repaint();        
     }//GEN-LAST:event_btnEmpleadosActionPerformed
     JPanel pnlFinanzas = new PnlProveedores();
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
@@ -1117,12 +1130,21 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         try {
             InputStream archivo = getClass().getResourceAsStream("../Reportes/Empleados.jrxml");
             JasperDesign jd = JRXmlLoader.load(archivo);
+
+            java.util.Map<String, Object> param = new HashMap<>();
+            //Image logo = new Image(getClass().getResource("/Reportes/Logo.png"));
+            //Image logo2;
+            //btnPDF.setIcon(logo);
+            //getClass().getResource("Logo.png")
+            //param.put("Logo", logo);
+
             JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, Conexion.con);
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, Conexion.con);
 
             JRExporter exporter = new JRPdfExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
             exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "ReporteEmpleados.pdf");
+
             exporter.exportReport();
 
             JasperViewer.viewReport(jp);
@@ -1374,16 +1396,24 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -1392,8 +1422,10 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             public void run() {
                 try {
                     UIManager.setLookAndFeel(new MetalLookAndFeel());
+
                 } catch (UnsupportedLookAndFeelException ex) {
-                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Principal.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
                 Empleados usuario = new Empleados("KG001", "Kevin Garcia", "Gerente", "Matutino");
                 new Principal(usuario).setVisible(true);

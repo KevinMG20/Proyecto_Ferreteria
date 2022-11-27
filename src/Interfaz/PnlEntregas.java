@@ -4,103 +4,418 @@
  */
 package Interfaz;
 
+import Objetos.Empleados;
+import Objetos.Entregas;
+import Objetos.Productos;
+import Objetos.Proveedores;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author Kevin MG
  */
 public class PnlEntregas extends javax.swing.JPanel {
 
-    /**
-     * Creates new form pnlNuevaInscripcion
-     */
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    DefaultTableModel tableProductosModel, tableEntregasModel, tableInfoModel;
+    ArrayList<String[]> listaDeProductos;
+    ArrayList<Proveedores> listaDeProveedores;
+    ArrayList<Empleados> listaDeEmpleados;
+    Productos productoAux;
+    Proveedores proveedorAux;
+    Empleados empleadoAux;
+    Entregas entregaAux;
+
     public PnlEntregas() {
+        entregaAux = new Entregas();
+
         initComponents();
+        iniciarTablas();
+        llenarProductos();
+        llenarEmpleados();
+        llenarProveedores();
+        obtenerEntregasRecientes();
+
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        //((JSpinner.DefaultEditor) spnCantidad.getEditor()).getTextField().setEditable(false);
+        spnCantidad.getEditor().getComponent(0).setBackground(new Color(215, 215, 215));
+
+        JComponent editor = spnCantidad.getEditor();
+        JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) editor;
+        spinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
+
+        calFecha.getDateEditor().addPropertyChangeListener(
+                new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("date".equals(e.getPropertyName())) {
+                    //System.out.println(e.getPropertyName() + ": " + (Date) e.getNewValue());
+                    String date = ((JTextField) calFecha.getDateEditor().getUiComponent()).getText();
+                    txtFecha.setText(date);
+                    //txtFecha.setText((JTextField) calFecha.getDateEditor().getUiComponent()).getText();
+                }
+            }
+        });
+    }
+    ArrayList<Entregas> listaDeEntregas;
+
+    public void obtenerEntregasRecientes() {
+        listaDeEntregas = entregaAux.consultarTodasEntregas();
+        //Limpiar la tabla
+        while (tableEntregasModel.getRowCount() != 0) {
+            tableEntregasModel.removeRow(0);
+        }
+        for (int x = 0; x < listaDeEntregas.size(); x++) {
+            tableEntregasModel.addRow(new String[]{listaDeEntregas.get(x).getFolioEntrega(),
+                listaDeEntregas.get(x).getFecha(), listaDeEntregas.get(x).getIdEmpleado(),
+                listaDeEntregas.get(x).getIdProveedor(), Integer.toString(listaDeEntregas.get(x).getIdProductos().length)});
+        }
+
+        tblEntregas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    seleccionandoEntrega = true;
+                    switch (tblEntregas.getSelectedColumn()) {
+                        case 0, 1, 4: //En caso que se seleccione el Folio o el total de productos
+                            mostrarProductos(tblEntregas.getSelectedRow());
+                            break;
+                        case 2: //En caso del empleado
+                            mostrarEmpleado(tblEntregas.getSelectedRow());
+                            break;
+                        case 3: //En caso del proveedor
+                            mostrarProveedor(tblEntregas.getSelectedRow());
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception ex) {
+
+                }
+
+            }
+        });
+    }
+    boolean seleccionandoEntrega = false;
+
+    public void mostrarProveedor(int item) {
+        tableInfoModel = new DefaultTableModel();
+
+        tableInfoModel.addColumn("ID");
+        tableInfoModel.addColumn("Nombre");
+        tableInfoModel.addColumn("RFC");
+        tableInfoModel.addColumn("Telefono");
+
+        tblInfo.setModel(tableInfoModel);
+
+        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tblInfo.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tblInfo.getColumnModel().getColumn(3).setPreferredWidth(30);
+
+        for (int i = 0; i < 4; i++) {
+            tblInfo.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        proveedorAux = new Proveedores(listaDeEntregas.get(item).getIdProveedor());
+        proveedorAux = proveedorAux.consultarProveedor(proveedorAux.getIdProveedor());
+
+        tableInfoModel.addRow(new Object[]{proveedorAux.getIdProveedor(), proveedorAux.getNombre(),
+            proveedorAux.getRfc(), proveedorAux.getTelefono()});
     }
 
-    public static void bloquearEdicion() {             
+    public void mostrarEmpleado(int item) {
+        tableInfoModel = new DefaultTableModel();
 
+        tableInfoModel.addColumn("ID");
+        tableInfoModel.addColumn("Nombre");
+        tableInfoModel.addColumn("Puesto");
+        tableInfoModel.addColumn("Turno");
+
+        tblInfo.setModel(tableInfoModel);
+
+        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tblInfo.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tblInfo.getColumnModel().getColumn(3).setPreferredWidth(40);
+
+        for (int i = 0; i < 4; i++) {
+            tblInfo.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        empleadoAux = new Empleados(listaDeEntregas.get(item).getIdEmpleado());
+        System.out.println(listaDeEntregas.get(item).getIdEmpleado() + "asd");
+        empleadoAux = empleadoAux.consultarEmpleado(empleadoAux);
+        tableInfoModel.addRow(new String[]{empleadoAux.getIdEmpleado(), empleadoAux.getNombre(),
+            empleadoAux.getPuesto(), empleadoAux.getTurno()});
     }
 
-    public static void desbloquearEdicion() {
-       
+    public void mostrarProductos(int item) {
+        tableInfoModel = new DefaultTableModel();
+
+        tableInfoModel.addColumn("ID");
+        tableInfoModel.addColumn("Nombre");
+        tableInfoModel.addColumn("Categoria");
+        tableInfoModel.addColumn("Marca");
+        tableInfoModel.addColumn("Cantidad");
+
+        tblInfo.setModel(tableInfoModel);
+
+        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tblInfo.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tblInfo.getColumnModel().getColumn(3).setPreferredWidth(40);
+        tblInfo.getColumnModel().getColumn(4).setPreferredWidth(30);
+
+        for (int i = 0; i < 5; i++) {
+            tblInfo.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        for (int i = 0; i < listaDeEntregas.get(item).getIdProductos().length; i++) {
+            productoAux = new Productos(listaDeEntregas.get(item).getIdProductos()[i]);
+            productoAux = productoAux.consultarProducto(productoAux);
+            tableInfoModel.addRow(new String[]{productoAux.getIdProducto(),
+                productoAux.getNombre(), productoAux.getCategoria(),
+                productoAux.getMarca(), Integer.toString(listaDeEntregas.get(item).getCantidades()[i])});
+        }
+    }
+
+    public void llenarProductos() {
+        listaDeProductos = new ArrayList<>();
+        productoAux = new Productos();
+        listaDeProductos = productoAux.consultarTodosLosProductos();
+        cbxProductos.removeAllItems();
+        for (int x = 0; x < listaDeProductos.size(); x++) {
+            cbxProductos.addItem(listaDeProductos.get(x)[0]);
+        }
+    }
+
+    public void llenarProveedores() {
+        listaDeProveedores = new ArrayList<>();
+        proveedorAux = new Proveedores();
+        listaDeProveedores = proveedorAux.consultarTodosProveedores();
+        cbxProveedores.removeAllItems();
+        for (int x = 0; x < listaDeProveedores.size(); x++) {
+            cbxProveedores.addItem(listaDeProveedores.get(x).getIdProveedor());
+        }
+    }
+
+    public void llenarEmpleados() {
+        listaDeEmpleados = new ArrayList<>();
+        empleadoAux = new Empleados();
+        listaDeEmpleados = empleadoAux.consultarEmpleados();
+        cbxEmpleados.removeAllItems();
+        for (int x = 0; x < listaDeEmpleados.size(); x++) {
+            cbxEmpleados.addItem(listaDeEmpleados.get(x).getIdEmpleado());
+        }
+    }
+
+    public void iniciarTablas() {
+        tableEntregasModel = new DefaultTableModel();
+        tableEntregasModel.addColumn("Folio");
+        tableEntregasModel.addColumn("Fecha");
+        tableEntregasModel.addColumn("Empleado");
+        tableEntregasModel.addColumn("Proveedor");
+        tableEntregasModel.addColumn("Productos");
+        tblEntregas.setModel(tableEntregasModel);
+
+        tableProductosModel = new DefaultTableModel();
+        tableProductosModel.addColumn("ID");
+        tableProductosModel.addColumn("Nombre");
+        tableProductosModel.addColumn("Marca");
+        tableProductosModel.addColumn("Cantidad");
+        tblProductos.setModel(tableProductosModel);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JTableHeader th = tblProductos.getTableHeader();
+        th.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        th.setForeground(Color.WHITE);
+        tblProductos.getTableHeader().setBackground(new Color(2, 62, 138));
+
+        th = tblEntregas.getTableHeader();
+        th.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        th.setForeground(Color.WHITE);
+        tblEntregas.getTableHeader().setBackground(new Color(2, 62, 138));
+
+        th = tblInfo.getTableHeader();
+        th.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        th.setForeground(Color.WHITE);
+        tblInfo.getTableHeader().setBackground(new Color(2, 62, 138));
+
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(25);
+        tblProductos.getColumnModel().getColumn(3).setPreferredWidth(25);
+
+        for (int i = 0; i < 4; i++) {
+            tblProductos.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        tblEntregas.getColumnModel().getColumn(1).setPreferredWidth(30);
+        tblEntregas.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tblEntregas.getColumnModel().getColumn(3).setPreferredWidth(40);
+        tblEntregas.getColumnModel().getColumn(4).setPreferredWidth(40);
+
+        for (int i = 0; i < 5; i++) {
+            tblEntregas.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        //Cuando se da click en un elemento de la tabla de entregas, se colocan sus datos para modificar
+        tblProductos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    cbxProductos.setSelectedItem(tblProductos.getValueAt(tblProductos.getSelectedRow(), 0));
+                    spnCantidad.setValue(Integer.parseInt(tblProductos.getValueAt(tblProductos.getSelectedRow(), 3).toString()));
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
+        tblInfo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    seleccionandoProducto = true;
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+    }
+    boolean seleccionandoProducto = false;
+
+    public void limpiar() {
+        spnCantidad.setValue(1);
+        while (tableProductosModel.getRowCount() != 0) {
+            tableProductosModel.removeRow(0);
+        }
+    }
+
+    public void modificarEntrega() {
+        entregaAux = listaDeEntregas.get(tblEntregas.getSelectedRow());
+        txtFecha.setText(entregaAux.getFecha());
+        cbxEmpleados.setSelectedItem(entregaAux.getIdEmpleado());
+        cbxProveedores.setSelectedItem(entregaAux.getIdProveedor());
+        productoAux = new Productos();
+        String datos[] = new String[4];
+        while (tableProductosModel.getRowCount() != 0) {
+            tableProductosModel.removeRow(0);
+        }
+        //Buscamos al producto en la lista de productos
+        for (int x = 0; x < entregaAux.getIdProductos().length; x++) {
+            for (int y = 0; y < listaDeProductos.size(); y++) {
+                if (entregaAux.getIdProductos()[x].equals(listaDeProductos.get(y)[0])) {
+                    datos[0] = listaDeProductos.get(y)[0];
+                    datos[1] = listaDeProductos.get(y)[1];
+                    datos[2] = listaDeProductos.get(y)[3];
+                    datos[3] = Integer.toString(entregaAux.getCantidades()[x]);
+                    tableProductosModel.addRow(datos);
+                    break;
+                }
+            }
+        }
+        modificando = true;
+        btnAgregar.setEnabled(false);
+        cbxProductos.setEnabled(false);
+        spnCantidad.setEnabled(false);
+        tblProductos.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cbxYear = new javax.swing.JComboBox<>();
-        btnOperacion = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        txtDireccion = new javax.swing.JTextField();
+        cbxProveedores = new javax.swing.JComboBox<>();
+        btnLimpiar = new javax.swing.JButton();
+        calFecha = new com.toedter.calendar.JDateChooser();
+        txtFecha = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chbFechaHoy = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jList4 = new javax.swing.JList<>();
+        btnAgregar = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
-        cbxYear1 = new javax.swing.JComboBox<>();
-        btnOperacion1 = new javax.swing.JButton();
+        cbxProductos = new javax.swing.JComboBox<>();
+        btnFinalizar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        btnBajas1 = new javax.swing.JButton();
-        btnModificar1 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jLabel22 = new javax.swing.JLabel();
-        txtDireccion4 = new javax.swing.JTextField();
-        cbxYear2 = new javax.swing.JComboBox<>();
+        cbxEmpleados = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
+        spnCantidad = new javax.swing.JSpinner();
+        jLabel18 = new javax.swing.JLabel();
+        scrlEntregas = new javax.swing.JScrollPane();
+        tblEntregas = new javax.swing.JTable();
+        scrlProductos = new javax.swing.JScrollPane();
+        tblProductos = new javax.swing.JTable();
+        scrlInfo = new javax.swing.JScrollPane();
+        tblInfo = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(232, 232, 232));
         setMinimumSize(new java.awt.Dimension(1156, 750));
         setPreferredSize(new java.awt.Dimension(1366, 676));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbxYear.setBackground(new java.awt.Color(232, 232, 232));
-        cbxYear.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
-        cbxYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018" }));
-        cbxYear.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
-        cbxYear.setPreferredSize(new java.awt.Dimension(72, 25));
-        add(cbxYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 200, -1));
-
-        btnOperacion.setBackground(new java.awt.Color(211, 211, 211));
-        btnOperacion.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 18)); // NOI18N
-        btnOperacion.setForeground(new java.awt.Color(64, 64, 64));
-        btnOperacion.setText("Limpiar");
-        btnOperacion.addActionListener(new java.awt.event.ActionListener() {
+        cbxProveedores.setBackground(new java.awt.Color(215, 215, 215));
+        cbxProveedores.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+        cbxProveedores.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
+        cbxProveedores.setPreferredSize(new java.awt.Dimension(72, 25));
+        cbxProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOperacionActionPerformed(evt);
+                cbxProveedoresActionPerformed(evt);
             }
         });
-        add(btnOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 550, 110, 30));
+        add(cbxProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 210, -1));
 
-        jDateChooser1.setBackground(new java.awt.Color(215, 215, 215));
-        jDateChooser1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 14), new java.awt.Color(0, 102, 153))); // NOI18N
-        jDateChooser1.setMinSelectableDate(new java.util.Date(-62135744286000L));
-        jDateChooser1.setMinimumSize(new java.awt.Dimension(85, 25));
-        jDateChooser1.setPreferredSize(new java.awt.Dimension(85, 25));
-        add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 25, -1));
+        btnLimpiar.setBackground(new java.awt.Color(211, 211, 211));
+        btnLimpiar.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 18)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(64, 64, 64));
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.setFocusPainted(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 580, 110, 33));
 
-        txtDireccion.setBackground(new java.awt.Color(215, 215, 215));
-        txtDireccion.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
-        txtDireccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtDireccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
-        txtDireccion.setFocusable(false);
-        txtDireccion.setPreferredSize(new java.awt.Dimension(64, 25));
-        add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 270, -1));
+        calFecha.setBackground(new java.awt.Color(215, 215, 215));
+        calFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 14), new java.awt.Color(0, 102, 153))); // NOI18N
+        calFecha.setMinSelectableDate(new java.util.Date(-62135744286000L));
+        calFecha.setMinimumSize(new java.awt.Dimension(85, 25));
+        calFecha.setPreferredSize(new java.awt.Dimension(85, 25));
+        add(calFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 25, -1));
+
+        txtFecha.setBackground(new java.awt.Color(215, 215, 215));
+        txtFecha.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+        txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
+        txtFecha.setFocusable(false);
+        txtFecha.setPreferredSize(new java.awt.Dimension(64, 25));
+        add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 270, -1));
 
         jLabel16.setBackground(new java.awt.Color(215, 215, 215));
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -112,7 +427,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel16.setMinimumSize(new java.awt.Dimension(170, 30));
         jLabel16.setOpaque(true);
         jLabel16.setPreferredSize(new java.awt.Dimension(170, 30));
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 510, -1));
+        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 540, -1));
 
         jLabel17.setBackground(new java.awt.Color(215, 215, 215));
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -125,7 +440,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel17.setOpaque(true);
         jLabel17.setPreferredSize(new java.awt.Dimension(213, 30));
         jLabel17.setRequestFocusEnabled(false);
-        add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 480, -1));
+        add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 500, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -139,12 +454,17 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel9.setText("Cantidad");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 170, -1));
 
-        jCheckBox1.setBackground(new java.awt.Color(215, 215, 215));
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(64, 64, 64));
-        jCheckBox1.setText("Usar la fecha de hoy ");
-        jCheckBox1.setOpaque(true);
-        add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+        chbFechaHoy.setBackground(new java.awt.Color(215, 215, 215));
+        chbFechaHoy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chbFechaHoy.setForeground(new java.awt.Color(64, 64, 64));
+        chbFechaHoy.setText("Usar la fecha de hoy ");
+        chbFechaHoy.setOpaque(true);
+        chbFechaHoy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbFechaHoyActionPerformed(evt);
+            }
+        });
+        add(chbFechaHoy, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 170, 170, -1));
 
         jLabel10.setBackground(new java.awt.Color(51, 51, 51));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -153,41 +473,17 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel10.setText("Fecha");
         add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 300, -1));
 
-        jButton4.setBackground(new java.awt.Color(211, 211, 211));
-        jButton4.setForeground(new java.awt.Color(64, 64, 64));
-        jButton4.setText("Agregar");
-        jButton4.setPreferredSize(new java.awt.Dimension(72, 25));
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 80, -1));
-
-        jList2.setBackground(new java.awt.Color(232, 232, 232));
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        btnAgregar.setBackground(new java.awt.Color(211, 211, 211));
+        btnAgregar.setForeground(new java.awt.Color(64, 64, 64));
+        btnAgregar.setText("Agregar");
+        btnAgregar.setFocusPainted(false);
+        btnAgregar.setPreferredSize(new java.awt.Dimension(72, 25));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
         });
-        jScrollPane2.setViewportView(jList2);
-
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, 90, 160));
-
-        jList3.setBackground(new java.awt.Color(232, 232, 232));
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList3);
-
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 100, 160));
-
-        jList4.setBackground(new java.awt.Color(232, 232, 232));
-        jList4.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jList4);
-
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 270, 160));
+        add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 100, -1));
 
         jLabel20.setBackground(new java.awt.Color(51, 51, 51));
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -196,23 +492,23 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel20.setText("ID del Producto");
         add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 210, -1));
 
-        cbxYear1.setBackground(new java.awt.Color(232, 232, 232));
-        cbxYear1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
-        cbxYear1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018" }));
-        cbxYear1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
-        cbxYear1.setPreferredSize(new java.awt.Dimension(72, 25));
-        add(cbxYear1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 210, -1));
+        cbxProductos.setBackground(new java.awt.Color(215, 215, 215));
+        cbxProductos.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+        cbxProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
+        cbxProductos.setPreferredSize(new java.awt.Dimension(72, 25));
+        add(cbxProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 210, -1));
 
-        btnOperacion1.setBackground(new java.awt.Color(2, 62, 138));
-        btnOperacion1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 18)); // NOI18N
-        btnOperacion1.setForeground(new java.awt.Color(232, 232, 232));
-        btnOperacion1.setText("Finalizar");
-        btnOperacion1.addActionListener(new java.awt.event.ActionListener() {
+        btnFinalizar.setBackground(new java.awt.Color(2, 62, 138));
+        btnFinalizar.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 18)); // NOI18N
+        btnFinalizar.setForeground(new java.awt.Color(232, 232, 232));
+        btnFinalizar.setText("Confirmar");
+        btnFinalizar.setFocusPainted(false);
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOperacion1ActionPerformed(evt);
+                btnFinalizarActionPerformed(evt);
             }
         });
-        add(btnOperacion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 550, 110, 30));
+        add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 580, 120, 33));
 
         jLabel11.setBackground(new java.awt.Color(215, 215, 215));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -220,39 +516,42 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Herramientas del Gerente");
         jLabel11.setOpaque(true);
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 610, 480, 33));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 500, 33));
 
-        btnBajas1.setBackground(new java.awt.Color(1, 50, 112));
-        btnBajas1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnBajas1.setForeground(new java.awt.Color(232, 232, 232));
-        btnBajas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png"))); // NOI18N
-        btnBajas1.setText("Eliminar");
-        btnBajas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnBajas1.setFocusPainted(false);
-        btnBajas1.setIconTextGap(8);
-        btnBajas1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnBajas1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(1, 50, 112));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(232, 232, 232));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png"))); // NOI18N
+        btnEliminar.setText("Eliminar entrega");
+        btnEliminar.setToolTipText("Seleccione una de las entregas recientes y presione este boton para eliminarla");
+        btnEliminar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setIconTextGap(8);
+        btnEliminar.setPreferredSize(new java.awt.Dimension(97, 30));
+        btnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBajas1ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        add(btnBajas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 670, 180, 30));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 693, 220, 40));
 
-        btnModificar1.setBackground(new java.awt.Color(2, 62, 138));
-        btnModificar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnModificar1.setForeground(new java.awt.Color(232, 232, 232));
-        btnModificar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
-        btnModificar1.setText("Modificar");
-        btnModificar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnModificar1.setFocusPainted(false);
-        btnModificar1.setIconTextGap(8);
-        btnModificar1.setPreferredSize(new java.awt.Dimension(75, 27));
-        btnModificar1.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setBackground(new java.awt.Color(2, 62, 138));
+        btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(232, 232, 232));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
+        btnModificar.setText("Modificar entrega");
+        btnModificar.setToolTipText("Seleccione una de las entregas recientes y presione este boton para modificarla");
+        btnModificar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnModificar.setFocusPainted(false);
+        btnModificar.setIconTextGap(8);
+        btnModificar.setPreferredSize(new java.awt.Dimension(75, 27));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificar1ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 670, 180, 30));
+        add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 693, 210, 40));
 
         jTextField1.setBackground(new java.awt.Color(215, 215, 215));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -266,99 +565,260 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel7.setText("Buscar");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 35, 70, -1));
 
-        jScrollPane6.setBackground(new java.awt.Color(232, 232, 232));
-        jScrollPane6.setOpaque(false);
-
-        jList1.setBackground(new java.awt.Color(232, 232, 232));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane6.setViewportView(jList1);
-
-        add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 150, 510, 560));
-
         jLabel22.setBackground(new java.awt.Color(51, 51, 51));
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(51, 51, 51));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("ID del Proveedor");
-        add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 200, -1));
+        add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 210, -1));
 
-        txtDireccion4.setBackground(new java.awt.Color(232, 232, 232));
-        txtDireccion4.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
-        txtDireccion4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtDireccion4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        txtDireccion4.setPreferredSize(new java.awt.Dimension(64, 25));
-        txtDireccion4.setSelectionColor(new java.awt.Color(0, 102, 153));
-        add(txtDireccion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 170, -1));
-
-        cbxYear2.setBackground(new java.awt.Color(232, 232, 232));
-        cbxYear2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
-        cbxYear2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018" }));
-        cbxYear2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
-        cbxYear2.setPreferredSize(new java.awt.Dimension(72, 25));
-        add(cbxYear2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 500, 200, -1));
+        cbxEmpleados.setBackground(new java.awt.Color(215, 215, 215));
+        cbxEmpleados.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+        cbxEmpleados.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
+        cbxEmpleados.setPreferredSize(new java.awt.Dimension(72, 25));
+        add(cbxEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 530, 210, -1));
 
         jLabel23.setBackground(new java.awt.Color(51, 51, 51));
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(51, 51, 51));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Empleado que atiende");
-        add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 200, -1));
+        jLabel23.setText("Empleado que recibe");
+        add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 210, -1));
+
+        spnCantidad.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+        spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spnCantidad.setBorder(null);
+        spnCantidad.setPreferredSize(new java.awt.Dimension(64, 25));
+        add(spnCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 170, 25));
+
+        jLabel18.setBackground(new java.awt.Color(215, 215, 215));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(64, 64, 64));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Información de la entrega");
+        jLabel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
+        jLabel18.setMaximumSize(new java.awt.Dimension(170, 30));
+        jLabel18.setMinimumSize(new java.awt.Dimension(170, 30));
+        jLabel18.setOpaque(true);
+        jLabel18.setPreferredSize(new java.awt.Dimension(170, 30));
+        add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 560, 540, -1));
+
+        scrlEntregas.setBackground(new java.awt.Color(232, 232, 232));
+        scrlEntregas.setForeground(new java.awt.Color(64, 64, 64));
+        scrlEntregas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        scrlEntregas.setOpaque(false);
+
+        tblEntregas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblEntregas.setRowHeight(25);
+        scrlEntregas.setViewportView(tblEntregas);
+
+        add(scrlEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, 540, 390));
+
+        scrlProductos.setBackground(new java.awt.Color(232, 232, 232));
+        scrlProductos.setForeground(new java.awt.Color(64, 64, 64));
+        scrlProductos.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+
+        tblProductos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblProductos.setRowHeight(25);
+        scrlProductos.setViewportView(tblProductos);
+
+        add(scrlProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 500, 200));
+
+        scrlInfo.setBackground(new java.awt.Color(232, 232, 232));
+        scrlInfo.setForeground(new java.awt.Color(64, 64, 64));
+        scrlInfo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        scrlInfo.setOpaque(false);
+
+        tblInfo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblInfo.setRowHeight(25);
+        scrlInfo.setViewportView(tblInfo);
+
+        add(scrlInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 602, 540, 150));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 100, 20, 660));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOperacionActionPerformed
-               
-        revalidate();
-        repaint();
-    }//GEN-LAST:event_btnOperacionActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void btnOperacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOperacion1ActionPerformed
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        String mensaje;
+        if (modificando) {
+            mensaje = "¿Confirmar la modificación de la entrega?";
+        } else {
+            mensaje = "¿Confirmar el registro de la entrega?";
+        }
+
+        if (JOptionPane.showConfirmDialog(null, mensaje, "Confirmar", JOptionPane.YES_OPTION) == 0) {
+            String date = ((JTextField) calFecha.getDateEditor().getUiComponent()).getText();
+
+            String[] productos = new String[tableProductosModel.getRowCount()];
+            int[] cantidades = new int[tableProductosModel.getRowCount()];
+
+            for (int x = 0; x < productos.length; x++) {
+                productos[x] = tableProductosModel.getValueAt(x, 0).toString();
+                cantidades[x] = Integer.parseInt(tableProductosModel.getValueAt(x, 3).toString());
+                //System.out.println("Producto en " + x + ": " + productos[x]);
+            }
+            try {
+                if (productos[0].isBlank() || cantidades[0] == 0) {
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "No se han agregado productos nuevos");
+                return;
+            }
+
+            entregaAux = new Entregas();
+            //System.out.println("Folio: " + entregaAux.generarFolio(date, cbxProveedores.getSelectedItem().toString()));
+
+            if (modificando) {
+                entregaAux = new Entregas(tblEntregas.getValueAt(tblEntregas.getSelectedRow(), 0).toString(),
+                        date, productos, cantidades, cbxProveedores.getSelectedItem().toString(),
+                        cbxEmpleados.getSelectedItem().toString());
+                entregaAux.actualizarDatosEntregas(entregaAux);
+            } else {
+                entregaAux = new Entregas(entregaAux.generarFolio(date, cbxProveedores.getSelectedItem().toString()),
+                        date, productos, cantidades, cbxProveedores.getSelectedItem().toString(),
+                        cbxEmpleados.getSelectedItem().toString());
+                entregaAux.registrarEntrega(entregaAux);
+            }
+            modificando = false;
+            btnAgregar.setEnabled(true);
+            cbxProductos.setEnabled(true);
+            spnCantidad.setEnabled(true);
+            tblProductos.setEnabled(true);
+            limpiar();
+        }
+
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnOperacion1ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
+    boolean modificando;
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            entregaAux = new Entregas(tblEntregas.getValueAt(tblEntregas.getSelectedRow(), 0).toString());
+            if (seleccionandoEntrega && !seleccionandoProducto) {
+                modificarEntrega();
+                obtenerEntregasRecientes();
+            } else if (!seleccionandoEntrega && seleccionandoProducto) {
+                int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad del producto seleccionado"));
+                entregaAux.actualizarCantidades(cantidad, tblInfo.getValueAt(tblInfo.getSelectedRow(), 0).toString());
+                mostrarProductos(tblEntregas.getSelectedRow());
+            } else if (seleccionandoEntrega && seleccionandoProducto) {
+                Object[] botones = {"Entrega", "Producto"};
 
-    private void btnBajas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajas1ActionPerformed
+                int opcion = JOptionPane.showOptionDialog(null, "Se seleccionaron campos en dos tablas distintas\n"
+                        + "¿Desea modificar los datos de la entrega? O ¿Desea modificar la cantidad del producto seleccionado?", "Operaciones",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, botones, botones[0]);
+
+                if (opcion == 0) {
+                    modificarEntrega();
+                    obtenerEntregasRecientes();
+                } else if (opcion == 1) {
+                    int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad del producto seleccionado"));
+                    entregaAux.actualizarCantidades(cantidad, tblInfo.getValueAt(tblInfo.getSelectedRow(), 0).toString());
+                    mostrarProductos(tblEntregas.getSelectedRow());
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Primero seleccione un elemento en la tabla de entregas recientes");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void chbFechaHoyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbFechaHoyActionPerformed
+        if (chbFechaHoy.isSelected()) {
+            calFecha.setDate(new Date());
+            calFecha.setEnabled(false);
+        } else {
+            calFecha.setEnabled(true);
+        }
+    }//GEN-LAST:event_chbFechaHoyActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            //Primero recorremos la tabla para evitar que hayan repetidos
+            for (int i = 0; i < tblProductos.getRowCount(); i++) {
+                if (cbxProductos.getSelectedItem().toString().equals(tblProductos.getValueAt(i, 0))) {
+                    Object[] botones = {"Sumar", "Sobreescribir"};
+                    int opcion = JOptionPane.showOptionDialog(null, "Ya se han agregado unidades de este producto\n\n"
+                            + "¿Desea sumar las cantidades? O ¿Desea que se sobreescriba la cantidad anterior?", "Operaciones",
+                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, botones, botones[0]);
+
+                    if (opcion == 0) {
+                        //Sumar
+                        int enLaTabla = Integer.parseInt(tblProductos.getValueAt(i, 3).toString());
+                        int enElSpinner = Integer.parseInt(spnCantidad.getValue().toString());
+                        tblProductos.setValueAt((enLaTabla + enElSpinner), i, 3);
+
+                    } else if (opcion == 1) {
+                        //Corregir
+                        tblProductos.setValueAt(Integer.parseInt(spnCantidad.getValue().toString()), i, 3);
+                    }
+                    return;
+                }
+            }
+            productoAux = new Productos(cbxProductos.getSelectedItem().toString());
+            String datos[] = new String[4];
+            //System.out.println("Tamano de lista de productos" + listaDeProductos.size());
+            for (int x = 0; x < listaDeProductos.size(); x++) {
+                //System.out.println("En la lista: " + listaDeProductos.get(x)[0]);                
+                if (cbxProductos.getSelectedItem().toString().equals(listaDeProductos.get(x)[0])) {
+                    productoAux = productoAux.consultarProducto(productoAux);
+
+                    datos[0] = productoAux.getIdProducto();
+                    datos[1] = productoAux.getNombre();
+                    datos[2] = productoAux.getMarca();
+                    datos[3] = spnCantidad.getValue().toString();
+                    tableProductosModel.addRow(datos);
+                    break;
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("En catch");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void cbxProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedoresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnBajas1ActionPerformed
-
-    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificar1ActionPerformed
-
+    }//GEN-LAST:event_cbxProveedoresActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBajas1;
-    private javax.swing.JButton btnModificar1;
-    public static javax.swing.JButton btnOperacion;
-    public static javax.swing.JButton btnOperacion1;
-    private static javax.swing.JComboBox<String> cbxYear;
-    private static javax.swing.JComboBox<String> cbxYear1;
-    private static javax.swing.JComboBox<String> cbxYear2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    public static javax.swing.JButton btnFinalizar;
+    public static javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
+    private com.toedter.calendar.JDateChooser calFecha;
+    private static javax.swing.JComboBox<String> cbxEmpleados;
+    private static javax.swing.JComboBox<String> cbxProductos;
+    private static javax.swing.JComboBox<String> cbxProveedores;
+    private javax.swing.JCheckBox chbFechaHoy;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
-    private javax.swing.JList<String> jList4;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
-    private static javax.swing.JTextField txtDireccion;
-    private static javax.swing.JTextField txtDireccion4;
+    private javax.swing.JScrollPane scrlEntregas;
+    private javax.swing.JScrollPane scrlInfo;
+    private javax.swing.JScrollPane scrlProductos;
+    private javax.swing.JSpinner spnCantidad;
+    private javax.swing.JTable tblEntregas;
+    private javax.swing.JTable tblInfo;
+    private javax.swing.JTable tblProductos;
+    private static javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

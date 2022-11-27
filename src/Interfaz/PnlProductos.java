@@ -625,7 +625,7 @@ public class PnlProductos extends javax.swing.JPanel {
 
         spnExistencias.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         spnExistencias.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        spnExistencias.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        spnExistencias.setBorder(null);
         spnExistencias.setPreferredSize(new java.awt.Dimension(64, 25));
         pnlProducto.add(spnExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 340, 30));
 
