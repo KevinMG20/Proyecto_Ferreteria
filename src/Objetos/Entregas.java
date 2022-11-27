@@ -23,29 +23,44 @@ public class Entregas {
     String idEmpleado;
 
     //Metodos
+    //Se recorre cada caracter, se hacen mayusculas y se eliminan espacios en blanco y puntos
     public String generarFolio(String fecha, String idProv) {
         try {
-            fecha = fecha.toUpperCase();
-            String folioEntrega = fecha.substring(0, 2);
-            folioEntrega += fecha.substring(3, 8);
-            folioEntrega += fecha.substring(10) + "_";
-            folioEntrega += idProv + "_";
+            //System.out.println("Fecha: " + fecha + "\nProveedor: " + idProv);
+            String folioEntrega = "";
+            for (int i = 0; i < (fecha.length() - 4); i++) {
+                if (fecha.charAt(i) == ' ' || fecha.charAt(i) == '.') {
+                    if (folioEntrega.length() < 2) { //En caso de dias del mes menores a 10
+                        folioEntrega = "0" + folioEntrega;
+                    }
+                } else {
+                    folioEntrega += Character.toString(fecha.charAt(i));
+                }
+            }
+            folioEntrega += fecha.substring(fecha.length() - 2, fecha.length());
+            folioEntrega = folioEntrega.toUpperCase();
+
+            folioEntrega += "_" + idProv + "_";
 
             for (int x = 1; x < 100; x++) {
                 if (x < 10) {
                     if (!existeRegistro(new Entregas(folioEntrega + "0" + x))) {
                         folioEntrega += "0" + x;
+                        System.out.println("Folio generado: " + folioEntrega);
                         return folioEntrega;
                     }
                 } else if (x < 100) {
                     if (!existeRegistro(new Entregas(folioEntrega + x))) {
                         folioEntrega += "0" + x;
+                        System.out.println("Folio generado: " + folioEntrega);
                         return folioEntrega;
                     }
                 }
             }
+
         } catch (StringIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "Introduzca una fecha que sea válida");
+            ex.printStackTrace();
+            System.out.println("Error al generar el Folio");
         }
 
         return null;
@@ -107,15 +122,16 @@ public class Entregas {
             Conexion.con.commit();
             Conexion.con.setAutoCommit(true);
 
+            JOptionPane.showMessageDialog(null, "Entrega registrada exitosamente");
+
             //int filasInsertadas = ps.executeUpdate();
             //System.out.println("Insercion exitosa.\nRegistros insertados: " + filasInsertadas);
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             ex.printStackTrace();
             try {
                 Conexion.con.rollback();
             } catch (SQLException e) {
-                ex.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
@@ -188,23 +204,50 @@ public class Entregas {
         }
     }
 
-    public void eliminarEntrega() { //Eliminacion de entregas              
-
-        Entregas eliminarEntr = new Entregas(JOptionPane.showInputDialog(null, "Ingrese el folio de la entrega que desea eliminar"));
-
-        if (!existeRegistro(eliminarEntr)) { //Si no existe el registro, se termina el metodo
-            return;
-        }
+    public void eliminarEntrega(Entregas eliminarEntr) { //Eliminacion de entregas              
         System.out.println("Se eliminara una nueva entrega\n");
 
-        int option = JOptionPane.showConfirmDialog(null,
-                "¿Estás seguro de eliminar esta entrega?", "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int option = JOptionPane.showConfirmDialog(null, "Eliminar una entrega significa también eliminar todos los productos que se"
+                + "recibieron en ella\n¿Estás seguro de eliminar esta entrega y todos sus productos?", "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (option == JOptionPane.OK_OPTION) {
             try {
-                PreparedStatement ps = Conexion.con.prepareStatement("DELETE FROM entregas WHERE folioEntrega=?");
+                Conexion.con.setAutoCommit(false);
+                PreparedStatement psEntrega = Conexion.con.prepareStatement("DELETE FROM entregas WHERE folioEntrega=?");
+                psEntrega.setString(1, eliminarEntr.getFolioEntrega());
+                psEntrega.execute();
 
-                ps.setString(1, eliminarEntr.getFolioEntrega());
+                PreparedStatement psProductos = Conexion.con.prepareStatement("DELETE FROM productosdeentrega WHERE folioEntrega=?");
+                psProductos.setString(1, eliminarEntr.getFolioEntrega());
+                psProductos.execute();
+
+                Conexion.con.commit();
+                Conexion.con.setAutoCommit(true);
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                try {
+                    Conexion.con.rollback();
+                } catch (SQLException e) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void eliminarProductoDeEntrega(String idProducto, String folioEntrega) { //Eliminacion de entregas                    
+        System.out.println("Se eliminara una nueva entrega\n");
+
+        int option = JOptionPane.showConfirmDialog(null,
+                "¿Estás seguro de eliminar el pruducto de la entrega?", "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (option == JOptionPane.OK_OPTION) {
+            try {
+                PreparedStatement ps = Conexion.con.prepareStatement("DELETE FROM productosdeentrega WHERE folioEntrega=? AND idProducto=?");
+
+                ps.setString(1, folioEntrega);
+                ps.setString(2, idProducto);
 
                 int filasInsertadas = ps.executeUpdate();
                 System.out.println("Eliminacion exitosa.\nRegistros eliminados: " + filasInsertadas);
@@ -213,7 +256,61 @@ public class Entregas {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
             }
+
         }
+    }
+
+    public Entregas consultarEntrega(Entregas entregaAux) { //Consulta de una entrega
+        ResultSet resultEntrega, resultProductos;
+        //String consultaEntrega = "SELECT * FROM entregas";
+        //String consultaProductos = "SELECT * FROM productosdeentrega";
+        ArrayList<Entregas> listaDeEntregas = new ArrayList<>();
+        Entregas buscarEntr;
+        int rows = 0;
+        String[] productoDeEntrega;
+        int[] cantidadesDeProductos;
+        int x = 0;
+
+        try {
+            PreparedStatement ps = Conexion.con.prepareStatement("SELECT * FROM entregas WHERE folioEntrega='" + entregaAux.getFolioEntrega() + "'");
+            resultEntrega = ps.executeQuery();
+
+            if (resultEntrega.next()) {
+                entregaAux.setFolioEntrega(resultEntrega.getString("folioEntrega"));
+                entregaAux.setFecha(resultEntrega.getString("fecha"));
+                entregaAux.setIdProveedor(resultEntrega.getString("idProveedor"));
+                entregaAux.setIdEmpleado(resultEntrega.getString("idEmpleado"));
+
+                //Posteriormente, de cada entrega, se consulta sus productos en la tabla foranea
+                ps = Conexion.con.prepareStatement("SELECT * FROM productosdeentrega WHERE folioEntrega='"
+                        + entregaAux.getFolioEntrega() + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                resultProductos = ps.executeQuery();
+                //Obtener la cantidad de productos de la entrega
+                if (resultProductos.last()) {
+                    rows = resultProductos.getRow();
+                    resultProductos.beforeFirst();
+                }
+                productoDeEntrega = new String[rows];
+                cantidadesDeProductos = new int[rows];
+
+                //Se guardan todos los productos y sus cantidades en arrays
+                while (resultProductos.next()) {
+                    productoDeEntrega[x] = resultProductos.getString("idProducto");
+                    cantidadesDeProductos[x] = resultProductos.getInt("cantidad");
+                    x++;
+                }
+                //Y se asignan al objeto
+                entregaAux.setIdProductos(productoDeEntrega);
+                entregaAux.setCantidades(cantidadesDeProductos);
+
+                return entregaAux;
+            }
+            return null;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public ArrayList<Entregas> consultarTodasEntregas() { //Consulta de una entrega

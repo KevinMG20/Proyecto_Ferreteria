@@ -199,7 +199,7 @@ public class Productos {
                 productoAux.setPrecio(rs.getFloat("precio"));
                 productoAux.setExistencias(rs.getInt("existencias"));
 
-                System.out.println("\nProducto encontrado:\n" + productoAux.toString());
+                //System.out.println("\nProducto encontrado:\n" + productoAux.toString());
                 return productoAux;
             } else {
                 JOptionPane.showMessageDialog(null, "No hay ningun registro con ese ID");

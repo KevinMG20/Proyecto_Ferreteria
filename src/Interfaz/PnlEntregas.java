@@ -16,6 +16,7 @@ import java.beans.PropertyChangeListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
@@ -77,8 +78,10 @@ public class PnlEntregas extends javax.swing.JPanel {
         });
     }
     ArrayList<Entregas> listaDeEntregas;
+    String folioSeleccionado;
 
     public void obtenerEntregasRecientes() {
+        entregaAux = new Entregas();
         listaDeEntregas = entregaAux.consultarTodasEntregas();
         //Limpiar la tabla
         while (tableEntregasModel.getRowCount() != 0) {
@@ -95,19 +98,26 @@ public class PnlEntregas extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
                     seleccionandoEntrega = true;
+                    folioSeleccionado = tblEntregas.getValueAt(tblEntregas.getSelectedRow(), 0).toString();
                     switch (tblEntregas.getSelectedColumn()) {
                         case 0, 1, 4: //En caso que se seleccione el Folio o el total de productos
                             mostrarProductos(tblEntregas.getSelectedRow());
+                            seleccionandoEntrega = true;
                             break;
                         case 2: //En caso del empleado
                             mostrarEmpleado(tblEntregas.getSelectedRow());
+                            seleccionandoProducto = false;
                             break;
                         case 3: //En caso del proveedor
                             mostrarProveedor(tblEntregas.getSelectedRow());
+                            seleccionandoProducto = false;
                             break;
                         default:
                             break;
                     }
+                } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                    JOptionPane.showMessageDialog(null, "Antes de presionar en buscar, deseleccione la edición de la celda");
+                    obtenerEntregasRecientes();
                 } catch (Exception ex) {
 
                 }
@@ -160,38 +170,43 @@ public class PnlEntregas extends javax.swing.JPanel {
             tblInfo.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         empleadoAux = new Empleados(listaDeEntregas.get(item).getIdEmpleado());
-        System.out.println(listaDeEntregas.get(item).getIdEmpleado() + "asd");
+        //System.out.println(listaDeEntregas.get(item).getIdEmpleado() + "asd");
         empleadoAux = empleadoAux.consultarEmpleado(empleadoAux);
         tableInfoModel.addRow(new String[]{empleadoAux.getIdEmpleado(), empleadoAux.getNombre(),
             empleadoAux.getPuesto(), empleadoAux.getTurno()});
     }
 
     public void mostrarProductos(int item) {
-        tableInfoModel = new DefaultTableModel();
+        try {
+            tableInfoModel = new DefaultTableModel();
 
-        tableInfoModel.addColumn("ID");
-        tableInfoModel.addColumn("Nombre");
-        tableInfoModel.addColumn("Categoria");
-        tableInfoModel.addColumn("Marca");
-        tableInfoModel.addColumn("Cantidad");
+            tableInfoModel.addColumn("ID");
+            tableInfoModel.addColumn("Nombre");
+            tableInfoModel.addColumn("Categoria");
+            tableInfoModel.addColumn("Marca");
+            tableInfoModel.addColumn("Cantidad");
 
-        tblInfo.setModel(tableInfoModel);
+            tblInfo.setModel(tableInfoModel);
 
-        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(20);
-        tblInfo.getColumnModel().getColumn(2).setPreferredWidth(40);
-        tblInfo.getColumnModel().getColumn(3).setPreferredWidth(40);
-        tblInfo.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tblInfo.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblInfo.getColumnModel().getColumn(2).setPreferredWidth(40);
+            tblInfo.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tblInfo.getColumnModel().getColumn(4).setPreferredWidth(30);
 
-        for (int i = 0; i < 5; i++) {
-            tblInfo.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+            for (int i = 0; i < 5; i++) {
+                tblInfo.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
 
-        for (int i = 0; i < listaDeEntregas.get(item).getIdProductos().length; i++) {
-            productoAux = new Productos(listaDeEntregas.get(item).getIdProductos()[i]);
-            productoAux = productoAux.consultarProducto(productoAux);
-            tableInfoModel.addRow(new String[]{productoAux.getIdProducto(),
-                productoAux.getNombre(), productoAux.getCategoria(),
-                productoAux.getMarca(), Integer.toString(listaDeEntregas.get(item).getCantidades()[i])});
+            for (int i = 0; i < listaDeEntregas.get(item).getIdProductos().length; i++) {
+                productoAux = new Productos(listaDeEntregas.get(item).getIdProductos()[i]);
+                productoAux = productoAux.consultarProducto(productoAux);
+                tableInfoModel.addRow(new String[]{productoAux.getIdProducto(),
+                    productoAux.getNombre(), productoAux.getCategoria(),
+                    productoAux.getMarca(), Integer.toString(listaDeEntregas.get(item).getCantidades()[i])});
+            }
+        } catch (Exception ex) {//Si no hay un item seleccionado, que se vacie la tabla
+            tableInfoModel = new DefaultTableModel();
+            tblInfo.setModel(tableInfoModel);
         }
     }
 
@@ -291,10 +306,10 @@ public class PnlEntregas extends javax.swing.JPanel {
         tblInfo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                try {
+                if (tableInfoModel.getColumnName(2).equals("Categoria")) {
                     seleccionandoProducto = true;
-                } catch (Exception ex) {
-
+                } else {
+                    seleccionandoProducto = false;
                 }
             }
         });
@@ -311,6 +326,7 @@ public class PnlEntregas extends javax.swing.JPanel {
     public void modificarEntrega() {
         entregaAux = listaDeEntregas.get(tblEntregas.getSelectedRow());
         txtFecha.setText(entregaAux.getFecha());
+        //calFecha.setDate(new Date(DateFormat(entregaAux.getFecha())));
         cbxEmpleados.setSelectedItem(entregaAux.getIdEmpleado());
         cbxProveedores.setSelectedItem(entregaAux.getIdProveedor());
         productoAux = new Productos();
@@ -338,10 +354,61 @@ public class PnlEntregas extends javax.swing.JPanel {
         tblProductos.setEnabled(false);
     }
 
+    public void buscarEntrega() {
+        try {
+            entregaAux = new Entregas(txtBuscar.getText());
+            entregaAux = entregaAux.consultarEntrega(entregaAux);
+            listaDeEntregas.clear();
+            listaDeEntregas.add(entregaAux);
+            productoAux = new Productos();
+            String datos[] = new String[5];
+            //Limpiar la tabla de info
+            if (tableInfoModel != null) {
+                while (tableInfoModel.getRowCount() != 0) {
+                    tableInfoModel.removeRow(0);
+                }
+            } else {
+                tableInfoModel = new DefaultTableModel();
+                tblInfo.setModel(tableInfoModel);
+            }
+            //Limpiar la tabla de entregas
+            while (tableEntregasModel.getRowCount() != 0) {
+                tableEntregasModel.removeRow(0);
+            }
+            try {
+                tableEntregasModel.addRow(new String[]{entregaAux.getFolioEntrega(), entregaAux.getFecha(),
+                    entregaAux.getIdEmpleado(), entregaAux.getIdProveedor(),
+                    Integer.toString(entregaAux.getIdProductos().length)});
+            } catch (java.lang.NullPointerException e) {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado ninguna entrega con ese folio");
+                return;
+            }
+            //Buscamos al producto en la lista de productos
+            for (int x = 0; x < entregaAux.getIdProductos().length; x++) {
+                for (int y = 0; y < listaDeProductos.size(); y++) {
+                    if (entregaAux.getIdProductos()[x].equals(listaDeProductos.get(y)[0])) {
+                        datos = new String[5];
+                        datos[0] = listaDeProductos.get(y)[0];
+                        datos[1] = listaDeProductos.get(y)[1];
+                        datos[2] = listaDeProductos.get(y)[2];
+                        datos[3] = listaDeProductos.get(y)[3];
+                        datos[4] = Integer.toString(entregaAux.getCantidades()[x]);
+                        tableInfoModel.addRow(datos);
+                        break;
+                    }
+                }
+            }
+            folioSeleccionado = entregaAux.getFolioEntrega();
+        } catch (Exception ex) {
+
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnBuscar = new javax.swing.JButton();
         cbxProveedores = new javax.swing.JComboBox<>();
         btnLimpiar = new javax.swing.JButton();
         calFecha = new com.toedter.calendar.JDateChooser();
@@ -359,7 +426,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         cbxEmpleados = new javax.swing.JComboBox<>();
@@ -373,21 +440,32 @@ public class PnlEntregas extends javax.swing.JPanel {
         scrlInfo = new javax.swing.JScrollPane();
         tblInfo = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
+        btnVerTodos = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(232, 232, 232));
         setMinimumSize(new java.awt.Dimension(1156, 750));
         setPreferredSize(new java.awt.Dimension(1366, 676));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnBuscar.setBackground(new java.awt.Color(2, 62, 138));
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoBuscar2.png"))); // NOI18N
+        btnBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnBuscar.setFocusPainted(false);
+        btnBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 30, 40, 40));
+
         cbxProveedores.setBackground(new java.awt.Color(215, 215, 215));
         cbxProveedores.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
         cbxProveedores.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
         cbxProveedores.setPreferredSize(new java.awt.Dimension(72, 25));
-        cbxProveedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxProveedoresActionPerformed(evt);
-            }
-        });
         add(cbxProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 210, -1));
 
         btnLimpiar.setBackground(new java.awt.Color(211, 211, 211));
@@ -553,17 +631,25 @@ public class PnlEntregas extends javax.swing.JPanel {
         });
         add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 693, 210, 40));
 
-        jTextField1.setBackground(new java.awt.Color(215, 215, 215));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(142, 142, 142));
-        jTextField1.setText("Folio de la entrega...");
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 16, 1, 1));
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 30, 270, 40));
+        txtBuscar.setBackground(new java.awt.Color(215, 215, 215));
+        txtBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(142, 142, 142));
+        txtBuscar.setText("Folio de la entrega...");
+        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 16, 1, 1));
+        txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBuscarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBuscarFocusLost(evt);
+            }
+        });
+        add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 30, 280, 40));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Buscar");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 35, 70, -1));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 35, 70, -1));
 
         jLabel22.setBackground(new java.awt.Color(51, 51, 51));
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -637,6 +723,21 @@ public class PnlEntregas extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 100, 20, 660));
+
+        btnVerTodos.setBackground(new java.awt.Color(2, 62, 138));
+        btnVerTodos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnVerTodos.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoActualizar.png"))); // NOI18N
+        btnVerTodos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnVerTodos.setFocusPainted(false);
+        btnVerTodos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVerTodos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnVerTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerTodosActionPerformed(evt);
+            }
+        });
+        add(btnVerTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 30, 40, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -650,9 +751,9 @@ public class PnlEntregas extends javax.swing.JPanel {
         } else {
             mensaje = "¿Confirmar el registro de la entrega?";
         }
-
+        String date;
         if (JOptionPane.showConfirmDialog(null, mensaje, "Confirmar", JOptionPane.YES_OPTION) == 0) {
-            String date = ((JTextField) calFecha.getDateEditor().getUiComponent()).getText();
+            date = txtFecha.getText();
 
             String[] productos = new String[tableProductosModel.getRowCount()];
             int[] cantidades = new int[tableProductosModel.getRowCount()];
@@ -674,14 +775,17 @@ public class PnlEntregas extends javax.swing.JPanel {
             //System.out.println("Folio: " + entregaAux.generarFolio(date, cbxProveedores.getSelectedItem().toString()));
 
             if (modificando) {
-                entregaAux = new Entregas(tblEntregas.getValueAt(tblEntregas.getSelectedRow(), 0).toString(),
-                        date, productos, cantidades, cbxProveedores.getSelectedItem().toString(),
-                        cbxEmpleados.getSelectedItem().toString());
+                entregaAux = new Entregas(folioSeleccionado, date, productos, cantidades,
+                        cbxProveedores.getSelectedItem().toString(), cbxEmpleados.getSelectedItem().toString());
                 entregaAux.actualizarDatosEntregas(entregaAux);
             } else {
                 entregaAux = new Entregas(entregaAux.generarFolio(date, cbxProveedores.getSelectedItem().toString()),
                         date, productos, cantidades, cbxProveedores.getSelectedItem().toString(),
                         cbxEmpleados.getSelectedItem().toString());
+                if (date == null || date.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Introduzca una fecha válida");
+                    return;
+                }
                 entregaAux.registrarEntrega(entregaAux);
             }
             modificando = false;
@@ -689,26 +793,81 @@ public class PnlEntregas extends javax.swing.JPanel {
             cbxProductos.setEnabled(true);
             spnCantidad.setEnabled(true);
             tblProductos.setEnabled(true);
+            obtenerEntregasRecientes();
             limpiar();
         }
 
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+            entregaAux = new Entregas(tblEntregas.getValueAt(tblEntregas.getSelectedRow(), 0).toString());
+            if (seleccionandoEntrega && !seleccionandoProducto) { //Entrega seleccionada pero no producto
+                entregaAux.eliminarEntrega(entregaAux);
+                obtenerEntregasRecientes();
+                seleccionandoEntrega = false;
+                seleccionandoProducto = false;
+            } else if (!seleccionandoEntrega && seleccionandoProducto) { //Producto seleccionado pero no entrega
+                entregaAux.eliminarProductoDeEntrega(tblInfo.getValueAt(tblInfo.getSelectedRow(), 0).toString(),
+                        folioSeleccionado);
+
+                //Para actualizar la tabla
+                for (int i = 0; i < listaDeEntregas.size(); i++) {
+                    if (folioSeleccionado.equals(listaDeEntregas.get(i).getFolioEntrega())) {
+                        obtenerEntregasRecientes();
+                        mostrarProductos(i);
+                    }
+                }
+                seleccionandoProducto = false;
+            } else if (seleccionandoEntrega && seleccionandoProducto) { //Ambos seleccionados, se pregunta
+                Object[] botones = {"Entrega", "Producto"};
+
+                int opcion = JOptionPane.showOptionDialog(null, "Se seleccionaron campos en dos tablas distintas\n"
+                        + "¿Desea eliminar los datos de la entrega? O ¿Desea eliminar el producto seleccionado?", "Operaciones",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, botones, botones[0]);
+
+                if (opcion == 0) {
+                    entregaAux.eliminarEntrega(entregaAux);
+                    obtenerEntregasRecientes();
+                    seleccionandoEntrega = false;
+                    seleccionandoProducto = false;
+                } else if (opcion == 1) {
+                    entregaAux.eliminarProductoDeEntrega(tblInfo.getValueAt(tblInfo.getSelectedRow(), 0).toString(),
+                            folioSeleccionado);
+
+                    for (int i = 0; i < listaDeEntregas.size(); i++) {
+                        if (folioSeleccionado.equals(listaDeEntregas.get(i).getFolioEntrega())) {
+                            obtenerEntregasRecientes();
+                            mostrarProductos(i);
+                        }
+                    }
+                    seleccionandoProducto = false;
+                }
+            }
+            seleccionandoProducto = false;
+        } catch (Exception ex) { //Ninguno seleccionado
+            JOptionPane.showMessageDialog(null, "Primero seleccione un elemento en la tabla de entregas o uno de sus productos");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
     boolean modificando;
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
             entregaAux = new Entregas(tblEntregas.getValueAt(tblEntregas.getSelectedRow(), 0).toString());
-            if (seleccionandoEntrega && !seleccionandoProducto) {
+            if (seleccionandoEntrega && !seleccionandoProducto) { //Entrega seleccionada pero no producto
                 modificarEntrega();
                 obtenerEntregasRecientes();
-            } else if (!seleccionandoEntrega && seleccionandoProducto) {
+            } else if (!seleccionandoEntrega && seleccionandoProducto) { //Producto seleccionado pero no entrega
                 int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad del producto seleccionado"));
                 entregaAux.actualizarCantidades(cantidad, tblInfo.getValueAt(tblInfo.getSelectedRow(), 0).toString());
-                mostrarProductos(tblEntregas.getSelectedRow());
-            } else if (seleccionandoEntrega && seleccionandoProducto) {
+                //Como la seleccion se quita al dar click en un boton, se debe buscar el folio en la lista de entregas
+                //Para actualizar la tabla
+                for (int i = 0; i < listaDeEntregas.size(); i++) {
+                    if (folioSeleccionado.equals(listaDeEntregas.get(i).getFolioEntrega())) {
+                        obtenerEntregasRecientes();
+                        mostrarProductos(i);
+                    }
+                }
+            } else if (seleccionandoEntrega && seleccionandoProducto) { //Ambos seleccionados, se pregunta
                 Object[] botones = {"Entrega", "Producto"};
 
                 int opcion = JOptionPane.showOptionDialog(null, "Se seleccionaron campos en dos tablas distintas\n"
@@ -721,10 +880,15 @@ public class PnlEntregas extends javax.swing.JPanel {
                 } else if (opcion == 1) {
                     int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad del producto seleccionado"));
                     entregaAux.actualizarCantidades(cantidad, tblInfo.getValueAt(tblInfo.getSelectedRow(), 0).toString());
-                    mostrarProductos(tblEntregas.getSelectedRow());
+                    for (int i = 0; i < listaDeEntregas.size(); i++) {
+                        if (folioSeleccionado.equals(listaDeEntregas.get(i).getFolioEntrega())) {
+                            obtenerEntregasRecientes();
+                            mostrarProductos(i);
+                        }
+                    }
                 }
             }
-        } catch (Exception ex) {
+        } catch (Exception ex) { //Ninguno seleccionado
             JOptionPane.showMessageDialog(null, "Primero seleccione un elemento en la tabla de entregas recientes");
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -784,16 +948,36 @@ public class PnlEntregas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void cbxProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxProveedoresActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        buscarEntrega();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusGained
+        if (txtBuscar.getText().equals("Folio de la entrega...")) {
+            txtBuscar.setText("");
+            txtBuscar.setForeground(new Color(64, 64, 64));
+        }
+    }//GEN-LAST:event_txtBuscarFocusGained
+
+    private void txtBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusLost
+        if (txtBuscar.getText().equals("")) {
+            txtBuscar.setText("Folio de la entrega...");
+            txtBuscar.setForeground(new Color(142, 142, 142));
+        }
+    }//GEN-LAST:event_txtBuscarFocusLost
+
+    private void btnVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosActionPerformed
+        obtenerEntregasRecientes();
+    }//GEN-LAST:event_btnVerTodosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     public static javax.swing.JButton btnFinalizar;
     public static javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnVerTodos;
     private com.toedter.calendar.JDateChooser calFecha;
     private static javax.swing.JComboBox<String> cbxEmpleados;
     private static javax.swing.JComboBox<String> cbxProductos;
@@ -811,7 +995,6 @@ public class PnlEntregas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane scrlEntregas;
     private javax.swing.JScrollPane scrlInfo;
     private javax.swing.JScrollPane scrlProductos;
@@ -819,6 +1002,7 @@ public class PnlEntregas extends javax.swing.JPanel {
     private javax.swing.JTable tblEntregas;
     private javax.swing.JTable tblInfo;
     private javax.swing.JTable tblProductos;
+    private javax.swing.JTextField txtBuscar;
     private static javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

@@ -517,7 +517,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Buscar");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 50, 70, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 45, 70, -1));
 
         btnAgregar.setBackground(new java.awt.Color(2, 62, 138));
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
