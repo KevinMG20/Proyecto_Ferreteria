@@ -1159,7 +1159,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         revalidate();
         repaint();
     }//GEN-LAST:event_btnEntregasActionPerformed
-    JPanel pnlVentas = new PnlVentas();
+    JPanel pnlVentas = new PnlVentas1();
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlVentas);
