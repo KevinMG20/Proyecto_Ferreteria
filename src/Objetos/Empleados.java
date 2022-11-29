@@ -282,22 +282,11 @@ public class Empleados {
         return true;
     }
 
-    public boolean iniciarSesion(Empleados empleado) {
-        try {
-            ResultSet rs;
-            PreparedStatement ps = Conexion.con.prepareStatement("SELECT * FROM empleados WHERE idEmpleado='" + empleado.getIdEmpleado() + "'");
-            rs = ps.executeQuery();
-
-            if (rs.next() && empleado.getIdEmpleado().equals(rs.getString("idEmpleado"))) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            return false;
+    public boolean iniciarSesion(Empleados empleado, String password) {
+        if (empleado.getPuesto().equals("Gerente")) {
+            return password.equals("MySQL");
+        } else {
+            return password.equals("Ferreteria");
         }
     }
 

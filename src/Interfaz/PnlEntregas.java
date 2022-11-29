@@ -13,14 +13,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -63,6 +57,12 @@ public class PnlEntregas extends javax.swing.JPanel {
         JComponent editor = spnCantidad.getEditor();
         JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) editor;
         spinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
+        
+        if (!Login.usuario.getPuesto().equals("Gerente")) {
+            lblHerramientas.setVisible(false);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);            
+        }
 
         calFecha.getDateEditor().addPropertyChangeListener(
                 new PropertyChangeListener() {
@@ -262,17 +262,17 @@ public class PnlEntregas extends javax.swing.JPanel {
         JTableHeader th = tblProductos.getTableHeader();
         th.setFont(new Font("Segoe UI", Font.BOLD, 15));
         th.setForeground(Color.WHITE);
-        tblProductos.getTableHeader().setBackground(new Color(2, 62, 138));
+        tblProductos.getTableHeader().setBackground(new Color(183,52,0));
 
         th = tblEntregas.getTableHeader();
         th.setFont(new Font("Segoe UI", Font.BOLD, 15));
         th.setForeground(Color.WHITE);
-        tblEntregas.getTableHeader().setBackground(new Color(2, 62, 138));
+        tblEntregas.getTableHeader().setBackground(new Color(183,52,0));
 
         th = tblInfo.getTableHeader();
         th.setFont(new Font("Segoe UI", Font.BOLD, 15));
         th.setForeground(Color.WHITE);
-        tblInfo.getTableHeader().setBackground(new Color(2, 62, 138));
+        tblInfo.getTableHeader().setBackground(new Color(183,52,0));
 
         tblProductos.getColumnModel().getColumn(0).setPreferredWidth(25);
         tblProductos.getColumnModel().getColumn(2).setPreferredWidth(25);
@@ -423,7 +423,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         jLabel20 = new javax.swing.JLabel();
         cbxProductos = new javax.swing.JComboBox<>();
         btnFinalizar = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
+        lblHerramientas = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
@@ -447,7 +447,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1366, 676));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnBuscar.setBackground(new java.awt.Color(2, 62, 138));
+        btnBuscar.setBackground(new java.awt.Color(183, 52, 0));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoBuscar2.png"))); // NOI18N
@@ -576,7 +576,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         cbxProductos.setPreferredSize(new java.awt.Dimension(72, 25));
         add(cbxProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 210, -1));
 
-        btnFinalizar.setBackground(new java.awt.Color(2, 62, 138));
+        btnFinalizar.setBackground(new java.awt.Color(183, 52, 0));
         btnFinalizar.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 18)); // NOI18N
         btnFinalizar.setForeground(new java.awt.Color(232, 232, 232));
         btnFinalizar.setText("Confirmar");
@@ -588,15 +588,15 @@ public class PnlEntregas extends javax.swing.JPanel {
         });
         add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 580, 120, 33));
 
-        jLabel11.setBackground(new java.awt.Color(215, 215, 215));
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(64, 64, 64));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Herramientas del Gerente");
-        jLabel11.setOpaque(true);
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 500, 33));
+        lblHerramientas.setBackground(new java.awt.Color(215, 215, 215));
+        lblHerramientas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblHerramientas.setForeground(new java.awt.Color(64, 64, 64));
+        lblHerramientas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHerramientas.setText("Herramientas del Gerente");
+        lblHerramientas.setOpaque(true);
+        add(lblHerramientas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 500, 33));
 
-        btnEliminar.setBackground(new java.awt.Color(1, 50, 112));
+        btnEliminar.setBackground(new java.awt.Color(183, 52, 0));
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(232, 232, 232));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png"))); // NOI18N
@@ -614,7 +614,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         });
         add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 693, 220, 40));
 
-        btnModificar.setBackground(new java.awt.Color(2, 62, 138));
+        btnModificar.setBackground(new java.awt.Color(183, 52, 0));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(232, 232, 232));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
@@ -724,7 +724,7 @@ public class PnlEntregas extends javax.swing.JPanel {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 100, 20, 660));
 
-        btnVerTodos.setBackground(new java.awt.Color(2, 62, 138));
+        btnVerTodos.setBackground(new java.awt.Color(183, 52, 0));
         btnVerTodos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnVerTodos.setForeground(new java.awt.Color(255, 255, 255));
         btnVerTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoActualizar.png"))); // NOI18N
@@ -984,7 +984,6 @@ public class PnlEntregas extends javax.swing.JPanel {
     private static javax.swing.JComboBox<String> cbxProveedores;
     private javax.swing.JCheckBox chbFechaHoy;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -995,6 +994,7 @@ public class PnlEntregas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblHerramientas;
     private javax.swing.JScrollPane scrlEntregas;
     private javax.swing.JScrollPane scrlInfo;
     private javax.swing.JScrollPane scrlProductos;

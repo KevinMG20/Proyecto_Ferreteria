@@ -225,7 +225,7 @@ public class PnlProductos extends javax.swing.JPanel {
         JTableHeader th = tblProductos.getTableHeader();
         th.setFont(new Font("Segoe UI", Font.BOLD, 15));
         th.setForeground(Color.WHITE);
-        tblProductos.getTableHeader().setBackground(new Color(2, 62, 138));
+        tblProductos.getTableHeader().setBackground(new Color(183,52,0));
 
         tblProductos.getColumnModel().getColumn(0).setPreferredWidth(25);
         tblProductos.getColumnModel().getColumn(4).setPreferredWidth(25);
@@ -245,7 +245,7 @@ public class PnlProductos extends javax.swing.JPanel {
                     productoAux = new Productos(tableModel.getValueAt(tblProductos.getSelectedRow(), 0).toString());
                     productoAux = productoAux.consultarProducto(productoAux);
                     cargarProducto(productoAux);
-                    System.out.println("En listener");
+                    //System.out.println("En listener");
                 } catch (Exception ex) {
                     cargarProducto(null);
                 }
@@ -268,7 +268,7 @@ public class PnlProductos extends javax.swing.JPanel {
 
     public void cargarProducto(Productos datos) {
         if (datos != null) {
-            System.out.println("Cargando objeto");
+            //System.out.println("Cargando objeto");
             lblID.setText(datos.getIdProducto());
             cbxMarca.setSelectedItem(datos.getMarca());
             txtNombre.setText(datos.getNombre());
@@ -355,6 +355,7 @@ public class PnlProductos extends javax.swing.JPanel {
         txtNombre = new javax.swing.JTextField();
         cbxCats = new javax.swing.JComboBox<>();
         cbxMarca = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
@@ -376,7 +377,7 @@ public class PnlProductos extends javax.swing.JPanel {
         pnlCategorias.setPreferredSize(new java.awt.Dimension(330, 390));
         pnlCategorias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnSiguiente.setBackground(new java.awt.Color(211, 211, 211));
+        btnSiguiente.setBackground(new java.awt.Color(215, 215, 215));
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         btnSiguiente.setForeground(new java.awt.Color(64, 64, 64));
         btnSiguiente.setText("<");
@@ -390,7 +391,7 @@ public class PnlProductos extends javax.swing.JPanel {
         });
         pnlCategorias.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 33));
 
-        btnSiguiente1.setBackground(new java.awt.Color(211, 211, 211));
+        btnSiguiente1.setBackground(new java.awt.Color(215, 215, 215));
         btnSiguiente1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         btnSiguiente1.setForeground(new java.awt.Color(64, 64, 64));
         btnSiguiente1.setText(">");
@@ -539,10 +540,10 @@ public class PnlProductos extends javax.swing.JPanel {
         pnlProducto.setPreferredSize(new java.awt.Dimension(870, 390));
         pnlProducto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnEditarDatos.setBackground(new java.awt.Color(211, 211, 211));
+        btnEditarDatos.setBackground(new java.awt.Color(183, 52, 0));
         btnEditarDatos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditarDatos.setForeground(new java.awt.Color(64, 64, 64));
-        btnEditarDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar2.png"))); // NOI18N
+        btnEditarDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditarBlanco.png"))); // NOI18N
         btnEditarDatos.setToolTipText("Desbloquear edicion");
         btnEditarDatos.setPreferredSize(new java.awt.Dimension(72, 25));
         btnEditarDatos.addActionListener(new java.awt.event.ActionListener() {
@@ -657,6 +658,9 @@ public class PnlProductos extends javax.swing.JPanel {
         cbxMarca.setPreferredSize(new java.awt.Dimension(72, 30));
         pnlProducto.add(cbxMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 240, -1));
 
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        pnlProducto.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 30, 450));
+
         add(pnlProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 530, 430));
 
         pnlTabla.setBackground(new java.awt.Color(232, 232, 232));
@@ -692,7 +696,6 @@ public class PnlProductos extends javax.swing.JPanel {
         btnVerTodos.setForeground(new java.awt.Color(64, 64, 64));
         btnVerTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoElementos.png"))); // NOI18N
         btnVerTodos.setToolTipText("Mostrar todos los productos");
-        btnVerTodos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnVerTodos.setFocusPainted(false);
         btnVerTodos.setMargin(new java.awt.Insets(2, 0, 2, 0));
         btnVerTodos.setPreferredSize(new java.awt.Dimension(72, 25));
@@ -713,10 +716,10 @@ public class PnlProductos extends javax.swing.JPanel {
         pnlTabla.add(jLabel20);
         jLabel20.setBounds(30, 30, 600, 33);
 
-        btnNuevoProducto.setBackground(new java.awt.Color(211, 211, 211));
+        btnNuevoProducto.setBackground(new java.awt.Color(183, 52, 0));
         btnNuevoProducto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnNuevoProducto.setForeground(new java.awt.Color(64, 64, 64));
-        btnNuevoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoAgregar.png"))); // NOI18N
+        btnNuevoProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnNuevoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoAgregarBlanco.png"))); // NOI18N
         btnNuevoProducto.setText("Registrar");
         btnNuevoProducto.setIconTextGap(8);
         btnNuevoProducto.setMargin(new java.awt.Insets(2, 0, 2, 14));
@@ -729,10 +732,10 @@ public class PnlProductos extends javax.swing.JPanel {
         pnlTabla.add(btnNuevoProducto);
         btnNuevoProducto.setBounds(710, 30, 130, 33);
 
-        btnEliminarProducto.setBackground(new java.awt.Color(211, 211, 211));
+        btnEliminarProducto.setBackground(new java.awt.Color(183, 52, 0));
         btnEliminarProducto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnEliminarProducto.setForeground(new java.awt.Color(64, 64, 64));
-        btnEliminarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar2.png"))); // NOI18N
+        btnEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEliminar.png"))); // NOI18N
         btnEliminarProducto.setText("Eliminar");
         btnEliminarProducto.setIconTextGap(8);
         btnEliminarProducto.setMargin(new java.awt.Insets(2, 0, 2, 14));
@@ -745,10 +748,10 @@ public class PnlProductos extends javax.swing.JPanel {
         pnlTabla.add(btnEliminarProducto);
         btnEliminarProducto.setBounds(1020, 30, 130, 33);
 
-        btnModificar.setBackground(new java.awt.Color(211, 211, 211));
+        btnModificar.setBackground(new java.awt.Color(183, 52, 0));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnModificar.setForeground(new java.awt.Color(64, 64, 64));
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar3.png"))); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.setIconTextGap(8);
         btnModificar.setMargin(new java.awt.Insets(2, 0, 2, 14));
@@ -774,8 +777,10 @@ public class PnlProductos extends javax.swing.JPanel {
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         if (paginaActual > 1) {
             paginaActual--;
-            indexLista = (int) Math.floor(indexLista / 6); //Dividir para obtener la pagina anterior, ej: 15 / 6 = 2.5 = 2
-            indexLista = (indexLista * 6) - 6; //2 * 6 = 12 - 5 = 7; el index comenzara desde el 7 al 12, lo que corresponde a la pagina 2
+            indexLista = (paginaActual * 6) - 6;
+            if (indexLista < 0) {
+                indexLista = 0;
+            }
             actualizarCategorias();
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
@@ -937,6 +942,7 @@ public class PnlProductos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCat1;
     private javax.swing.JLabel lblCat2;
     private javax.swing.JLabel lblCat3;

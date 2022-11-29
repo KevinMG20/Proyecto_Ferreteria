@@ -1,89 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Empleados" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion"/>
-	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
-	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
-	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
-	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ea35827a-0a2b-4b3d-b405-4005c7a4a433">
+	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-        <parameter name="Logo"/>
+	<parameter name="Logo" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select * from empleados]]>
 	</queryString>
 	<field name="idEmpleado" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="idEmpleado"/>
-		<property name="com.jaspersoft.studio.field.label" value="idEmpleado"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nombre" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
-		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="puesto" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="puesto"/>
-		<property name="com.jaspersoft.studio.field.label" value="puesto"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="turno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="turno"/>
-		<property name="com.jaspersoft.studio.field.label" value="turno"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="136" splitType="Stretch">
+		<band height="132" splitType="Stretch">
+			<image>
+				<reportElement x="461" y="0" width="96" height="95" uuid="192fc5ec-2825-45db-9062-3d12bb6c3041"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="104" width="555" height="32" forecolor="#000000" backcolor="#E54100" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
+				<reportElement mode="Opaque" x="0" y="0" width="455" height="95" backcolor="#000000" uuid="8ad1f1d2-17b8-4b92-84d3-4d8d1e70972e"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="11" width="302" height="28" forecolor="#FFFFFF" uuid="0ad8e3e3-ac0e-4ed1-91fb-b5203d79c698"/>
+					<textElement textAlignment="Center">
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Ferreteria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="0" y="29" width="302" height="66" forecolor="#FFFFFF" uuid="fa067d06-2d38-41d9-8088-bb254c67fe51"/>
+					<textElement textAlignment="Center">
+						<font size="44" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Construye Fácil]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="322" y="15" width="129" height="44" forecolor="#FFFFFF" uuid="63e6d63d-0c8e-4b15-82a0-1db148c9e6e4"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Blvd. Felipe Pescador 1830 Nueva Vizcaya, 34080 Durango, Dgo.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="322" y="65" width="129" height="16" forecolor="#FFFFFF" uuid="c9f891a7-9bc0-450e-a50e-6fd5934106b0"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tel. 618 871 49 72]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="100" width="555" height="32" forecolor="#000000" backcolor="#B73400" uuid="9e32d0e5-486e-4093-9311-b0ef2e105f3d"/>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="406" y="8" width="144" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8">
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement x="408" y="6" width="144" height="20" forecolor="#FFFFFF" uuid="a6d3a1b4-e2f2-400f-956f-751301799c1d"/>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
-			</frame>
-			<image>
-				<reportElement x="456" y="0" width="99" height="100" uuid="97705585-a0b5-4ec7-86f3-ae10c220e6af"/>
-				<imageExpression class="java.awt.Image"><![CDATA[$P{Logo}]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement style="SubTitle" x="10" y="106" width="249" height="29" forecolor="#FFFFFF" uuid="2ec2abbb-371b-42c4-9f1e-77f78a04d2e6"/>
-				<textElement>
-					<font fontName="SansSerif" size="19" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Reporte de Empleados]]></text>
-			</staticText>
-			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="451" height="100" backcolor="#000000" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
-					<reportElement style="Title" x="40" y="0" width="370" height="66" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
+					<reportElement style="Title" x="2" y="4" width="187" height="28" forecolor="#FFFFFF" uuid="7f1c30f2-73b0-4e1a-85de-81aba65ff0c1"/>
 					<textElement textAlignment="Center">
-						<font isBold="false"/>
+						<font size="22" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Ferreteria]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="SubTitle" x="100" y="60" width="249" height="29" forecolor="#FFFFFF" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
-					<textElement textAlignment="Center">
-						<font size="25" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Construye Fácil]]></text>
+					<text><![CDATA[Lista de Empleados]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -92,83 +90,67 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="30" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="7" width="555" height="18" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="977cfd47-4980-4912-9835-c27def56827c"/>
+				<reportElement x="2" y="6" width="553" height="20" backcolor="#000000" uuid="d13533c0-b331-4371-8d3d-4a505086d928"/>
 			</rectangle>
 			<staticText>
-				<reportElement style="Column header" x="40" y="7" width="98" height="18" forecolor="#FFFFFF" uuid="a24db445-54aa-4c3d-a741-28e6fa777010">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="482ec9ff-5171-4a65-ad21-c899c44a5c34"/>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font size="15" isBold="true"/>
+				<reportElement style="Column header" x="26" y="7" width="68" height="18" forecolor="#FFFFFF" uuid="0c95d9bb-16c6-4e00-9892-95b46d106061"/>
+				<textElement>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="138" y="7" width="138" height="18" forecolor="#FFFFFF" uuid="a6d8015a-f26a-47b4-b2cc-561cd99c59a6">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f9335268-ecb4-4f21-b1d1-5bb175a39d69"/>
-				</reportElement>
+				<reportElement style="Column header" x="110" y="7" width="203" height="18" forecolor="#FFFFFF" uuid="75b442ac-18b5-4c23-93ae-30e85630a9d9"/>
 				<textElement>
-					<font size="15" isBold="false"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="276" y="7" width="138" height="18" forecolor="#FFFFFF" uuid="74c3766a-e380-4956-82f7-5443fb5837d8">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e595bfa6-1862-42c5-a2ab-3e2634a4e837"/>
-				</reportElement>
+				<reportElement style="Column header" x="313" y="7" width="138" height="18" forecolor="#FFFFFF" uuid="cf1a87d2-5115-46fb-a847-f47e7831b35b"/>
 				<textElement>
-					<font size="15" isBold="false"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Puesto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="414" y="7" width="138" height="18" forecolor="#FFFFFF" uuid="ae1e1493-ee10-4f4f-8eaf-0abe2eb43376">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d14f3fc4-fc35-40e2-9600-3188276e5ef9"/>
-				</reportElement>
+				<reportElement style="Column header" x="451" y="7" width="101" height="18" forecolor="#FFFFFF" uuid="7786f932-54dc-4010-8881-f1c3e8dcaf4a"/>
 				<textElement>
-					<font size="15" isBold="false"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Turno]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
-				<textField textAdjust="StretchHeight">
-					<reportElement style="Detail" positionType="Float" x="30" y="0" width="108" height="18" uuid="6d4c5534-7d2f-46fd-bc1f-d5ffcf5561a0">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="482ec9ff-5171-4a65-ad21-c899c44a5c34"/>
-					</reportElement>
-					<textElement textAlignment="Left">
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="a8df09cf-95b9-4613-a2e0-7bec870ddc09"/>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="12" y="0" width="82" height="18" uuid="b3bfe09c-c78f-4f37-b168-c4fa5c422f11"/>
+					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight">
-					<reportElement style="Detail" positionType="Float" x="138" y="0" width="138" height="18" uuid="63612f84-072e-4ff4-ae63-87903ce28502">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f9335268-ecb4-4f21-b1d1-5bb175a39d69"/>
-					</reportElement>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="110" y="0" width="203" height="18" uuid="f1779dcd-e9cf-4849-abfb-091313472d4a"/>
 					<textElement>
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight">
-					<reportElement style="Detail" positionType="Float" x="276" y="0" width="138" height="18" uuid="0dfb87fe-10fd-4056-929e-6e8a9f898d03">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e595bfa6-1862-42c5-a2ab-3e2634a4e837"/>
-					</reportElement>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="313" y="0" width="138" height="18" uuid="e6cb892a-d634-4fe3-bb7e-936efb786c3e"/>
 					<textElement>
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{puesto}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight">
-					<reportElement style="Detail" positionType="Float" x="414" y="0" width="138" height="18" uuid="3ec98c11-dca2-490a-b53a-5bc1516586fe">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d14f3fc4-fc35-40e2-9600-3188276e5ef9"/>
-					</reportElement>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="451" y="0" width="101" height="18" uuid="a893b1bb-c72d-4fe9-9966-b26a4bd80982"/>
 					<textElement>
 						<font size="14"/>
 					</textElement>
@@ -180,7 +162,7 @@
 	<columnFooter>
 		<band height="7" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="1133a906-5b71-476e-9f3e-bc97c97058c1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="5b5ef51c-41b6-4cc4-8808-4e8709430763"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
@@ -190,23 +172,23 @@
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="729c3539-f946-4d0e-a0a7-bda2815ea1b0"/>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="275eb577-a6ef-478d-87e6-5f9aa5d11dc6"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="4834e99c-7f6c-485a-b098-50e5187f2ab4"/>
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="b3040baa-df3b-4b4a-974c-8befa9b02c64"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685"/>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="738807a2-7a8e-4543-a9dd-f1380c9c0118"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="137d38c7-1a83-4fc5-b156-9d5f1b1a0ddc"/>
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="fbccc172-293f-45c1-843a-e0a4e3b2cff1"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>

@@ -34,6 +34,12 @@ public class PnlProveedores extends javax.swing.JPanel {
         initComponents();
         provedAux = new Proveedores();
         cargarProveedores();
+        
+        if (!Login.usuario.getPuesto().equals("Gerente")) {
+            btnAgregar.setVisible(false);
+            btnEditar.setVisible(false);
+            btnEliminar.setVisible(false);            
+        }
     }
 
     public void guardarDatosAnterior(JTextField txtID, JTextField txtRFC, JTextField txtNombre, JTextField txtTelefono) {
@@ -499,7 +505,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1200, 780));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnVerTodos.setBackground(new java.awt.Color(2, 62, 138));
+        btnVerTodos.setBackground(new java.awt.Color(183, 52, 0));
         btnVerTodos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnVerTodos.setForeground(new java.awt.Color(255, 255, 255));
         btnVerTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoActualizar.png"))); // NOI18N
@@ -519,7 +525,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         jLabel6.setText("Buscar");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 45, 70, -1));
 
-        btnAgregar.setBackground(new java.awt.Color(2, 62, 138));
+        btnAgregar.setBackground(new java.awt.Color(183, 52, 0));
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoAgregarBlanco.png"))); // NOI18N
@@ -534,7 +540,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         });
         add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 40, 40));
 
-        btnBuscar.setBackground(new java.awt.Color(2, 62, 138));
+        btnBuscar.setBackground(new java.awt.Color(183, 52, 0));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoBuscar2.png"))); // NOI18N
@@ -984,7 +990,7 @@ public class PnlProveedores extends javax.swing.JPanel {
         lblPaginas.setText("Pagina 1 de 1");
         add(lblPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 720, 150, -1));
 
-        btnEditar.setBackground(new java.awt.Color(2, 62, 138));
+        btnEditar.setBackground(new java.awt.Color(183, 52, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditarBlanco.png"))); // NOI18N
@@ -1134,8 +1140,10 @@ public class PnlProveedores extends javax.swing.JPanel {
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
         if (paginaActual > 1) {
             paginaActual--;
-            indexLista = (int) Math.floor(indexLista / 6); //Dividir para obtener la pagina anterior, ej: 15 / 6 = 2.5 = 2
-            indexLista = (indexLista * 6) - 6; //2 * 6 = 12 - 5 = 7; el index comenzara desde el 7 al 12, lo que corresponde a la pagina 2
+            indexLista = (paginaActual * 6) - 6;
+            if (indexLista < 0) {
+                indexLista = 0;
+            }
             bloquerEdicionPanel();
             cargarProveedores();
         }

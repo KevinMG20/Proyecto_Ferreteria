@@ -5,13 +5,12 @@ import Objetos.Empleados;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
-import java.io.File;
-
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -30,28 +29,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import net.sf.jasperreports.components.items.ItemData;
-import net.sf.jasperreports.components.map.MapComponent;
-import net.sf.jasperreports.components.map.MarkerDataset;
-import net.sf.jasperreports.components.map.StandardMapComponent;
-import net.sf.jasperreports.components.map.type.MapImageTypeEnum;
-import net.sf.jasperreports.components.map.type.MapScaleEnum;
-import net.sf.jasperreports.components.map.type.MapTypeEnum;
+import javax.swing.JComboBox;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
-import net.sf.jasperreports.engine.type.OnErrorTypeEnum;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -61,57 +52,30 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Principal extends javax.swing.JFrame implements FocusListener {
 
+    //Variables
     Conexion con = new Conexion();
     Empleados usuario, empleadoModificar, empleadoConsultar, empleadoInsertar;
-
-    public Principal(Empleados empleado) {
-        usuario = empleado;
-        initComponents();
-        iniciarDatos();
-
-        btnEmpleados.addMouseListener(ml);
-        btnEmpleados.addFocusListener(this);
-
-        btnProductos.addMouseListener(ml);
-        btnProductos.addFocusListener(this);
-
-        btnProveedores.addMouseListener(ml);
-        btnProveedores.addFocusListener(this);
-
-        btnEntregas.addMouseListener(ml);
-        btnEntregas.addFocusListener(this);
-
-        btnVentas.addMouseListener(ml);
-        btnVentas.addFocusListener(this);
-
-        btnSalir.addMouseListener(ml);
-        btnSalir.addFocusListener(this);
-
-        getContentPane().removeAll();
-
-        pnlIzquierdo.setLayout(new BoxLayout(pnlIzquierdo, BoxLayout.PAGE_AXIS));
-        pnlIzquierdo.add(pnlMenu);
-        add(pnlIzquierdo);
-
-        pnlDerecho.setLayout(new BoxLayout(pnlDerecho, BoxLayout.PAGE_AXIS));
-        pnlDerecho.add(pnlPrincipal);
-        add(pnlDerecho);
-
-        pnlOperaciones.setVisible(false);
-        pnlDatosOperaciones.setVisible(false);
-        btnListo.setVisible(false);
-        btnCancelarPerfil.setVisible(false);
-        showPuestoCBX.setVisible(false);
-        showTurnoCBX.setVisible(false);
-
-        revalidate();
-        repaint();
-    }
 
     ArrayList<Empleados> listaDeEmpleados;
     int indexLista = 0;
     int paginaActual = 1;
     int totalPaginas = 1;
+    public String operacion = "";
+    JPanel pnlVentas = new PnlVentas();
+    JPanel pnlEntregas = new PnlEntregas();
+    JPanel pnlGrupos = new PnlProductos();
+    JPanel pnlInscribir = new PnlEntregas();
+    JPanel pnlFinanzas = new PnlProveedores();
+    JPanel pnlDerecho = new JPanel();
+    JPanel pnlIzquierdo = new JPanel();
+
+    //Metodos
+    public void limpiar() {
+        txtIdEmpleado.setText("");
+        txtNombreEmpleado.setText("");
+        /*cbxPuestoEmpleado.setSelectedIndex(0);
+        cbxTurnoEmpleado.setSelectedIndex(0);*/
+    }
 
     public void actualizarEmpleados() {
         listaDeEmpleados = new ArrayList<>();
@@ -191,7 +155,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
 
     public void actualizarTodo() {
         usuario = usuario.consultarEmpleado(usuario);
-        indexLista = 0;
         iniciarDatos();
         txtIdOperacion.setText("");
         lblInfoEmpleado.setText("  ");
@@ -209,7 +172,8 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         showNombre.setText(usuario.getNombre());
         showPuestoTXT.setText(usuario.getPuesto());
         showTurnoTXT.setText(usuario.getTurno());
-
+        indexLista = 0;
+        paginaActual = 1;
         actualizarEmpleados();
     }
 
@@ -285,9 +249,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         return fechaActual;
     }
 
-    JPanel pnlDerecho = new JPanel();
-    JPanel pnlIzquierdo = new JPanel();
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -299,6 +260,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         btnSalir = new javax.swing.JButton();
         btnEntregas = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         pnlPrincipal = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnCancelarPerfil = new javax.swing.JButton();
@@ -318,7 +280,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel20 = new javax.swing.JLabel();
         btnModificar1 = new javax.swing.JButton();
         btnListo = new javax.swing.JButton();
-        jLabel26 = new javax.swing.JLabel();
+        lblHerramientasDelGerente = new javax.swing.JLabel();
         pnlFamilia = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         btnEmpleado3 = new javax.swing.JButton();
@@ -373,17 +335,17 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         setUndecorated(true);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        pnlMenu.setBackground(new java.awt.Color(2, 62, 138));
+        pnlMenu.setBackground(new java.awt.Color(183, 52, 0));
         pnlMenu.setMaximumSize(new java.awt.Dimension(210, 781));
         pnlMenu.setMinimumSize(new java.awt.Dimension(210, 781));
         pnlMenu.setPreferredSize(new java.awt.Dimension(210, 780));
         pnlMenu.setRequestFocusEnabled(false);
         pnlMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnEmpleados.setBackground(new java.awt.Color(2, 62, 138));
+        btnEmpleados.setBackground(new java.awt.Color(183, 52, 0));
         btnEmpleados.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         btnEmpleados.setForeground(new java.awt.Color(232, 230, 230));
-        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribir.png"))); // NOI18N
+        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEmpleados.png"))); // NOI18N
         btnEmpleados.setText("Empleados");
         btnEmpleados.setAlignmentY(0.0F);
         btnEmpleados.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -396,12 +358,12 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnEmpleadosActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 80));
+        pnlMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 210, 80));
 
-        btnProductos.setBackground(new java.awt.Color(2, 62, 138));
+        btnProductos.setBackground(new java.awt.Color(183, 52, 0));
         btnProductos.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         btnProductos.setForeground(new java.awt.Color(232, 230, 230));
-        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGrupos.png"))); // NOI18N
+        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoProductos.png"))); // NOI18N
         btnProductos.setText("Productos");
         btnProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -413,12 +375,12 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnProductosActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 210, 80));
+        pnlMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, 80));
 
-        btnProveedores.setBackground(new java.awt.Color(2, 62, 138));
+        btnProveedores.setBackground(new java.awt.Color(183, 52, 0));
         btnProveedores.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(232, 230, 230));
-        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
+        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoProveedores.png"))); // NOI18N
         btnProveedores.setText("Proveedores");
         btnProveedores.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -430,9 +392,9 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnProveedoresActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 210, 80));
+        pnlMenu.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 210, 80));
 
-        btnSalir.setBackground(new java.awt.Color(2, 62, 138));
+        btnSalir.setBackground(new java.awt.Color(183, 52, 0));
         btnSalir.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(232, 230, 230));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoSalir.png"))); // NOI18N
@@ -449,10 +411,10 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 700, 210, 80));
 
-        btnEntregas.setBackground(new java.awt.Color(2, 62, 138));
+        btnEntregas.setBackground(new java.awt.Color(183, 52, 0));
         btnEntregas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         btnEntregas.setForeground(new java.awt.Color(232, 230, 230));
-        btnEntregas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
+        btnEntregas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEntregas.png"))); // NOI18N
         btnEntregas.setText("Entregas");
         btnEntregas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnEntregas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -464,9 +426,9 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnEntregasActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 210, 80));
+        pnlMenu.add(btnEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 210, 80));
 
-        btnVentas.setBackground(new java.awt.Color(2, 62, 138));
+        btnVentas.setBackground(new java.awt.Color(183, 52, 0));
         btnVentas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         btnVentas.setForeground(new java.awt.Color(232, 230, 230));
         btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png"))); // NOI18N
@@ -481,7 +443,10 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnVentasActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 210, 80));
+        pnlMenu.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 210, 80));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconosFerreteria/Logo.png"))); // NOI18N
+        pnlMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, 200));
 
         getContentPane().add(pnlMenu);
 
@@ -512,7 +477,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlPrincipal.add(btnCancelarPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 130, 40));
 
-        btnPDF.setBackground(new java.awt.Color(2, 62, 138));
+        btnPDF.setBackground(new java.awt.Color(183, 52, 0));
         btnPDF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnPDF.setForeground(new java.awt.Color(255, 255, 255));
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPDF.png"))); // NOI18N
@@ -598,7 +563,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel20.setOpaque(true);
         pnlPrincipal.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 650, 33));
 
-        btnModificar1.setBackground(new java.awt.Color(2, 62, 138));
+        btnModificar1.setBackground(new java.awt.Color(183, 52, 0));
         btnModificar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnModificar1.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
@@ -614,7 +579,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlPrincipal.add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 610, 290, 50));
 
-        btnListo.setBackground(new java.awt.Color(2, 62, 138));
+        btnListo.setBackground(new java.awt.Color(183, 52, 0));
         btnListo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnListo.setForeground(new java.awt.Color(255, 255, 255));
         btnListo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEditar.png"))); // NOI18N
@@ -630,13 +595,13 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlPrincipal.add(btnListo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 470, 140, 40));
 
-        jLabel26.setBackground(new java.awt.Color(215, 215, 215));
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(64, 64, 64));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Herramientas del Gerente");
-        jLabel26.setOpaque(true);
-        pnlPrincipal.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 500, 400, 33));
+        lblHerramientasDelGerente.setBackground(new java.awt.Color(215, 215, 215));
+        lblHerramientasDelGerente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblHerramientasDelGerente.setForeground(new java.awt.Color(64, 64, 64));
+        lblHerramientasDelGerente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHerramientasDelGerente.setText("Herramientas del Gerente");
+        lblHerramientasDelGerente.setOpaque(true);
+        pnlPrincipal.add(lblHerramientasDelGerente, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 500, 400, 33));
 
         pnlFamilia.setBackground(new java.awt.Color(232, 232, 232));
         pnlFamilia.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -793,7 +758,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         lblEmpleado6.setText("Empleado 6");
         pnlFamilia.add(lblEmpleado6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 130, -1));
 
-        btnNextPage.setBackground(new java.awt.Color(2, 62, 138));
+        btnNextPage.setBackground(new java.awt.Color(183, 52, 0));
         btnNextPage.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnNextPage.setForeground(new java.awt.Color(255, 255, 255));
         btnNextPage.setText(">");
@@ -814,7 +779,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         lblPaginas.setText("Página 1 de 1");
         pnlFamilia.add(lblPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 345, 140, -1));
 
-        btnLastPage.setBackground(new java.awt.Color(2, 62, 138));
+        btnLastPage.setBackground(new java.awt.Color(183, 52, 0));
         btnLastPage.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnLastPage.setForeground(new java.awt.Color(255, 255, 255));
         btnLastPage.setText("<");
@@ -889,7 +854,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         cbxTurnoEmpleado.setPreferredSize(new java.awt.Dimension(72, 25));
         pnlDatosOperaciones.add(cbxTurnoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 270, -1));
 
-        btnConfirmarOperacion1.setBackground(new java.awt.Color(2, 62, 138));
+        btnConfirmarOperacion1.setBackground(new java.awt.Color(183, 52, 0));
         btnConfirmarOperacion1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnConfirmarOperacion1.setForeground(new java.awt.Color(232, 232, 232));
         btnConfirmarOperacion1.setText("Confirmar");
@@ -933,7 +898,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconosFerreteria/CatHerramientas.png"))); // NOI18N
         pnlHerramientas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, -1));
 
-        btnInsertarEmpleado.setBackground(new java.awt.Color(1, 50, 112));
+        btnInsertarEmpleado.setBackground(new java.awt.Color(183, 52, 0));
         btnInsertarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnInsertarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnInsertarEmpleado.setText("Nuevo Trabajador");
@@ -948,7 +913,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlHerramientas.add(btnInsertarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 240, 35));
 
-        btnEditarEmpleados.setBackground(new java.awt.Color(1, 50, 112));
+        btnEditarEmpleados.setBackground(new java.awt.Color(183, 52, 0));
         btnEditarEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnEditarEmpleados.setForeground(new java.awt.Color(255, 255, 255));
         btnEditarEmpleados.setText("Modificar empleados");
@@ -963,7 +928,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlHerramientas.add(btnEditarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 240, 35));
 
-        btnEliminarEmpleados.setBackground(new java.awt.Color(1, 50, 112));
+        btnEliminarEmpleados.setBackground(new java.awt.Color(183, 52, 0));
         btnEliminarEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnEliminarEmpleados.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarEmpleados.setText("Dar de baja empleados");
@@ -1014,7 +979,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         });
         pnlOperaciones.add(btnCancelarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, -1, -1));
 
-        btnConfirmarOperacion.setBackground(new java.awt.Color(2, 62, 138));
+        btnConfirmarOperacion.setBackground(new java.awt.Color(183, 52, 0));
         btnConfirmarOperacion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnConfirmarOperacion.setForeground(new java.awt.Color(232, 232, 232));
         btnConfirmarOperacion.setText("Confirmar");
@@ -1096,14 +1061,12 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
-        pnlResultadoBusqueda.cima1 = 0;
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlPrincipal);
-        PnlEntregas.btnLimpiar.show();
         revalidate();
-        repaint();        
+        repaint();
     }//GEN-LAST:event_btnEmpleadosActionPerformed
-    JPanel pnlFinanzas = new PnlProveedores();
+
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlFinanzas);
@@ -1111,14 +1074,13 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         repaint();
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
-    JPanel pnlInscribir = new PnlEntregas();
     private void btnEditarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpleadosActionPerformed
         pnlHerramientas.setVisible(false);
         operacion = "Modificar";
         lblTitulo_PnlOperaciones.setText("Modificar Datos del Empleado");
         pnlOperaciones.setVisible(true);
     }//GEN-LAST:event_btnEditarEmpleadosActionPerformed
-    JPanel pnlGrupos = new PnlProductos();
+
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlGrupos);
@@ -1127,23 +1089,26 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        JComboBox cbxReporte = new JComboBox(new Object[]{"Empleados", "Productos", "Proveedores", "Entregas", "Ventas"});
+        Object[] objetos = {"¿Qué elementos debe incluir el reporte?", cbxReporte};
+
+        if (JOptionPane.showConfirmDialog(null, objetos, "Generar un nuevo reporte", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE) != JOptionPane.OK_OPTION) {
+            return;
+        }
+        String elemento = cbxReporte.getSelectedItem().toString();
         try {
-            InputStream archivo = getClass().getResourceAsStream("../Reportes/Empleados.jrxml");
+            InputStream archivo = getClass().getResourceAsStream("../Reportes/" + elemento + ".jrxml");
             JasperDesign jd = JRXmlLoader.load(archivo);
 
-            java.util.Map<String, Object> param = new HashMap<>();
-            //Image logo = new Image(getClass().getResource("/Reportes/Logo.png"));
-            //Image logo2;
-            //btnPDF.setIcon(logo);
-            //getClass().getResource("Logo.png")
-            //param.put("Logo", logo);
+            java.util.Map<String, Object> params = new HashMap<>();
+            params.put("Logo", "Recursos/IconosFerreteria/Logo.png");
 
             JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, param, Conexion.con);
+            JasperPrint jp = JasperFillManager.fillReport(jr, params, Conexion.con);
 
             JRExporter exporter = new JRPdfExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
-            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "ReporteEmpleados.pdf");
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "Reporte" + elemento + ".pdf");
 
             exporter.exportReport();
 
@@ -1152,14 +1117,14 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnPDFActionPerformed
-    JPanel pnlEntregas = new PnlEntregas();
+
     private void btnEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregasActionPerformed
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlEntregas);
         revalidate();
         repaint();
     }//GEN-LAST:event_btnEntregasActionPerformed
-    JPanel pnlVentas = new PnlVentas1();
+
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         pnlDerecho.removeAll();
         pnlDerecho.add(pnlVentas);
@@ -1172,7 +1137,12 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         rellenarPuestos(usuario);
         operacion = "Insertar";
         lblTitulo_PnlDatosOperaciones.setText("Registrar a un nuevo Empleado");
+
         pnlDatosOperaciones.setVisible(true);
+        txtNombreEmpleado.setEditable(true);
+        btnCancelarOperacion1.setVisible(true);
+        btnConfirmarOperacion1.setText("Confirmar");
+        limpiar();
     }//GEN-LAST:event_btnInsertarEmpleadoActionPerformed
 
     private void btnCancelarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPerfilActionPerformed
@@ -1195,7 +1165,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             actualizarEmpleados();
         }
     }//GEN-LAST:event_btnNextPageActionPerformed
-    public String operacion = "";
+
     private void btnEliminarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadosActionPerformed
         pnlHerramientas.setVisible(false);
         operacion = "Eliminar";
@@ -1248,8 +1218,10 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private void btnLastPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastPageActionPerformed
         if (paginaActual > 1) {
             paginaActual--;
-            indexLista = (int) Math.floor(indexLista / 6); //Dividir para obtener la pagina anterior, ej: 15 / 6 = 2.5 = 2
-            indexLista = (indexLista * 6) - 6; //2 * 6 = 12 - 5 = 7; el index comenzara desde el 7 al 12, lo que corresponde a la pagina 2
+            indexLista = (paginaActual * 6) - 6;
+            if (indexLista < 0) {
+                indexLista = 0;
+            }
             actualizarEmpleados();
         }
     }//GEN-LAST:event_btnLastPageActionPerformed
@@ -1263,10 +1235,16 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             pnlDatosOperaciones.setVisible(true);
             lblTitulo_PnlDatosOperaciones.setText(lblTitulo_PnlOperaciones.getText());
             rellenarDatosDeOperacion(empleadoModificar);
+            if (operacion.equals("Modificar")) {
+                txtNombreEmpleado.setEditable(true);
+                btnCancelarOperacion1.setVisible(true);
+                btnConfirmarOperacion1.setText("Confirmar");
+            } else if (operacion.equals("Eliminar")) {
+                btnConfirmarOperacion1.setText("Confirmar");
+                btnCancelarOperacion1.setVisible(true);
+                txtNombreEmpleado.setEditable(false);
+            }
 
-            //Frame_Empleados abrirEmpleados = new Frame_Empleados(empleado, operacion);
-            //abrirEmpleados.lblTituloOperacion.setText(lblTitulo.getText());
-            //abrirEmpleados.setVisible(true);
         } else {
             lblInfoEmpleado.setText("No se ha encontrado ningún empleado");
         }
@@ -1303,10 +1281,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             case "Consultar":
                 pnlDatosOperaciones.setVisible(false);
                 pnlFamilia.setVisible(true);
-
-                txtNombreEmpleado.setFocusable(true);
-                btnConfirmarOperacion1.setText("Confirmar");
-                btnCancelarOperacion1.setVisible(true);
                 break;
             case "Insertar":
                 empleadoInsertar = new Empleados();
@@ -1315,6 +1289,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 empleadoInsertar.setTurno(cbxTurnoEmpleado.getSelectedItem().toString());
                 empleadoInsertar = usuario.registrarEmpleado(empleadoInsertar);
                 indexLista = 0;
+                paginaActual = 1;
                 actualizarEmpleados();
 
                 pnlDatosOperaciones.setVisible(false);
@@ -1326,6 +1301,11 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                     usuario.eliminarEmpleado(txtIdEmpleado.getText());
                     pnlDatosOperaciones.setVisible(false);
                     pnlFamilia.setVisible(true);
+                    txtIdOperacion.setText("");
+                    pnlOperaciones.setVisible(false);
+                    pnlHerramientas.setVisible(true);
+                    indexLista = 0;
+                    paginaActual = 1;
                     actualizarEmpleados();
                 }
 
@@ -1371,7 +1351,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         pnlDatosOperaciones.setVisible(true);
         rellenarDatosDeOperacion(empleadoConsultar);
 
-        txtNombreEmpleado.setFocusable(false);
+        txtNombreEmpleado.setEditable(false);
         btnConfirmarOperacion1.setText("Listo");
         btnCancelarOperacion1.setVisible(false);
         lblTitulo_PnlDatosOperaciones.setText("Ver datos del Empleado");
@@ -1385,13 +1365,13 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    //public static void main(String args[]) {
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+     */
+ /*try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -1418,7 +1398,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+ /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     UIManager.setLookAndFeel(new MetalLookAndFeel());
@@ -1431,23 +1411,28 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 new Principal(usuario).setVisible(true);
             }
         });
-    }
-
+    }*/
     @Override
     public void focusGained(FocusEvent evt) {
         Component c = evt.getComponent();
         if (c == btnEmpleados) {
-            btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribirActivado.png")));
-            btnEmpleados.setBackground(new Color(1, 49, 109));
+            btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEmpleadosActivado.png")));
+            btnEmpleados.setBackground(new Color(147, 44, 0));
         } else if (c == btnProductos) {
-            btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGruposActivado.png")));
-            btnProductos.setBackground(new Color(1, 49, 109));
+            btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoProductosActivado.png")));
+            btnProductos.setBackground(new Color(147, 44, 0));
         } else if (c == btnProveedores) {
-            btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzasActivado.png")));
-            btnProveedores.setBackground(new Color(1, 49, 109));
+            btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoProveedoresActivado.png")));
+            btnProveedores.setBackground(new Color(147, 44, 0));
+        } else if (c == btnEntregas) {
+            btnEntregas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEntregasActivado.png")));
+            btnEntregas.setBackground(new Color(147, 44, 0));
+        } else if (c == btnVentas) {
+            btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzasActivado.png")));
+            btnVentas.setBackground(new Color(147, 44, 0));
         } else if (c == btnSalir) {
             btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoSalirActivado.png")));
-            btnSalir.setBackground(new Color(1, 49, 109));
+            btnSalir.setBackground(new Color(147, 44, 0));
         }
     }
 
@@ -1455,17 +1440,23 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     public void focusLost(FocusEvent evt) {
         Component c = evt.getComponent();
         if (c == btnEmpleados) {
-            btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoInscribir.png")));
-            btnEmpleados.setBackground(new Color(2, 62, 138));
+            btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEmpleados.png")));
+            btnEmpleados.setBackground(new Color(183, 52, 0));
         } else if (c == btnProductos) {
-            btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoPanelGrupos.png")));
-            btnProductos.setBackground(new Color(2, 62, 138));
+            btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoProductos.png")));
+            btnProductos.setBackground(new Color(183, 52, 0));
         } else if (c == btnProveedores) {
-            btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png")));
-            btnProveedores.setBackground(new Color(2, 62, 138));
+            btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoProveedores.png")));
+            btnProveedores.setBackground(new Color(183, 52, 0));
+        } else if (c == btnEntregas) {
+            btnEntregas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoEntregas.png")));
+            btnEntregas.setBackground(new Color(183, 52, 0));
+        } else if (c == btnVentas) {
+            btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoFinanzas.png")));
+            btnVentas.setBackground(new Color(183, 52, 0));
         } else if (c == btnSalir) {
             btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconoSalir.png")));
-            btnSalir.setBackground(new Color(2, 62, 138));
+            btnSalir.setBackground(new Color(183, 52, 0));
         }
     }
 
@@ -1473,23 +1464,75 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
             Component c = evt.getComponent();
-            c.setBackground(new Color(1, 49, 109));
+            c.setBackground(new Color(147, 44, 0));
         }
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
             Component c = evt.getComponent();
             if (!c.hasFocus()) {
-                c.setBackground(new Color(2, 62, 138));
+                c.setBackground(new Color(183, 52, 0));
             }
         }
 
         @Override
         public void mousePressed(java.awt.event.MouseEvent evt) {
             Component c = evt.getComponent();
-            c.setBackground(new Color(1, 49, 109));
+            c.setBackground(new Color(234, 112, 63));
         }
+
     };
+
+    public Principal(Empleados empleado) {
+        usuario = empleado;
+        initComponents();
+        iniciarDatos();
+
+        if (!Login.usuario.getPuesto().equals("Gerente")) {
+            pnlHerramientas.setVisible(false);
+            pnlOperaciones.setVisible(false);
+            lblHerramientasDelGerente.setVisible(false);
+            btnModificar1.setVisible(false);
+        }
+
+        btnEmpleados.addMouseListener(ml);
+        btnEmpleados.addFocusListener(this);
+
+        btnProductos.addMouseListener(ml);
+        btnProductos.addFocusListener(this);
+
+        btnProveedores.addMouseListener(ml);
+        btnProveedores.addFocusListener(this);
+
+        btnEntregas.addMouseListener(ml);
+        btnEntregas.addFocusListener(this);
+
+        btnVentas.addMouseListener(ml);
+        btnVentas.addFocusListener(this);
+
+        btnSalir.addMouseListener(ml);
+        btnSalir.addFocusListener(this);
+
+        getContentPane().removeAll();
+
+        pnlIzquierdo.setLayout(new BoxLayout(pnlIzquierdo, BoxLayout.PAGE_AXIS));
+        pnlIzquierdo.add(pnlMenu);
+        add(pnlIzquierdo);
+
+        pnlDerecho.setLayout(new BoxLayout(pnlDerecho, BoxLayout.PAGE_AXIS));
+        pnlDerecho.add(pnlPrincipal);
+        add(pnlDerecho);
+
+        pnlOperaciones.setVisible(false);
+        pnlDatosOperaciones.setVisible(false);
+        btnListo.setVisible(false);
+        btnCancelarPerfil.setVisible(false);
+        showPuestoCBX.setVisible(false);
+        showTurnoCBX.setVisible(false);
+
+        revalidate();
+        repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarOperacion;
@@ -1519,6 +1562,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private javax.swing.JButton btnVentas;
     private static javax.swing.JComboBox<String> cbxPuestoEmpleado;
     private static javax.swing.JComboBox<String> cbxTurnoEmpleado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1533,7 +1577,6 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
@@ -1547,6 +1590,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
     private javax.swing.JLabel lblEmpleado5;
     private javax.swing.JLabel lblEmpleado6;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblHerramientasDelGerente;
     private javax.swing.JLabel lblInfoEmpleado;
     private javax.swing.JLabel lblPaginas;
     public javax.swing.JLabel lblTitulo_PnlDatosOperaciones;
