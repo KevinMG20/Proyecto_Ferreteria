@@ -10,6 +10,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1097,7 +1098,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
         }
         String elemento = cbxReporte.getSelectedItem().toString();
         try {
-            InputStream archivo = getClass().getResourceAsStream("../Reportes/" + elemento + ".jrxml");
+            File archivo = new File("Reportes/" + elemento + ".jrxml");
             JasperDesign jd = JRXmlLoader.load(archivo);
 
             java.util.Map<String, Object> params = new HashMap<>();
@@ -1115,6 +1116,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
             JasperViewer.viewReport(jp);
         } catch (JRException e) {
             e.printStackTrace();
+            //JOptionPane.showMessageDialog(null, "Error al generar el reporte\n" + e.getMessage());
         }
     }//GEN-LAST:event_btnPDFActionPerformed
 
