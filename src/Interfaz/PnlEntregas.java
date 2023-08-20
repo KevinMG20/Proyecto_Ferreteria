@@ -71,6 +71,7 @@ public class PnlEntregas extends javax.swing.JPanel {
                 if ("date".equals(e.getPropertyName())) {
                     //System.out.println(e.getPropertyName() + ": " + (Date) e.getNewValue());
                     String date = ((JTextField) calFecha.getDateEditor().getUiComponent()).getText();
+                    System.out.println("Date: " + date);
                     txtFecha.setText(date);
                     //txtFecha.setText((JTextField) calFecha.getDateEditor().getUiComponent()).getText();
                 }
@@ -487,9 +488,11 @@ public class PnlEntregas extends javax.swing.JPanel {
         calFecha.setPreferredSize(new java.awt.Dimension(85, 25));
         add(calFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 25, -1));
 
+        txtFecha.setEditable(false);
         txtFecha.setBackground(new java.awt.Color(215, 215, 215));
         txtFecha.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
         txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFecha.setText(" ");
         txtFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Malgun Gothic Semilight", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
         txtFecha.setFocusable(false);
         txtFecha.setPreferredSize(new java.awt.Dimension(64, 25));
@@ -1003,6 +1006,6 @@ public class PnlEntregas extends javax.swing.JPanel {
     private javax.swing.JTable tblInfo;
     private javax.swing.JTable tblProductos;
     private javax.swing.JTextField txtBuscar;
-    private static javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

@@ -580,8 +580,8 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         pnlProv3.setBackground(new java.awt.Color(221, 221, 221));
         pnlProv3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlProv3MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlProv3MousePressed(evt);
             }
         });
         pnlProv3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -641,8 +641,8 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         pnlProv2.setBackground(new java.awt.Color(221, 221, 221));
         pnlProv2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlProv2MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlProv2MousePressed(evt);
             }
         });
         pnlProv2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -702,8 +702,8 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         pnlProv6.setBackground(new java.awt.Color(221, 221, 221));
         pnlProv6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlProv6MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlProv6MousePressed(evt);
             }
         });
         pnlProv6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -763,8 +763,8 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         pnlProv4.setBackground(new java.awt.Color(221, 221, 221));
         pnlProv4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlProv4MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlProv4MousePressed(evt);
             }
         });
         pnlProv4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -824,8 +824,8 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         pnlProv5.setBackground(new java.awt.Color(221, 221, 221));
         pnlProv5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlProv5MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlProv5MousePressed(evt);
             }
         });
         pnlProv5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -885,8 +885,8 @@ public class PnlProveedores extends javax.swing.JPanel {
 
         pnlProv1.setBackground(new java.awt.Color(221, 221, 221));
         pnlProv1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlProv1MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlProv1MousePressed(evt);
             }
         });
         pnlProv1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1019,60 +1019,6 @@ public class PnlProveedores extends javax.swing.JPanel {
         buscarProveedor();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void pnlProv1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv1MouseClicked
-        bloquerEdicionPanel();
-        pnlProv1.setBorder(pnlBorder);
-        //pnlProv1.setBackground(new Color(237, 237, 237));
-        panelSeleccionado = 1;
-        anteriorSeleccionado = panelSeleccionado;
-        proveedorSeleccionado = txtID.getText();
-    }//GEN-LAST:event_pnlProv1MouseClicked
-
-    private void pnlProv2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv2MouseClicked
-        bloquerEdicionPanel();
-        pnlProv2.setBorder(pnlBorder);
-        //pnlProv2.setBackground(new Color(237, 237, 237));
-        panelSeleccionado = 2;
-        anteriorSeleccionado = panelSeleccionado;
-        proveedorSeleccionado = txtID1.getText();
-    }//GEN-LAST:event_pnlProv2MouseClicked
-
-    private void pnlProv3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv3MouseClicked
-        bloquerEdicionPanel();
-        pnlProv3.setBorder(pnlBorder);
-        //pnlProv3.setBackground(new Color(237, 237, 237));
-        panelSeleccionado = 3;
-        anteriorSeleccionado = panelSeleccionado;
-        proveedorSeleccionado = txtID2.getText();
-    }//GEN-LAST:event_pnlProv3MouseClicked
-
-    private void pnlProv4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv4MouseClicked
-        bloquerEdicionPanel();
-        pnlProv4.setBorder(pnlBorder);
-        //pnlProv4.setBackground(new Color(237, 237, 237));
-        panelSeleccionado = 4;
-        anteriorSeleccionado = panelSeleccionado;
-        proveedorSeleccionado = txtID3.getText();
-    }//GEN-LAST:event_pnlProv4MouseClicked
-
-    private void pnlProv5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv5MouseClicked
-        bloquerEdicionPanel();
-        pnlProv5.setBorder(pnlBorder);
-        //pnlProv5.setBackground(new Color(237, 237, 237));
-        panelSeleccionado = 5;
-        anteriorSeleccionado = panelSeleccionado;
-        proveedorSeleccionado = txtID4.getText();
-    }//GEN-LAST:event_pnlProv5MouseClicked
-
-    private void pnlProv6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv6MouseClicked
-        bloquerEdicionPanel();
-        pnlProv6.setBorder(pnlBorder);
-        //pnlProv6.setBackground(new Color(237, 237, 237));
-        panelSeleccionado = 6;
-        anteriorSeleccionado = panelSeleccionado;
-        proveedorSeleccionado = txtID5.getText();
-    }//GEN-LAST:event_pnlProv6MouseClicked
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         /*if (!quiereEliminar) {
             if (buscarProveedor()) { //Si se encuentra a un proveedor
@@ -1151,6 +1097,60 @@ public class PnlProveedores extends javax.swing.JPanel {
         btnAgregar.setIcon(new ImageIcon(getClass().getResource("/Recursos/IconoAgregarBlanco.png")));
         btnEditar.setIcon(new ImageIcon(getClass().getResource("/Recursos/IconoEditarBlanco.png")));
     }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void pnlProv1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv1MousePressed
+        bloquerEdicionPanel();
+        pnlProv1.setBorder(pnlBorder);
+        //pnlProv1.setBackground(new Color(237, 237, 237));
+        panelSeleccionado = 1;
+        anteriorSeleccionado = panelSeleccionado;
+        proveedorSeleccionado = txtID.getText();
+    }//GEN-LAST:event_pnlProv1MousePressed
+
+    private void pnlProv2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv2MousePressed
+        bloquerEdicionPanel();
+        pnlProv2.setBorder(pnlBorder);
+        //pnlProv2.setBackground(new Color(237, 237, 237));
+        panelSeleccionado = 2;
+        anteriorSeleccionado = panelSeleccionado;
+        proveedorSeleccionado = txtID1.getText();
+    }//GEN-LAST:event_pnlProv2MousePressed
+
+    private void pnlProv3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv3MousePressed
+        bloquerEdicionPanel();
+        pnlProv3.setBorder(pnlBorder);
+        //pnlProv3.setBackground(new Color(237, 237, 237));
+        panelSeleccionado = 3;
+        anteriorSeleccionado = panelSeleccionado;
+        proveedorSeleccionado = txtID2.getText();
+    }//GEN-LAST:event_pnlProv3MousePressed
+
+    private void pnlProv4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv4MousePressed
+        bloquerEdicionPanel();
+        pnlProv4.setBorder(pnlBorder);
+        //pnlProv4.setBackground(new Color(237, 237, 237));
+        panelSeleccionado = 4;
+        anteriorSeleccionado = panelSeleccionado;
+        proveedorSeleccionado = txtID3.getText();
+    }//GEN-LAST:event_pnlProv4MousePressed
+
+    private void pnlProv5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv5MousePressed
+        bloquerEdicionPanel();
+        pnlProv5.setBorder(pnlBorder);
+        //pnlProv5.setBackground(new Color(237, 237, 237));
+        panelSeleccionado = 5;
+        anteriorSeleccionado = panelSeleccionado;
+        proveedorSeleccionado = txtID4.getText();
+    }//GEN-LAST:event_pnlProv5MousePressed
+
+    private void pnlProv6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProv6MousePressed
+        bloquerEdicionPanel();
+        pnlProv6.setBorder(pnlBorder);
+        //pnlProv6.setBackground(new Color(237, 237, 237));
+        panelSeleccionado = 6;
+        anteriorSeleccionado = panelSeleccionado;
+        proveedorSeleccionado = txtID5.getText();
+    }//GEN-LAST:event_pnlProv6MousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
