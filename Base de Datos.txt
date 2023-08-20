@@ -1,0 +1,11 @@
+Nombre de la base de datos: ferreteria
+Tablas: empleados, productos, proveedores, entregas, ventas, productosdeentrega y productosdeventa
+EL ARCHIVO SQL NO INCLUYE LA INSTRUCCIÓN DE CREAR LAS TABLAS
+
+Usuario: KG001 		(gerente)
+Contraseña: MySQL 		(aplica para todos los gerentes)
+
+Usuario: JL001		(empleado)
+Contraseña: Ferreteria	(aplica para todos los empleados que no sean gerentes
+
+De preferencia ejecutar el archivo jar en la carpeta dist
