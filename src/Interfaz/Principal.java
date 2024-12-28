@@ -359,7 +359,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnEmpleadosActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 210, 80));
+        pnlMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 210, 60));
 
         btnProductos.setBackground(new java.awt.Color(183, 52, 0));
         btnProductos.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
@@ -376,7 +376,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnProductosActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, 80));
+        pnlMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 60));
 
         btnProveedores.setBackground(new java.awt.Color(183, 52, 0));
         btnProveedores.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
@@ -393,7 +393,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnProveedoresActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 210, 80));
+        pnlMenu.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 210, 60));
 
         btnSalir.setBackground(new java.awt.Color(183, 52, 0));
         btnSalir.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
@@ -410,7 +410,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnSalirActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 700, 210, 80));
+        pnlMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 210, 60));
 
         btnEntregas.setBackground(new java.awt.Color(183, 52, 0));
         btnEntregas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
@@ -427,7 +427,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnEntregasActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 210, 80));
+        pnlMenu.add(btnEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 210, 60));
 
         btnVentas.setBackground(new java.awt.Color(183, 52, 0));
         btnVentas.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
@@ -444,7 +444,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnVentasActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 210, 80));
+        pnlMenu.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 210, 60));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/IconosFerreteria/Logo.png"))); // NOI18N
         pnlMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, 200));
@@ -491,7 +491,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnPDFActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, 290, 50));
+        pnlPrincipal.add(btnPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, 220, 50));
 
         lblFecha.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(102, 102, 102));
@@ -578,7 +578,7 @@ public class Principal extends javax.swing.JFrame implements FocusListener {
                 btnModificar1ActionPerformed(evt);
             }
         });
-        pnlPrincipal.add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 610, 290, 50));
+        pnlPrincipal.add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 610, 220, 50));
 
         btnListo.setBackground(new java.awt.Color(183, 52, 0));
         btnListo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
