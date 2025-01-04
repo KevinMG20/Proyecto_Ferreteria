@@ -6,25 +6,25 @@ This is a desktop application developed with **Java Swing** and powered by a **M
 
 ## 📸 Screenshots
 
-![Start](./Capturas/Login.png)
+![Login](./Capturas/Login.PNG)
 *Login*
 
-![Game Modes](./Capturas/Empleados.png)
+![Employees](./Capturas/Empleados.PNG)
 *Employees*
 
-![Character Selector](./Capturas/Productos.png)
+![Products](./Capturas/Productos.PNG)
 *Products*
 
-![Game Board](./Capturas/Proveedores.png)
+![Suppliers](./Capturas/Proveedores.PNG)
 *Suppliers*
 
-![Game Board](./Capturas/Entregas.png)
+![Deliveries](./Capturas/Entregas.PNG)
 *Deliveries*
 
-![Game Board](./Capturas/Ventas.png)
+![Sells](./Capturas/Ventas.PNG)
 *Sells*
 
-![Game Board](./Capturas/Reportes.png)
+![Generated Reports](./Capturas/Reportes.PNG)
 *Generated Reports*
 
 ---
